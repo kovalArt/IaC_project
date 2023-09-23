@@ -4,7 +4,7 @@
 
 - name: Copy Nginx default config to sites-enabled
   copy:
-    src: default
+    src: ../files/default
     dest: /etc/nginx/sites-enabled/default
   notify: restart nginx
 
@@ -13,4 +13,3 @@
     name: nginx
     state: started 
     enabled: yes
-  become: yes
