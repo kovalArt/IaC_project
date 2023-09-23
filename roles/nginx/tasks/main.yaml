@@ -1,9 +1,16 @@
-- name: install nginx 
-  apt:
-    name: nginx
-    state: latest
+- name: Ensure nginx is installed and in working state
+  apt: 
+    name: nginx  
 
-- name: start nginx web server 
-  service: 
+- name: Copy Nginx default config to sites-enabled
+  copy:
+    src: default
+    dest: /etc/nginx/sites-enabled/default
+  notify: restart nginx
+
+- name: start nginx
+  service:
     name: nginx
     state: started 
+    enabled: yes
+  become: yes
