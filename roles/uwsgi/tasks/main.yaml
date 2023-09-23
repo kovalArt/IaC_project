@@ -1,9 +1,7 @@
 ---
 - name: Install uWSGI packages
   apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
+    pkg:
     - uwsgi
     - uwsgi-plugin-python3
     - python3-pymysql
@@ -19,4 +17,4 @@
   service:
     name: uwsgi
     state: started
-    enabled: true
+    enabled: yes

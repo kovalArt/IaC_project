@@ -1,7 +1,7 @@
 - name: Add the user 'agama'
   user:
     name: agama
-    system: yes
+    system: true
 
 - name: Create install directory
   file:
