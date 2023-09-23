@@ -1,7 +1,6 @@
 - name: Add the user 'agama'
   user:
     name: agama
-    comment: web app user
     system: yes
 
 - name: Create install directory
@@ -16,6 +15,7 @@
   apt: 
     name: python3-flask-sqlalchemy
     update_cache: yes
+    state: latest
 
 - name: Download agama.py
   get_url:
