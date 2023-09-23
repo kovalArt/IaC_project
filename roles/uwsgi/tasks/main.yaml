@@ -6,16 +6,17 @@
   with_items:
     - uwsgi
     - uwsgi-plugin-python3
+    - python3-pymysql
 
 - name: Configure uWSGI for AGAMA application
   copy:
-    src: roles/uwsgi/files/agama.ini
+    src: ../files/agama.ini
     dest: /etc/uwsgi/apps-enabled/agama.ini
   notify: Restart uWSGI service
 
 
 - name: uWSGI service
-  ansible.builtin.service:
+  service:
     name: uwsgi
     state: started
     enabled: true
