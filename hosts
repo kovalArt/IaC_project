@@ -1,4 +1,9 @@
-artkov ansible_host=193.40.156.67 ansible_port=19122 ansible_user=ubuntu
+artkov ansible_host=193.40.156.67 ansible_port=5122 ansible_user=ubuntu
+artkov-1 ansible_host=193.40.156.67 ansible_port=6322 ansible_user=ubuntu
 
 [web_servers]
 artkov
+
+[db_servers]
+artkov-1
+
