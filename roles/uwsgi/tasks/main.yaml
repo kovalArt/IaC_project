@@ -7,8 +7,8 @@
     - python3-pymysql
 
 - name: Configure uWSGI for AGAMA application
-  copy:
-    src: ../files/agama.ini
+  template:
+    src: ../templates/agama.ini.j2
     dest: /etc/uwsgi/apps-enabled/agama.ini
   notify: Restart uWSGI service
 
