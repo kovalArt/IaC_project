@@ -1,0 +1,33 @@
+---
+- name: Install Bind9
+  become: true
+  apt:
+    name: bind9
+    state: present
+
+- name: Ensure Bind9 service is running and enabled
+  become: true
+  systemd:
+    name: bind9
+    enabled: yes
+    state: started
+
+- name: Configure DNS forwarders
+  become: true
+  template:
+    src: named.conf.options.j2
+    dest: /etc/bind/named.conf.options
+
+- name: Configure access rules for DNS server
+  become: true
+  template:
+    src: named.conf.options.j2
+    dest: /etc/bind/named.conf.options
+
+- name: Configure master zone
+  become: true
+  template:
+    src: db.infocare.j2
+    dest: /var/lib/bind/db.infocare
+
+
