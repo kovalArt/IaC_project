@@ -1,5 +1,13 @@
 options {
+    directory "/var/cache/bind";
+
+    allow-query {
+        {{ localhost }};
+        {{ local_network }};
+    };    
+    
     forwarders {
         {{ forwarder_ips | join(';\n        ') }};
     };
 };
+

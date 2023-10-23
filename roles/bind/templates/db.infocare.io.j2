@@ -1,0 +1,16 @@
+$TTL	604800
+{{ startup_name }}.	IN	SOA	{{ startup_name }}. kovalart-1.{{ startup_name }}. (
+			      3		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+
+{% for vm in groups['dns_server'] %}
+{{ startup_name }}.	IN	NS	{{ vm }}.{{startup_name}}.
+{% endfor %}
+
+{% for vm in hostvars %}
+{{ hostvars[vm]['inventory_hostname'] }}	IN	A	{{ hostvars[vm]['ansible_default_ipv4']['address'] }}
+{% endfor %}

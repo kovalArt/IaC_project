@@ -17,7 +17,9 @@
       - agama
       - uwsgi
       - nginx
+
   - name: DNS server tasks
     hosts: dns_server
     roles:
       - bind
+    tags: d

@@ -1,33 +1,46 @@
 ---
+
+# --- Task 2 (Install Bind9)---
 - name: Install Bind9
-  become: true
+  become: yes
   apt:
     name: bind9
     state: present
 
 - name: Ensure Bind9 service is running and enabled
-  become: true
+  become: yes
   systemd:
     name: bind9
     enabled: yes
     state: started
 
+# --- Task 3,4 (DNS forwarders and access rules) --- 
 - name: Configure DNS forwarders
-  become: true
+  become: yes
   template:
     src: named.conf.options.j2
     dest: /etc/bind/named.conf.options
+  notify: restart bind9
 
-- name: Configure access rules for DNS server
-  become: true
+# --- Task 5 (Configure Master Zone) ---
+- name: Configure Master Zone
+  become: yes
   template:
-    src: named.conf.options.j2
-    dest: /etc/bind/named.conf.options
+    src: db.infocare.io.j2
+    dest: /var/lib/bind/db.infocare.io
+  notify: restart bind9
 
-- name: Configure master zone
-  become: true
+# --- Task 6 (Update VM and Shut down systemd-resolved)
+- name: Update VMs DNS settings
+  become: yes
   template:
-    src: db.infocare.j2
-    dest: /var/lib/bind/db.infocare
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+  notify: restart bind9
 
+- name: Shut down systemd-resolved
+  become: yes
+  systemd:
+    name: systemd-resolved
+    state: stopped
 

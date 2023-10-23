@@ -2,11 +2,12 @@ forwarder_ips:
   - 1.1.1.1
   - 8.8.8.8
   - 9.9.9.9
-startup_name: "infocare"
-bind_server_ip: "192.168.42.117"
+startup_name: "infocare.io"
+bind_server_ip: "192.168.42.52"
+local_network: "192.168.42.0/23"
+localhost: "127.0.0.0/8"
 
-
-mysql_host: 192.168.43.40
+mysql_host: kovalart-2
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
