@@ -1,13 +1,20 @@
 options {
-    directory "/var/cache/bind";
+	directory "/var/cache/bind";
+	forwarders {
+      {% for f in forwarder_ips %}
+	    {{ f }};
+      {% endfor %}
+	};
+    allow-query { {{ localhost }}; {{ local_network }}; };
+};
 
-    allow-query {
-        {{ localhost }};
-        {{ local_network }};
-    };    
-    
-    forwarders {
-        {{ forwarder_ips | join(';\n        ') }};
-    };
+zone "{{ startup_name }}" {
+  type primary;
+  file "/var/lib/bind/db.{{ startup_name }}";
+  allow-transfer {
+    {% for vm in hostvars %}
+	{{ hostvars[vm]['ansible_default_ipv4']['address'] }};
+	{% endfor %}
+  };
 };
 

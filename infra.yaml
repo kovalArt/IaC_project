@@ -1,6 +1,7 @@
 ---
   - name: Initial setup
     hosts: all
+    gather_facts: false
     roles:
       - init
  
@@ -21,5 +22,6 @@
   - name: DNS server tasks
     hosts: dns_server
     roles:
+    gather_facts: false
       - bind
     tags: d

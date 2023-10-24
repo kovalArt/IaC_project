@@ -3,16 +3,16 @@
 # --- Task 2 (Install Bind9)---
 - name: Install Bind9
   become: yes
+  become_method: sudo
   apt:
-    name: bind9
+    name: 
+      - bind9
+      - libssl-dev
+      - libuv1
+      - perl
+      - pkg-config
+      - python3-dnspython
     state: present
-
-- name: Ensure Bind9 service is running and enabled
-  become: yes
-  systemd:
-    name: bind9
-    enabled: yes
-    state: started
 
 # --- Task 3,4 (DNS forwarders and access rules) --- 
 - name: Configure DNS forwarders
@@ -28,15 +28,7 @@
   template:
     src: db.infocare.io.j2
     dest: /var/lib/bind/db.infocare.io
-  notify: restart bind9
-
-# --- Task 6 (Update VM and Shut down systemd-resolved)
-- name: Update VMs DNS settings
-  become: yes
-  template:
-    src: resolv.conf.j2
-    dest: /etc/resolv.conf
-  notify: restart bind9
+  notify: restart rndc
 
 - name: Shut down systemd-resolved
   become: yes
@@ -44,3 +36,15 @@
     name: systemd-resolved
     state: stopped
 
+# --- Task 6 (Update VM and Shut down systemd-resolved)
+- name: Update VMs DNS settings
+  become: yes
+  template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+
+- name: Ensure Bind9 service is running and enabled
+  become: yes
+  systemd:
+    name: bind9
+    state: started

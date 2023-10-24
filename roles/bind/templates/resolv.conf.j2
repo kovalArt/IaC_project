@@ -1,2 +1,3 @@
-nameserver {{ hostvars["kovalart-2"]['ansible_default_ipv4']['address'] }} 
+nameserver {{ hostvars['kovalart-2']['ansible_default_ipv4']['address'] }}
+
 search {{ startup_name }}

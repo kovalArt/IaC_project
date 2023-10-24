@@ -1,7 +1,10 @@
 - name: restart bind9
   become: yes
-  become_user: root
   service: 
-    name: named.service
-    state: restarted 
-    
+    name: bind9
+    state: restarted
+    enabled: yes  
+
+- name: reload rndc
+  command:
+    cmd: rndc reload
