@@ -5,6 +5,6 @@
     state: restarted
     enabled: yes  
 
-- name: reload rndc
+- name: restart rndc
   command:
     cmd: rndc reload
