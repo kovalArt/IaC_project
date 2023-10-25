@@ -1,0 +1,38 @@
+---
+
+- name: Install Prometheus on Second VM
+  apt:
+    name:
+      prometheus
+    state: present
+
+- name: Copy Prometheus Configuration
+  template:
+    src: ../templates/prometheus_config.yaml.j2
+    dest: /etc/prometheus/prometheus.yml
+  notify:
+    - restart prometheus
+
+# === Task 3 (Install Nginx and set Reverse Proxy) === 
+- name: Install Nginx on VM2
+  apt: 
+    name: nginx  
+
+- name: Copy Nginx default config to sites-enabled
+  copy:
+    src: ../templates/prometheus
+    dest: /etc/nginx/sites-enabled/prometheus
+  notify: restart nginx
+
+- name: start nginx
+  service:
+    name: nginx
+    state: started 
+    enabled: true
+
+- name: Copy Prometheus service configuration
+  template:
+    src: ../templates/prom.service.j2
+    dest: /etc/default/prometheus
+  notify:
+    - restart prometheus

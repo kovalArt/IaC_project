@@ -4,7 +4,17 @@
     roles:
       - init
  
- 
+  - name: DNS server tasks
+    hosts: dns_server
+    roles:
+      - bind
+    tags: d
+
+  - name: Resolv.conf task
+    hosts: all_vms
+    roles:
+      - resolv_dns
+
   - name: Database server
     hosts: db_servers
     roles:
@@ -19,8 +29,12 @@
       - nginx
     tags: w
 
-  - name: DNS server tasks
-    hosts: dns_server
+
+  - name: Prometheus tasks
+    hosts: prometheus 
     roles:
-      - bind
-    tags: d
+      - prometheus
+    tags: p
+
+
+    

@@ -30,18 +30,7 @@
     dest: /var/lib/bind/db.infocare.io
   notify: restart rndc
 
-- name: Shut down systemd-resolved
-  become: yes
-  systemd:
-    name: systemd-resolved
-    state: stopped
-
-# --- Task 6 (Update VM and Shut down systemd-resolved)
-- name: Update VMs DNS settings
-  become: yes
-  template:
-    src: resolv.conf.j2
-    dest: /etc/resolv.conf
+# --- Task 6
 
 - name: Ensure Bind9 service is running and enabled
   become: yes

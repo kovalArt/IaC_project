@@ -1,0 +1,13 @@
+---
+
+- name: Shut down systemd-resolved
+  become: yes
+  systemd:
+    name: systemd-resolved
+    state: stopped
+
+- name: Change resolv.conf on both VMs
+  become: yes
+  template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf

@@ -1,6 +1,10 @@
 kovalart-1 ansible_host=193.40.156.67 ansible_port=14522 ansible_user=ubuntu
 kovalart-2 ansible_host=193.40.156.67 ansible_port=14422 ansible_user=ubuntu
 
+[all_vms]
+kovalart-1
+kovalart-2
+
 [web_servers]
 kovalart-1
 
@@ -9,4 +13,6 @@ kovalart-2
 
 [dns_server]
 kovalart-2
-    
+
+[prometheus]
+kovalart-2
