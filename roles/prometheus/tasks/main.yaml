@@ -18,17 +18,18 @@
   apt: 
     name: nginx  
 
+- name: start nginx
+  become: yes
+  service:
+    name: nginx
+    state: started 
+    enabled: true
+
 - name: Copy Nginx default config to sites-enabled
   copy:
     src: ../templates/prometheus
     dest: /etc/nginx/sites-enabled/prometheus
   notify: restart nginx
-
-- name: start nginx
-  service:
-    name: nginx
-    state: started 
-    enabled: true
 
 - name: Copy Prometheus service configuration
   template:

@@ -1,14 +1,16 @@
 global:
   scrape_interval: 15s
 
+
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
       - targets: ['localhost:9090']
+    metrics_path: /prometheus/metrics
 
   - job_name: 'linux'
     static_configs:
-      - template:
+      - targets:
         {% for host in groups['all'] %}
         - '{{ host }}:9100'
         {% endfor %}
