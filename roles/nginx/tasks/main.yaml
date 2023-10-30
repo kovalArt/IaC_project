@@ -12,4 +12,9 @@
   service:
     name: nginx
     state: started 
-    enabled: tru
+    enabled: true
+
+
+- name: Install exporter
+  apt:
+    name: prometheus-nginx-exporter

@@ -30,6 +30,7 @@
     src: ../templates/prometheus
     dest: /etc/nginx/sites-enabled/prometheus
   notify: restart nginx
+  
 
 - name: Copy Prometheus service configuration
   template:
@@ -37,3 +38,8 @@
     dest: /etc/default/prometheus
   notify:
     - restart prometheus
+
+- name: Install Nginx exporter
+  apt:
+    name: prometheus-nginx-exporter
+  
