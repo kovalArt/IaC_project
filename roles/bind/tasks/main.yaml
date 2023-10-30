@@ -37,3 +37,7 @@
   systemd:
     name: bind9
     state: started
+
+- name: Install Bind exporter
+  apt:
+    name: prometheus-bind-exporter

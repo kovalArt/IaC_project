@@ -3,3 +3,10 @@
     name: mysql
     state: restarted
   become: yes
+
+- name: restart mysql-exporter
+  service: 
+    name: prometheus-mysqld-exporter
+    state: restarted
+  become: yes
+
