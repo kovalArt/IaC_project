@@ -11,6 +11,11 @@ server {
 		proxy_pass http://kovalart-2:9090;
 	}
 
+	location /grafana {
+		proxy_set_header Host $http_host;
+		proxy_pass http://kovalart-1:3000;
+	}
+
 }
 
 server {

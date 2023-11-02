@@ -8,7 +8,7 @@
     hosts: dns_server
     roles:
       - bind
-    tags: d
+    tags: dns
 
   - name: Resolv.conf task
     hosts: all_vms
@@ -29,12 +29,15 @@
       - nginx
     tags: w
 
-
   - name: Prometheus tasks
     hosts: prometheus 
     roles:
       - prometheus
     tags: p
 
-
+  - name: Grafana tasks
+    hosts: grafana
+    roles:
+      - grafana
+    tags: g
     

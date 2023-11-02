@@ -1,0 +1,12 @@
+# # config file version
+apiVersion: 1
+
+# # list of datasources that should be deleted from the database
+deleteDatasources:
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    orgId: 1
+    url: http://kovalart-2:9090/prometheus
+    version: 1
+    editable: false

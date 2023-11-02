@@ -32,3 +32,9 @@
       prometheus-node-exporter
     state: present
 
+- name: Ensure ca-certificates is installed with a specific version
+  apt:
+    name: ca-certificates=20230311ubuntu0.20.04.1
+    state: present
+  become: yes
+
