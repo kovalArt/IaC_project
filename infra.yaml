@@ -35,6 +35,12 @@
       - prometheus
     tags: p
 
+  - name: Influxdb Tasks
+    hosts: influxdb
+    roles:
+      - influxdb
+    tags: idb
+
   - name: Grafana tasks
     hosts: grafana
     roles:
