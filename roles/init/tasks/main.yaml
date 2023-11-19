@@ -1,25 +1,4 @@
-#- name: Ansible ping module
-#  ansible.builtin.ping:
-
-#- name: Add user juri
-#  ansible.builtin.user:
-#    user: juri
-        
-#- name: Add user roman
-#  ansible.builtin.user:
-#    user: roman
-
-#- name: Add user juri authorized key 
-#  ansible.posix.authorized_key:
-#    user: juri
-#    state: present 
-#    key: https://github.com/hudolejev.keys
-        
-#- name: Add user roman authorized key 
-#  ansible.posix.authorized_key:
-#    user: roman
-#    state: present 
-#    key: https://github.com/romankuchin.keys
+---
 
 - name: Update APT cache
   ansible.builtin.apt:
@@ -27,14 +6,31 @@
 
 - name: Install Prometheus nodes
   become: yes
-  apt:
+  apt:    
     name:
       prometheus-node-exporter
     state: present
+
+- name: Ensure the Node Exporters are started
+  become: yes
+  service: 
+    name: prometheus-node-exporter
+    state: started
+    enabled: true 
 
 - name: Ensure ca-certificates is installed with a specific version
   apt:
     name: ca-certificates=20230311ubuntu0.20.04.1
     state: present
   become: yes
+
+- name: Install Rsyslog
+  apt:
+    name: rsyslog
+    state: present
+
+- name: Add the Rsyslog configuration for the Telegraf 
+  template:
+    src: rsyslog.conf.j2
+    dest: /etc/rsyslog.d/50-telegraf.conf
 

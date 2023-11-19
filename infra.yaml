@@ -35,15 +35,17 @@
       - prometheus
     tags: p
 
-  - name: Influxdb Tasks
-    hosts: influxdb
-    roles:
-      - influxdb
-    tags: idb
-
   - name: Grafana tasks
     hosts: grafana
     roles:
       - grafana
     tags: g
     
+  - name: Influxdb tasks
+    hosts: influxdb
+    roles:
+      - influxdb
+      - pinger
+    tags: i
+
+
