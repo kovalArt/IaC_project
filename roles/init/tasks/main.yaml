@@ -24,6 +24,8 @@
     state: present
   become: yes
 
+# =========== RSYSLOG  ===========
+
 - name: Install Rsyslog
   apt:
     name: rsyslog
@@ -34,3 +36,34 @@
     src: rsyslog.conf.j2
     dest: /etc/rsyslog.d/50-telegraf.conf
 
+# =========== BACKUP  ===========
+
+- name: Create backup user
+  user:
+    name: backup
+    home: /home/backup
+    shell: /bin/bash
+    append: no
+    groups: backup
+
+- name: Ensure .ssh directory exists for backup user
+  file:
+    path: /home/backup/.ssh
+    state: directory
+    owner: backup
+    group: backup
+    mode: '0700'
+
+- name: Generate SSH keypair for backup user
+  openssh_keypair:
+    path: /home/backup/.ssh/id_rsa
+    owner: backup
+    size: 2048
+
+- name: Add backup server SSH key to known hosts
+  template:
+    src: backup_known_hosts.j2
+    dest: /home/backup/.ssh/known_hosts
+    owner: backup
+    group: backup
+    mode: '0600'

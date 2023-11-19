@@ -11,6 +11,9 @@ webserver_ip: "193.40.156.67"
 vm1_ip: "{{ hostvars[kovalart-1]['ansible_default_ipv4']['address'] }}"
 vm2_ip: "{{ hostvars[kovalart-2]['ansible_default_ipv4']['address'] }}"
 
+backup_host: "192.168.42.132"
+backup_ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90"
+
 mysql_host: "{{ hostvars['kovalart-2']['ansible_default_ipv4']['address'] }}"
 mysql_database: agama
 mysql_user: agama
