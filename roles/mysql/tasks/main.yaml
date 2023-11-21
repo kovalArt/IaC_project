@@ -53,3 +53,80 @@
     src: my.cnf.j2
   no_log: yes
   notify: restart mysql-exporter
+
+# ====== BACKUP ======
+
+- name: Ensure that mysql directory exists 
+  file:
+    path: /home/backup/mysql
+    state: directory 
+    owner: backup 
+    group: backup 
+    mode: '0755'
+
+- name: Create MySQL user named backup with required privileges
+  mysql_user:
+    name: backup
+    password: "{{ mysql_backup_user_password }}" 
+    priv: "agama.*:LOCK TABLES,SELECT"
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  no_log: true
+
+- name: Ensure /home/backup/.my.cnf file is created
+  template:
+    src: backup_my.cnf.j2
+    dest: /home/backup/.my.cnf
+    owner: backup
+    group: backup
+    mode: '0600'
+
+- name: Ensure user backup can create MySQL dumps without errors
+  command: "sudo -u backup sh -c 'mysqldump agama >/dev/null; echo $?'"
+  register: dump_result
+
+- name: Fail if the dump command did not execute successfully
+  fail:
+    msg: "Error running mysqldump command. Check MySQL user privileges and .my.cnf configuration."
+  when: dump_result.rc != 0
+
+- name: Ensure backup directory exists
+  file:
+    path: /home/backup/mysql
+    state: directory
+    owner: backup
+    group: backup
+    mode: '0755'
+
+- name: Create MySQL dump cron job
+  cron:
+    name: "mysql-backup"
+    minute: "58"
+    hour: "10"
+    user: "backup"
+    job: "/usr/bin/mysqldump agama > /home/backup/mysql/agama.sql"
+    state: present
+
+- name: Create Duplicity full backup cron job
+  cron:
+    name: "duplicity-backup"
+    minute: "59"
+    hour: "10"
+    user: "backup"
+    job: "duplicity --no-encryption full /home/backup/mysql/ rsync://kovalArt@{{ backup_host }}:/mysql"
+    state: present
+
+- name: Create Duplicity incremental backup cron job
+  cron:
+    name: "duplicity-incremental"
+    minute: "00"
+    hour: "11"
+    user: "backup"
+    job: "duplicity --no-encryption incremental /home/backup/mysql/ rsync://kovalArt@{{ backup_host }}:/mysql"
+    state: present
+
+
+  
+
+
+

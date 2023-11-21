@@ -67,3 +67,16 @@
     owner: backup
     group: backup
     mode: '0600'
+
+- name: Ensure /home/backup/restore directory is created
+  file:
+    path: /home/backup/restore
+    state: directory
+    owner: backup
+    group: backup
+    mode: '0755'
+
+- name: Ensure Duplicity is installed
+  apt:
+    name: duplicity
+    state: present

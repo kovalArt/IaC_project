@@ -62,3 +62,14 @@
     loop:
       - prometheus
       - prometheus-influxdb-stats-exporter
+
+
+# ======= BACKUP =======
+
+  - name: Ensure that mysql directory exists 
+    file:
+      path: /home/backup/influxdb
+      state: directory 
+      owner: backup 
+      group: backup 
+      mode: '0755'
