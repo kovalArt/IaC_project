@@ -1,5 +1,5 @@
-kovalart-1 ansible_host=193.40.156.67 ansible_port=17922 ansible_user=ubuntu
-kovalart-2 ansible_host=193.40.156.67 ansible_port=5822 ansible_user=ubuntu
+kovalart-1 ansible_host=193.40.156.67 ansible_port=35522 ansible_user=ubuntu
+kovalart-2 ansible_host=193.40.156.67 ansible_port=37522 ansible_user=ubuntu
 
 [all_vms]
 kovalart-1

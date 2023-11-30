@@ -10,3 +10,9 @@
     state: restarted
   become: yes
 
+- name: reload cron 
+  service: 
+    name: cron
+    state: restarted
+  become: yes
+

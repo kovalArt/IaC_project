@@ -66,10 +66,30 @@
 
 # ======= BACKUP =======
 
-  - name: Ensure that mysql directory exists 
+  - name: Ensure that influxdb directory exists 
     file:
       path: /home/backup/influxdb
       state: directory 
       owner: backup 
       group: backup 
       mode: '0755'
+
+  - name: Ensure user backup can create InfluxDB dumps without errors
+    ansible.builtin.shell:
+      cmd: "sudo -u backup influxd backup -portable /tmp"
+    register: dump_result
+
+  - name: Fail if the dump command did not execute successfully
+    ansible.builtin.fail:
+      msg: "Error running influxd backup command. Check InfluxDB user privileges."
+    when: dump_result.rc != 0
+
+
+  - name: InfluxDB backup cron job
+    template:
+      src: ../files/influxdb_cron.j2
+      dest: /etc/cron.d/influxdb-backup
+      mode: "0644"
+      owner: backup 
+      group: backup
+
