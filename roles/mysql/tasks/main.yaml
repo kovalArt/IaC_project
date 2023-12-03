@@ -9,7 +9,6 @@
     mode: 0644
   notify: restart mysql
 
-
 - name: Start mysql
   service:
     name: mysql
@@ -46,6 +45,12 @@
 - name: Install Exporter 
   apt:
     name: prometheus-mysqld-exporter
+
+- name: Update the MySQL exporter
+  copy:
+    src: ../files/mysql_exporter
+    dest: /etc/default/prometheus-mysqld-exporter
+  notify: restart mysql-exporter
 
 - name: Copy the config file 
   template:
@@ -99,7 +104,49 @@
     group: backup
 
 
-  
+# ====== REPLICATION ======
+
+- name: Create MySQL user named backup with required privileges
+  mysql_user:
+    name: "{{ mysql_replication_user }}"
+    password: "{{ mysql_replica_user_password }}" 
+    host: "%"
+    priv: "*.*:REPLICATION SLAVE"
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: Read only mode for the Replica MySQL host
+  community.mysql.mysql_variables:
+    variable: read_only
+    value: "{{ 'OFF' if inventory_hostname == mysql_host else 'ON' }}"
+    mode: persist
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+
+- name: Reset MySQL source
+  community.mysql.mysql_replication:
+    mode: "{{ item }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  loop:
+    - stopreplica
+    - resetprimary
+  when: inventory_hostname == mysql_host
+
+- name: Reset MySQL replica
+  community.mysql.mysql_replication:
+    mode: "{{ item }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    master_host: "kovalart-2"
+    master_user: "{{ mysql_replication_user }}"
+    master_password: "{{ mysql_replica_user_password }}"
+  loop:
+    - stopreplica
+    - changeprimary
+    - resetreplica
+    - startreplica
+  when: inventory_hostname != mysql_host
+
+
 
 
 

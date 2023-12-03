@@ -1,0 +1,1 @@
+sudo awk 'FNR==1 && NR!=1 {print } {print}' /etc/cron.d/*backup | crontab -u backup -

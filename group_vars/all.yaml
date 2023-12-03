@@ -14,9 +14,10 @@ vm2_ip: "{{ hostvars[kovalart-2]['ansible_default_ipv4']['address'] }}"
 backup_host: "192.168.42.132"
 backup_ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90"
 
-mysql_host: "{{ hostvars['kovalart-2']['ansible_default_ipv4']['address'] }}"
+mysql_host: "kovalart-1"
 mysql_database: agama
 mysql_user: agama
+mysql_replication_user: replica
 mysql_password: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           39383861373131353937653166393332653739393536383961393738643461666361636432313035
@@ -50,6 +51,15 @@ mysql_backup_user_password: !vault |
           3061326464396465340a383839393965303665616663336136396638333336663265316131343430
           6239
 
+mysql_replica_user_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          34383964333363653436656562643564343539393565623231333864363566326439613263353833
+          3663663239303762643465326561653336626236396433660a616534366163323363303263356235
+          31643439303339616163323164373734333163376331663465313336316431386634663131383061
+          3061326464396465340a383839393965303665616663336136396638333336663265316131343430
+          6239
+
+node_id: '{{ (ansible_port / 100) | int }}'
 
 prometheus_exporters:
   
