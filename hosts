@@ -1,5 +1,5 @@
-kovalart-1 ansible_host=193.40.156.67 ansible_port=38522 ansible_user=ubuntu
-kovalart-2 ansible_host=193.40.156.67 ansible_port=34622 ansible_user=ubuntu
+kovalart-1 ansible_host=193.40.156.67 ansible_port=39322 ansible_user=ubuntu
+kovalart-2 ansible_host=193.40.156.67 ansible_port=35222 ansible_user=ubuntu
 
 [all_vms]
 kovalart-1
@@ -19,8 +19,10 @@ kovalart-2
 kovalart-2
 
 [grafana]
-kovalart-1
 kovalart-2
 
 [influxdb]
+kovalart-2
+
+[docker_host]
 kovalart-2

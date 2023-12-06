@@ -1,26 +1,41 @@
-- name: Add the user 'agama'
-  user:
-    name: agama
-    system: true
-
-- name: Create install directory
+- name: Agama directory
   file:
+    name: /opt/agama
+    owner: root
+    group: root
     state: directory
-    path: /opt/agama
-    owner: agama
-    group: agama
-    mode: 0755
+    recurse: true
 
-- name: Ensure python3-flask-sqlalchemy is installed and in working state
-  apt: 
-    pkg:
-    - python3-flask-sqlalchemy
-    - python3-pymysql
-    update_cache: yes
-    state: latest
+- name: Configure uWSGI for AGAMA application
+  template:
+    src: roles/uwsgi/templates/agama.ini.j2
+    dest: /opt/agama/agama.ini
+    owner: root 
+    mode: 0600
+  no_log: true 
 
-- name: Download agama.py
+- name: Download Dockerfile
   get_url:
-    url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
-    dest: /opt/agama
-    mode: 0755
+    url: https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile
+    dest: /opt/agama/Dockerfile
+    owner: root
+    group: root
+    mode: '777'
+
+- name: Build agama image
+  docker_image:
+    name: agama
+    build:
+      path: /opt/agama
+      network: host
+    source: build   
+
+- name: agama container
+  docker_container:
+    name: agama
+    image: agama
+    env:
+      AGAMA_DATABASE_URI: mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ mysql_database }}
+    ports:
+      - "{{ agama_port }}:8000"
+    restart_policy: always

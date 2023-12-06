@@ -1,0 +1,59 @@
+---
+
+  - name: Install required packages
+    apt:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - apt-transport-https
+      - software-properties-common
+      - wget
+
+  - name: Create the keyrings directory if it doesn't exist
+    file:
+      path: /etc/apt/keyrings
+      state: directory
+    when: not (ansible_distribution == 'Debian' and ansible_distribution_major_version == '9')
+
+  - name: Import GPG key
+    shell: wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | sudo tee /etc/apt/keyrings/grafana.gpg > /dev/null
+    args:
+      creates: /etc/apt/keyrings/grafana.gpg
+
+  - name: Add Grafana APT repository for stable releases
+    apt_repository:
+      repo: deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main
+      state: present
+
+  - name: Install Grafana OSS
+    apt:
+      name: grafana
+      state: present
+  
+  - name: Copy the config
+    template:
+      src: ../templates/grafana.ini.j2
+      dest: /etc/grafana/grafana.ini
+    notify:
+      - restart grafana
+
+  # === Setup provisionings ===
+  - name: Copy Dashboard provisioning 
+    copy:
+      src: ../templates/dashboards.yaml
+      dest: /etc/grafana/provisioning/dashboards/sample.yaml
+    notify:
+      - restart grafana
+
+  - name: Copy Datasource provisioning 
+    copy:
+      src: ../templates/datasource.yaml
+      dest: /etc/grafana/provisioning/datasources/sample.yaml
+    notify:
+      - restart grafana
+  
+  - name: Start grafana 
+    service:
+      name: grafana-server
+      state: started
+      enabled: yes

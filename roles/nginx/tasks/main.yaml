@@ -3,8 +3,8 @@
     name: nginx  
 
 - name: Copy Nginx default config to sites-enabled
-  copy:
-    src: ../files/default
+  template:
+    src: default
     dest: /etc/nginx/sites-enabled/default
   notify: restart nginx
 
