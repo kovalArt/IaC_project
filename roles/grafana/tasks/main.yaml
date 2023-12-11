@@ -13,7 +13,33 @@
     dest: /opt/grafana/grafana.ini
   no_log: true
   notify:
-   - restart grafana
+    - stop grafana
+    - start grafana
+
+- name: Copy Grafana datasource
+  template:
+    src: datasource.yaml.j2
+    dest: /opt/grafana/provisioning/datasources/default.yaml
+  notify:
+   - stop grafana
+   - start grafana
+
+- name: Copy Grafana dashboard
+  template:
+    src: default.yaml.j2
+    dest: /opt/grafana/provisioning/dashboards/default.yaml
+  notify:
+   - stop grafana
+   - start grafana
+
+- name: Copy Grafana main dashboard
+  copy:
+    src: ../files/main.json
+    dest: /opt/grafana/provisioning/datasources/main.json
+  notify:
+   - stop grafana
+   - start grafana
+
 
 - name: Pull Grafana Docker image
   community.docker.docker_image:
@@ -28,3 +54,18 @@
     restart_policy: always
     ports: "{{ grafana_port }}:3000"
     volumes: /opt/grafana:/etc/grafana
+
+- name: Create CNAME record for Grafana
+  community.general.nsupdate:
+    key_name: "nsupdate.key"
+    server: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ nsupdate_secret }}"
+    zone: "{{ startup_name }}"
+    state: present
+    record: "grafana"
+    type: "CNAME"
+    value: "kovalart-2"
+
+    
+

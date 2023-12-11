@@ -14,6 +14,12 @@
     mode: 0600
   no_log: true 
 
+- name: Download agama.py
+  get_url:
+    url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
+    dest: /opt/agama
+    mode: 0755
+
 - name: Download Dockerfile
   get_url:
     url: https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile
@@ -39,3 +45,29 @@
     ports:
       - "{{ agama_port }}:8000"
     restart_policy: always
+
+- name: Second agama container
+  docker_container:
+    name: agama-2
+    image: agama
+    env:
+      AGAMA_DATABASE_URI: mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ mysql_database }}
+    ports:
+      - "{{ second_agama_port }}:8000"
+    restart_policy: always
+
+- name: Create CNAME records for Agama instances
+  community.general.nsupdate:
+    key_name: "nsupdate.key"
+    server: "{{ hostvars['kovalart-2']['ansible_default_ipv4']['address'] }}"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ nsupdate_secret }}"
+    zone: "{{ startup_name }}"
+    state: present
+    type: "CNAME"
+    value: "{{ item.target }}"
+    record: "{{ item.service }}"
+  loop:
+    - { service: "www-1", target: "kovalart-1" }
+    - { service: "www-2", target: "kovalart-2" }
+  when: "'kovalart-2' in inventory_hostname"

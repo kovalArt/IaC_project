@@ -1,0 +1,105 @@
+- name: Install haproxy
+  apt:
+    pkg: 
+      - haproxy
+      - keepalived
+
+- name: Copy the Haproxy config
+  template:
+    src: haproxy.cnf.j2
+    dest: /etc/haproxy/haproxy.cfg
+  notify: Restart Haproxy
+
+- name: Create keepalived_script user
+  user:
+    name: keepalived_script
+
+- name: Copy check script to keepalived_script user's home folder
+  copy:
+    src: ../templates/script.sh
+    dest: /home/keepalived_script/check_script.sh
+    owner: keepalived_script
+    group: keepalived_script
+    mode: '0755'
+
+- name: Copy the Keepalived config
+  template: 
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+  become: true
+  notify: Restart keepalived
+  no_log: true
+
+- name: Start the services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - haproxy
+    - keepalived
+
+- name: Install prometheus-haproxy-exporter using APT
+  apt:
+    name: prometheus-haproxy-exporter
+    state: present
+
+- name: Configure haproxy.scrape-uri in /etc/default/prometheus-haproxy-exporter
+  template:
+    src: prometheus_haproxy
+    dest: /etc/default/prometheus-haproxy-exporter
+  notify: restart prometheus-haproxy-exporter
+
+- name: Download Keepalived Exporter
+  get_url:
+    url: http://backup/keepalived-exporter-1.2.0.linux-amd64.tar.gz
+    dest: /tmp/keepalived-exporter-1.2.0.linux-amd64.tar.gz
+
+- name: Extract Keepalived Exporter
+  ansible.builtin.unarchive:
+    src: /tmp/keepalived-exporter-1.2.0.linux-amd64.tar.gz
+    dest: /usr/local/bin/
+    remote_src: yes
+
+- name: Create systemd unit file
+  ansible.builtin.copy:
+    content: |
+      [Unit]
+      Description=Keepalived Exporter
+      After=network.target
+
+      [Service]
+      User=root
+      ExecStart=/usr/local/bin/keepalived-exporter-1.2.0.linux-amd64/keepalived-exporter
+
+      [Install]
+      WantedBy=default.target
+    dest: /etc/systemd/system/keepalived-exporter.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Start and enable Keepalived Exporter service
+  ansible.builtin.systemd:
+    name: keepalived-exporter
+    state: started
+    enabled: yes
+
+- name: Create CNAME records for HAproxy instances
+  community.general.nsupdate:
+    key_name: "nsupdate.key"
+    server: "{{ hostvars['kovalart-2']['ansible_default_ipv4']['address'] }}"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ nsupdate_secret }}"
+    zone: "{{ startup_name }}"
+    state: present
+    type: "CNAME"
+    value: "{{ item.target }}"
+    record: "{{ item.service }}"
+  loop:
+    - { service: "lb-1", target: "kovalart-1" }
+    - { service: "lb-2", target: "kovalart-2" } 

@@ -1,5 +1,5 @@
-kovalart-1 ansible_host=193.40.156.67 ansible_port=39322 ansible_user=ubuntu
-kovalart-2 ansible_host=193.40.156.67 ansible_port=35222 ansible_user=ubuntu
+kovalart-1 ansible_host=193.40.156.67 ansible_port=18722 ansible_user=ubuntu
+kovalart-2 ansible_host=193.40.156.67 ansible_port=2322 ansible_user=ubuntu
 
 [all_vms]
 kovalart-1
@@ -12,8 +12,15 @@ kovalart-1
 kovalart-1
 kovalart-2
 
-[dns_server]
+[dns_server:children]
+dns_primary
+dns_secondary
+
+[dns_primary]
 kovalart-2
+
+[dns_secondary]
+kovalart-1
 
 [prometheus]
 kovalart-2
@@ -24,5 +31,18 @@ kovalart-2
 [influxdb]
 kovalart-2
 
-[docker_host]
+[docker]
+kovalart-1
+kovalart-2
+
+[agama]
+kovalart-1
+kovalart-2
+
+[haproxy]
+kovalart-1
+kovalart-2
+
+[keepalived]
+kovalart-1
 kovalart-2

@@ -48,3 +48,15 @@
     name: prometheus-nginx-exporter
     state: started
     enabled: true
+
+- name: Create CNAME record for Grafana
+  community.general.nsupdate:
+    key_name: "nsupdate.key"
+    server: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ nsupdate_secret }}"
+    zone: "{{ startup_name }}"
+    state: present
+    record: "prometheus"
+    type: "CNAME"
+    value: "kovalart-2"

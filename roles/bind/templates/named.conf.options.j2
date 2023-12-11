@@ -8,16 +8,19 @@ options {
     allow-query { {{ localhost }}; {{ local_network }}; };
 };
 
-zone "{{ startup_name }}" {
-  type primary;
-  file "/var/lib/bind/db.{{ startup_name }}";
-  allow-transfer {
-    {% for vm in hostvars %}
-	{{ hostvars[vm]['ansible_default_ipv4']['address'] }};
-	{% endfor %}
-  };
-};
-
 statistics-channels {
   inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
 };
+
+key "transfer.key" {
+  algorithm hmac-sha256;
+  secret "{{ transfer_secret }}";
+};
+
+key "nsupdate.key" {
+  algorithm hmac-sha256;
+  secret "{{ nsupdate_secret }}";
+};
+
+
+

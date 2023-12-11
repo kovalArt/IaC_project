@@ -25,7 +25,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -90,7 +90,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+            "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
           "expr": "bind_up",
@@ -106,7 +106,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -171,7 +171,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+            "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
           "expr": "mysql_up",
@@ -187,7 +187,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -252,7 +252,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+            "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
           "expr": "nginx_up{instance=\"kovalart-1:9113\"}",
@@ -268,7 +268,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -333,7 +333,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+            "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
           "expr": "nginx_up{instance=\"kovalart-2:9113\"}",
@@ -349,7 +349,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -428,7 +428,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+            "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
           "expr": "1 - avg(irate(node_cpu_seconds_total{mode=\"idle\"}[1m])) by (instance)\r\n",
@@ -445,7 +445,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -524,7 +524,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+            "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
           "expr": "sum(node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Cached_bytes - node_memory_Buffers_bytes) by (instance)",
@@ -540,7 +540,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -619,7 +619,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+            "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
           "expr": "rate(bind_resolver_queries_total{type=\"A\"}[1m])",
@@ -635,7 +635,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -714,7 +714,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+            "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
           "expr": "rate(mysql_global_status_commands_total{command=\"SELECT\"}[1m])",
@@ -730,7 +730,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -809,7 +809,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "cd55304b-b19c-47f7-bc72-6b4a2e6e5afe"
+            "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
           "expr": "rate(nginx_http_requests_total[1m])",
@@ -836,7 +836,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "Main Dashboard",
-  "uid": "cb5037bc-165c-4cfa-b75d-e514ebc1e92e",
+  "uid": "PBFA97CFB590B2093",
   "version": 3,
   "weekStart": ""
 }

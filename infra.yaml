@@ -6,7 +6,7 @@
     tags: init
  
   - name: DNS server tasks
-    hosts: dns_server
+    hosts: dns_server:children
     roles:
       - bind
     tags: dns
@@ -15,6 +15,7 @@
     hosts: all_vms
     roles:
       - resolv_dns
+    tags: rslv
 
   - name: Database server
     hosts: db_servers
@@ -35,13 +36,23 @@
     tags: p
 
   - name: Docker tasks
-    hosts: docker_host
+    hosts: docker
     roles:
       - docker
-      - grafana
-      - agama
     tags: dck 
-    
+
+  - name: Grafana Tasks
+    hosts: grafana
+    roles:
+      - grafana
+    tags: g
+
+  - name: Agama tasks
+    hosts: agama
+    roles:
+      - agama
+    tags: a
+
   - name: Influxdb tasks
     hosts: influxdb
     roles:
@@ -49,3 +60,8 @@
       - pinger
     tags: i
 
+  - name: Haproxy tasks
+    hosts: haproxy
+    roles:
+      - haproxy
+    tags: h
