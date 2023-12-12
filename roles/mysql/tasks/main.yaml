@@ -59,6 +59,12 @@
   no_log: yes
   notify: restart mysql-exporter
 
+- name: Start Mysql exporter
+  service: 
+    name: prometheus-mysqld-exporter
+    status: started
+    enabled: true
+
 # ====== BACKUP ======
 
 - name: Ensure that mysql directory exists 

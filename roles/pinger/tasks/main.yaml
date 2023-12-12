@@ -4,6 +4,11 @@
     user:
       name: pinger
 
+  - name: Install fping
+    apt:
+      name: fping
+      state: present
+
   - name: Create a directory /etc/pinger
     file:
       path: /etc/pinger
@@ -14,19 +19,28 @@
       src: ../files/pinger.sh
       dest: /usr/local/bin/pinger
       mode: 0777
+    notify: restart pinger
 
   - name: Copy Pinger service file
     copy: 
       src: ../files/pinger.service
       dest: /etc/systemd/system/
       mode: 0777
+    notify: restart pinger
     
   - name: Copy Pinger.conf file 
     copy: 
       src: ../files/pinger.conf
       dest: /etc/pinger/pinger.conf
       mode: 0777
+    notify: restart pinger
 
   - name: Restart daemon
     systemd:
       daemon_reload: true
+
+  - name: Start pinger
+    service:
+      name: pinger
+      state: started
+      enabled: true

@@ -24,22 +24,29 @@
    - stop grafana
    - start grafana
 
-- name: Copy Grafana dashboard
-  template:
-    src: default.yaml.j2
-    dest: /opt/grafana/provisioning/dashboards/default.yaml
-  notify:
-   - stop grafana
-   - start grafana
-
 - name: Copy Grafana main dashboard
   copy:
     src: ../files/main.json
-    dest: /opt/grafana/provisioning/datasources/main.json
+    dest: /opt/grafana/provisioning/dashboards/default_dashboard.json
   notify:
    - stop grafana
    - start grafana
 
+- name: Syslog dashboard provisioning
+  copy:
+    src: ../files/syslog-dashboard.json
+    dest: /opt/grafana/provisioning/dashboards/syslog_dashboard.json
+  notify:
+   - stop grafana
+   - start grafana
+
+- name: MySQL dashboard provisioning
+  copy:
+    src: ../files/mysql.json
+    dest: /opt/grafana/provisioning/dashboards/mysql_dashboard.json
+  notify:
+   - stop grafana
+   - start grafana
 
 - name: Pull Grafana Docker image
   community.docker.docker_image:

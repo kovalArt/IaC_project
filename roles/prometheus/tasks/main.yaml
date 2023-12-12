@@ -49,7 +49,7 @@
     state: started
     enabled: true
 
-- name: Create CNAME record for Grafana
+- name: Create CNAME record for prometheus
   community.general.nsupdate:
     key_name: "nsupdate.key"
     server: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"

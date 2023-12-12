@@ -5,7 +5,7 @@ options {
 	    {{ f }};
       {% endfor %}
 	};
-    allow-query { {{ localhost }}; {{ local_network }}; };
+    allow-query { {{ localhost }}; {{ local_network }}; {{ docker_network }}; };
 };
 
 statistics-channels {

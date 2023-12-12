@@ -5,5 +5,16 @@ datasources:
     type: prometheus
     access: proxy
     # Access mode - proxy (server in the UI) or direct (browser in the UI).
-    url: http://prometheus/prometheus
+    url: 	http://193.40.156.67:32280/prometheus
 
+  - name: InfluxDB
+    type: influxdb
+    access: proxy
+    database: pinger
+    url: http://influxdb.infocare.io:8086
+
+  - name: InfluxDB-telegraf
+    type: influxdb
+    access: proxy
+    database: telegraf
+    url: http://influxdb.infocare.io:8086
