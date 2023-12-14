@@ -65,3 +65,9 @@
     roles:
       - haproxy
     tags: h
+
+  - name: Keepalived tasks
+    hosts: keepalived
+    roles:
+      - keepalived
+    tags: k

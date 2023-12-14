@@ -46,6 +46,8 @@
     - restart rndc
     - restart bind9
 
+- name: Run handlers
+  meta: flush_handlers
 # --- Task 6
 
 - name: Ensure Bind9 service is running and enabled

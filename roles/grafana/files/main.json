@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
+  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -1190,7 +1190,18 @@
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "1": {
+                  "color": "yellow",
+                  "index": 0,
+                  "text": "Read Only"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1209,7 +1220,7 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 2,
+        "w": 3,
         "x": 5,
         "y": 9
       },
@@ -1420,7 +1431,18 @@
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "Read/Write"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1439,7 +1461,7 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 2,
+        "w": 3,
         "x": 5,
         "y": 12
       },
@@ -1487,7 +1509,23 @@
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "1": {
+                  "color": "blue",
+                  "index": 1,
+                  "text": "Main "
+                },
+                "2": {
+                  "color": "yellow",
+                  "index": 0,
+                  "text": "Secondary"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1510,7 +1548,7 @@
         "x": 3,
         "y": 15
       },
-      "id": 24,
+      "id": 25,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -1523,7 +1561,7 @@
           "fields": "",
           "values": false
         },
-        "textMode": "value",
+        "textMode": "auto",
         "wideLayout": true
       },
       "pluginVersion": "10.2.2",
@@ -1738,6 +1776,11 @@
           "mappings": [
             {
               "options": {
+                "1": {
+                  "color": "blue",
+                  "index": 1,
+                  "text": "Main "
+                },
                 "2": {
                   "color": "yellow",
                   "index": 0,
@@ -1769,7 +1812,7 @@
         "x": 3,
         "y": 18
       },
-      "id": 25,
+      "id": 26,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -2196,6 +2239,6 @@
   "timezone": "",
   "title": "Main",
   "uid": "f7e0d7c7-cc44-43ea-8b59-a97b11d222f3",
-  "version": 10,
+  "version": 1,
   "weekStart": ""
 }

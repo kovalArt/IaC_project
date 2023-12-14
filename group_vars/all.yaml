@@ -15,7 +15,7 @@ vm2_ip: "{{ hostvars[kovalart-2]['ansible_default_ipv4']['address'] }}"
 backup_host: "192.168.42.132"
 backup_ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90"
 
-mysql_host: "kovalart-2" #was the hostname as in DNS, however Agama doesn't work with it 
+mysql_host: "kovalart-1" #was the hostname as in DNS, however Agama doesn't work with it 
 mysql_database: agama
 mysql_user: agama
 mysql_replication_user: replica
@@ -86,7 +86,7 @@ nsupdate_secret: !vault |
           63623330333665653931663165316666653533383732326365333361633731363865383131663165
           6365323238313862373562623039623761336230363362616130
 
-node_id: '{{ (ansible_port / 100) | int }}'
+node_id: "{{ (ansible_port / 10) | int }}"
 
 mysql_backup_host: "{{ groups['db_servers'] | reject('eq', mysql_host) | first | default(mysql_host) }}"
 

@@ -1,7 +1,9 @@
 vrrp_script check_haproxy {                 
     script "/home/keepalived_script/check_script.sh" 
     weight 20                              
-    interval 1               
+    interval 1
+    fall 2
+    rise 2               
 }
 
 vrrp_instance VI_1 {
@@ -21,9 +23,9 @@ vrrp_instance VI_1 {
         {% set vm = 'kovalart-1' %}
         {% set third_octet = hostvars[vm]['ansible_default_ipv4']['address'].split('.')[2] %}
         {% if third_octet == '42' %}
-    192.{{ hostvars[vm]['ansible_default_ipv4']['address'].split('.')[1] }}.100.{{ hostvars[vm]['ansible_default_ipv4']['address'].split('.')[3] }}
+    192.{{ hostvars[vm]['ansible_default_ipv4']['address'].split('.')[1] }}.100.{{ hostvars[vm]['ansible_default_ipv4']['address'].split('.')[3] }}/24
         {% elif third_octet == '43' %}
-    192.{{ hostvars[vm]['ansible_default_ipv4']['address'].split('.')[1] }}.101.{{ hostvars[vm]['ansible_default_ipv4']['address'].split('.')[3] }}
+    192.{{ hostvars[vm]['ansible_default_ipv4']['address'].split('.')[1] }}.101.{{ hostvars[vm]['ansible_default_ipv4']['address'].split('.')[3] }}/24
         {% endif %}
         {% endif %}
 
@@ -35,5 +37,8 @@ vrrp_instance VI_1 {
     {{ hostvars[vm]['ansible_default_ipv4']['address'] }}
         {% endif %}
         {% endfor %}
+        }
+        track_script {
+            check_haproxy
         }
 }

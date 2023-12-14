@@ -24,6 +24,14 @@
    - stop grafana
    - start grafana
 
+- name: Copy Grafana dashboard configuration
+  template:
+    src: default.yaml.j2
+    dest: /opt/grafana/provisioning/dashboards/default.yaml
+  notify:
+   - stop grafana
+   - start grafana
+
 - name: Copy Grafana main dashboard
   copy:
     src: ../files/main.json
