@@ -1,4 +1,4 @@
-- name: Install haproxy
+- name: Install keepalived
   apt:
     pkg: 
       - keepalived
@@ -23,7 +23,7 @@
   notify: Restart keepalived
   no_log: true
 
-- name: Start the services
+- name: Start the service
   service:
     name: "{{ item }}"
     state: started

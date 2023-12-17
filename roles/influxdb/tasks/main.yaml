@@ -9,18 +9,18 @@
     apt:
       deb: "/tmp/influxdb_1.8.10_amd64.deb"
 
-  - name: Ensure InfluxDB is enabled and running 
-    service:
-      name: influxdb 
-      state: started
-      enabled: true
-  
   - name: Change the config for Influxdb
     copy:
       src: ../files/influx.conf
       dest: /etc/influxdb/influxdb.conf
     notify: restart influxdb
 
+  - name: Ensure InfluxDB is enabled and running 
+    service:
+      name: influxdb 
+      state: started
+      enabled: true
+  
   - name: Download and install Telegraf
     get_url:
       url: "https://dl.influxdata.com/telegraf/releases/telegraf_1.28.2-1_amd64.deb"
@@ -35,11 +35,12 @@
     copy:
       src: ../files/telegraf.conf
       dest: /etc/telegraf/telegraf.conf
+    notify: restart telegraf
 
   - name: Restart Telegraf service
     service:
       name: telegraf
-      state: restarted
+      state: started
       enabled: yes
 
   - name: Download InfluxDB Stats Exporter binary
@@ -55,13 +56,13 @@
       mode: 0644
     notify: restart influxdb-stats-exporter
 
-  - name: Restart Prometheus and InfluxDB Stats Exporter
-    service:
-      name: "{{ item }}"
-      state: restarted
-    loop:
-      - prometheus
-      - prometheus-influxdb-stats-exporter
+#  - name: Restart Prometheus and InfluxDB Stats Exporter
+#    service:
+#      name: "{{ item }}"
+#      state: restarted
+#    loop:
+#      - prometheus
+#      - prometheus-influxdb-stats-exporter
 
 
 # ======= BACKUP =======
@@ -78,29 +79,26 @@
     ansible.builtin.shell:
       cmd: "sudo -u backup influxd backup -portable /tmp"
     register: dump_result
+    changed_when: "dump_result.rc != 0"
 
   - name: Fail if the dump command did not execute successfully
     ansible.builtin.fail:
       msg: "Error running influxd backup command. Check InfluxDB user privileges."
     when: dump_result.rc != 0
 
-
   - name: InfluxDB backup cron job
     template:
       src: ../files/influxdb_cron.j2
       dest: /etc/cron.d/influxdb-backup
-      mode: "0644"
-      owner: backup 
-      group: backup
 
   - name: Create CNAME record for Influxdb
     community.general.nsupdate:
       key_name: "nsupdate.key"
-      server: "{{ hostvars['kovalart-2']['ansible_default_ipv4']['address'] }}"
+      server: "kovalart-3"
       key_algorithm: "hmac-sha256"
       key_secret: "{{ nsupdate_secret }}"
       zone: "{{ startup_name }}"
       state: present
       record: "influxdb"
       type: "CNAME"
-      value: "kovalart-2"
+      value: "kovalart-3"

@@ -46,6 +46,18 @@
     - restart rndc
     - restart bind9
 
+- name: Configure Reverse Zone
+  become: yes
+  template:
+    src: db.rev.j2
+    dest: /var/cache/bind/db.rev
+#    force: no
+  when:
+    - inventory_hostname in groups['dns_primary']
+  notify: 
+    - restart rndc
+    - restart bind9
+
 - name: Run handlers
   meta: flush_handlers
 # --- Task 6
@@ -63,7 +75,7 @@
 - name: Create CNAME records for DNS instances
   community.general.nsupdate:
     key_name: "nsupdate.key"
-    server: "{{ hostvars['kovalart-2']['ansible_default_ipv4']['address'] }}"
+    server: "{{ hostvars['kovalart-3']['ansible_default_ipv4']['address'] }}"
     key_algorithm: "hmac-sha256"
     key_secret: "{{ nsupdate_secret }}"
     zone: "{{ startup_name }}"
@@ -74,4 +86,3 @@
   with_items:
     - { service: "ns-1", target: "kovalart-1" }
     - { service: "ns-2", target: "kovalart-2" }
-  when: "'kovalart-2' in inventory_hostname"

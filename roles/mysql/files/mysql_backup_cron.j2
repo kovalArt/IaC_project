@@ -1,5 +1,0 @@
-{% if inventory_hostname == mysql_backup_host %}
-30 2 * * * backup /usr/bin/mysqldump agama > /home/backup/mysql/agama.sql
-31 2 * * * backup duplicity --no-encryption full /home/backup/mysql/ rsync://kovalArt@{{ backup_host }}:/mysql
-32 2 * * * backup duplicity --no-encryp tion incremental /home/backup/mysql/ rsync://kovalArt@{{ backup_host }}:/mysql
-{% endif %}

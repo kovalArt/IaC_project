@@ -20,7 +20,10 @@ targets=$(grep "^targets=" /etc/pinger/pinger.conf | sed 's/^.*=//' | sed 's/\(,
 curl -i -XPOST "${db_url}/query" --data-urlencode "q=CREATE DATABASE $db_name" 1>/dev/null 2>/dev/null
 
 while true; do
-  result=$(fping -C1 -q $targets 2>&1 | awk '{print "rtt,dst="$1" rtt="$3}')
+  result=$(fping -C1 -q "$targets" 2>&1 | awk '{print "rtt,dst="$1" rtt="$3}')
   curl -i -XPOST "${db_url}/write?db=$db_name" --data-binary "$result" 1>/dev/null 2>/dev/null
  sleep 1
 done
+
+#1 security issue - fping did not use user input sanitization and got $targets without quotes (""). This could lead to command injection;
+#2 security issue - 

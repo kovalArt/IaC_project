@@ -7,7 +7,9 @@ zone "{{ startup_name }}" {
   allow-update { 
     127.0.0.1;
     key nsupdate.key; 
-    192.168.42.23;
+    {% for slave in groups['dns_secondary'] %}
+{{ hostvars[slave]['ansible_default_ipv4']['address'] }};
+    {% endfor %} 
     };
   
   allow-transfer { 
@@ -16,7 +18,6 @@ zone "{{ startup_name }}" {
     {% for slave in groups['dns_secondary'] %}
 {{ hostvars[slave]['ansible_default_ipv4']['address'] }};
     {% endfor %} 
-    192.168.42.23; 
     };
   
   {% else %}
@@ -31,5 +32,42 @@ zone "{{ startup_name }}" {
   
   {% endif %}  
   file "/var/cache/bind/db.{{ startup_name }}";
+
+};
+
+zone "168.192.in-addr.arpa." {
+  
+  {% if inventory_hostname in groups['dns_primary'] %}
+  
+  type primary;
+
+  allow-update { 
+    127.0.0.1;
+    key nsupdate.key;
+    {% for slave in groups['dns_secondary'] %}
+{{ hostvars[slave]['ansible_default_ipv4']['address'] }};
+    {% endfor %} 
+    };
+  
+  allow-transfer { 
+    127.0.0.1;
+    key transfer.key; 
+    {% for slave in groups['dns_secondary'] %}
+{{ hostvars[slave]['ansible_default_ipv4']['address'] }};
+    {% endfor %} 
+    };
+  
+  {% else %}
+  
+  type secondary;
+  
+  masters {
+    {% for master in groups['dns_primary'] %}
+    {{ hostvars[master]['ansible_default_ipv4']['address'] }};
+    {% endfor %}
+  };
+  
+  {% endif %}  
+  file "/var/cache/bind/db.rev";
 
 };

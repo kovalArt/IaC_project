@@ -27,10 +27,12 @@ defaults
 listen my_ha_frontend
     bind :88
     
-    server docker1 kovalart-1:{{ agama_port }} check 
-    server docker2 kovalart-2:{{ agama_port }} check
-    server docker3 kovalart-1:{{ second_agama_port }} check 
-    server docker4 kovalart-2:{{ second_agama_port }} check
+{% for machine_num in ['1', '2'] %}
+    {% for index in range(1, num_containers_per_machine|int + 1) %}
+        server docker{{ (machine_num|int - 1) * num_containers_per_machine|int + index }} kovalart-{{ machine_num }}:{{ agama_start_port + (index - 1) }} check
+    {% endfor %}
+{% endfor %}
+
 
 listen stats
     bind :9188

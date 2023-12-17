@@ -14,23 +14,6 @@
     - restart prometheus
 
 # === Task 3 (Install Nginx and set Reverse Proxy) === 
-- name: Install Nginx on VM2
-  apt: 
-    name: nginx  
-
-- name: start nginx
-  become: yes
-  service:
-    name: nginx
-    state: started 
-    enabled: true
-
-- name: Copy Nginx default config to sites-enabled
-  copy:
-    src: ../templates/prometheus
-    dest: /etc/nginx/sites-enabled/prometheus
-  notify: restart nginx
-  
 
 - name: Copy Prometheus service configuration
   template:
@@ -39,28 +22,14 @@
   notify:
     - restart prometheus
 
-- name: Install Nginx exporter
-  apt:
-    name: prometheus-nginx-exporter
-
-- name: Pause for 10 seconds to start nginx exporter
-  ansible.builtin.pause:
-    seconds: 10
-
-- name: Run the nginx exporter
-  service:
-    name: prometheus-nginx-exporter
-    state: started
-    enabled: true
-
 - name: Create CNAME record for prometheus
   community.general.nsupdate:
     key_name: "nsupdate.key"
-    server: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+    server: "kovalart-3"
     key_algorithm: "hmac-sha256"
     key_secret: "{{ nsupdate_secret }}"
     zone: "{{ startup_name }}"
     state: present
     record: "prometheus"
     type: "CNAME"
-    value: "kovalart-2"
+    value: "kovalart-3"

@@ -6,16 +6,16 @@ server {
 		proxy_set_header Host $http_host;
 		uwsgi_pass localhost:5000;
 		include uwsgi_params;
-		proxy_pass http://kovalart-2:{{ agama_port }};
+		proxy_pass http://kovalart-2:{{ agama_start_port }};
 	}
 
 	location /prometheus {
-		proxy_pass http://kovalart-2:9090;
+		proxy_pass http://kovalart-3:9090;
 	}
 
 	location /grafana {
 		proxy_set_header Host $http_host;
-		proxy_pass http://kovalart-2:{{ grafana_port }};
+		proxy_pass http://kovalart-3:{{ grafana_port }};
 	}
 
 }

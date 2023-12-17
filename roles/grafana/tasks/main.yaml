@@ -13,48 +13,42 @@
     dest: /opt/grafana/grafana.ini
   no_log: true
   notify:
-    - stop grafana
-    - start grafana
+    - restart grafana
 
 - name: Copy Grafana datasource
   template:
     src: datasource.yaml.j2
     dest: /opt/grafana/provisioning/datasources/default.yaml
   notify:
-   - stop grafana
-   - start grafana
+    - restart grafana
 
 - name: Copy Grafana dashboard configuration
   template:
     src: default.yaml.j2
     dest: /opt/grafana/provisioning/dashboards/default.yaml
   notify:
-   - stop grafana
-   - start grafana
+    - restart grafana
 
 - name: Copy Grafana main dashboard
   copy:
     src: ../files/main.json
     dest: /opt/grafana/provisioning/dashboards/default_dashboard.json
   notify:
-   - stop grafana
-   - start grafana
+    - restart grafana
 
 - name: Syslog dashboard provisioning
   copy:
     src: ../files/syslog-dashboard.json
     dest: /opt/grafana/provisioning/dashboards/syslog_dashboard.json
   notify:
-   - stop grafana
-   - start grafana
+    - restart grafana
 
 - name: MySQL dashboard provisioning
   copy:
     src: ../files/mysql.json
     dest: /opt/grafana/provisioning/dashboards/mysql_dashboard.json
   notify:
-   - stop grafana
-   - start grafana
+    - restart grafana
 
 - name: Pull Grafana Docker image
   community.docker.docker_image:
@@ -73,14 +67,14 @@
 - name: Create CNAME record for Grafana
   community.general.nsupdate:
     key_name: "nsupdate.key"
-    server: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+    server: "kovalart-3"
     key_algorithm: "hmac-sha256"
     key_secret: "{{ nsupdate_secret }}"
     zone: "{{ startup_name }}"
     state: present
     record: "grafana"
     type: "CNAME"
-    value: "kovalart-2"
+    value: "kovalart-3"
 
     
 

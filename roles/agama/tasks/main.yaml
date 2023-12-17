@@ -6,7 +6,7 @@
     state: directory
     recurse: true
 
-- name: Configure uWSGI for AGAMA application
+- name: Configure AGAMA application
   template:
     src: roles/uwsgi/templates/agama.ini.j2
     dest: /opt/agama/agama.ini
@@ -36,30 +36,39 @@
       network: host
     source: build   
 
-- name: agama container
+- name: Create Agama Containers
   docker_container:
-    name: agama
+    name: "agama{{ item }}"
     image: agama
     env:
-      AGAMA_DATABASE_URI: mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ mysql_database }}
+      AGAMA_DATABASE_URI: "mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ mysql_database }}"
     ports:
-      - "{{ agama_port }}:8000"
+      - "{{ agama_start_port + (item - 1) }}:8000"
     restart_policy: always
+  loop: "{{ range(1, num_containers_per_machine|int + 1) }}"
+  loop_control:
+    loop_var: item
+#  register: existing_agama_containers
 
-- name: Second agama container
+- name: Gather information about all running containers
+  shell:
+    cmd: "docker ps --format '{{ '{{.Names}}' }}' --filter 'status=running'"
+  register: running_containers_info
+  changed_when: "'agama' in running_containers_info.stdout_lines[-num_containers_per_machine|int:]"
+
+
+- name: Remove extra Agama Containers
   docker_container:
-    name: agama-2
-    image: agama
-    env:
-      AGAMA_DATABASE_URI: mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ mysql_database }}
-    ports:
-      - "{{ second_agama_port }}:8000"
-    restart_policy: always
+    name: "{{ item }}"
+    state: absent
+  loop: "{{ running_containers_info.stdout_lines }}"
+  when: item | regex_replace('^agama', '') | int > num_containers_per_machine | int
+
 
 - name: Create CNAME records for Agama instances
   community.general.nsupdate:
     key_name: "nsupdate.key"
-    server: "{{ hostvars['kovalart-2']['ansible_default_ipv4']['address'] }}"
+    server: "kovalart-3"
     key_algorithm: "hmac-sha256"
     key_secret: "{{ nsupdate_secret }}"
     zone: "{{ startup_name }}"
@@ -70,4 +79,3 @@
   loop:
     - { service: "www-1", target: "kovalart-1" }
     - { service: "www-2", target: "kovalart-2" }
-  when: "'kovalart-2' in inventory_hostname"

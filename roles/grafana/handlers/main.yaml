@@ -1,11 +1,5 @@
-- name: stop grafana
+- name: restart grafana
   docker_container:
-    name: grafana
-    state: stopped
-  listen: "stop grafana"
-  ignore_errors: yes
-
-- name: start grafana
-  docker_container:
-    name: grafana
-    state: started
+    name: grafana 
+    image: grafana/grafana
+    restart: yes

@@ -23,6 +23,9 @@
   community.mysql.mysql_db:
     name: "{{ mysql_database }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
+  notify:
+    - Reset MySQL source
+    - Reset MySQL replica
     
 - name: MySQL user
   community.mysql.mysql_user:
@@ -95,6 +98,7 @@
 - name: Ensure user backup can create MySQL dumps without errors
   command: "sudo -u backup sh -c 'mysqldump agama >/dev/null; echo $?'"
   register: dump_result
+  changed_when: "dump_result.rc != 0"
 
 - name: Fail if the dump command did not execute successfully
   fail:
@@ -103,11 +107,8 @@
 
 - name: Schedule MySQL dumps with Cron
   template:
-    src: ../files/mysql_backup_cron.j2
+    src: mysql_backup_cron.j2
     dest: /etc/cron.d/mysql_backup
-    mode: "0644"
-    owner: backup 
-    group: backup
 
 
 # ====== REPLICATION ======
@@ -127,35 +128,14 @@
     value: "{{ 'OFF' if inventory_hostname == mysql_host else 'ON' }}"
     mode: persist
     login_unix_socket: /var/run/mysqld/mysqld.sock
-
-
-- name: Reset MySQL source
-  community.mysql.mysql_replication:
-    mode: "{{ item }}"
-    login_unix_socket: /var/run/mysqld/mysqld.sock
-  loop:
-    - stopreplica
-    - resetprimary
-  when: inventory_hostname == mysql_host
-
-- name: Reset MySQL replica
-  community.mysql.mysql_replication:
-    mode: "{{ item }}"
-    login_unix_socket: /var/run/mysqld/mysqld.sock
-    master_host: "kovalart-2"
-    master_user: "{{ mysql_replication_user }}"
-    master_password: "{{ mysql_replica_user_password }}"
-  loop:
-    - stopreplica
-    - changeprimary
-    - resetreplica
-    - startreplica
-  when: inventory_hostname != mysql_host
+  notify:
+    - Reset MySQL source
+    - Reset MySQL replica
 
 - name: Create CNAME records for MySQL instances
   community.general.nsupdate:
     key_name: "nsupdate.key"
-    server: "{{ hostvars['kovalart-2']['ansible_default_ipv4']['address'] }}"
+    server: "kovalart-3"
     key_algorithm: "hmac-sha256"
     key_secret: "{{ nsupdate_secret }}"
     zone: "{{ startup_name }}"

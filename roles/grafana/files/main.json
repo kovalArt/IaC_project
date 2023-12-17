@@ -252,7 +252,7 @@
         "x": 4,
         "y": 0
       },
-      "id": 5,
+      "id": 27,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -276,14 +276,14 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "nginx_up{instance=\"kovalart-1:9113\"}",
+          "expr": "bind_up{instance=\"kovalart-3:9119\"}",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "NGINX kovalart-1",
+      "title": "DNS kovalart-3",
       "transparent": true,
       "type": "stat"
     },
@@ -340,7 +340,7 @@
         "x": 6,
         "y": 0
       },
-      "id": 6,
+      "id": 5,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -364,14 +364,14 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "nginx_up{instance=\"kovalart-2:9113\"}",
+          "expr": "nginx_up{instance=\"kovalart-3:9113\"}",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "NGINX kovalart-2",
+      "title": "NGINX kovalart-3",
       "transparent": true,
       "type": "stat"
     },
@@ -2126,22 +2126,44 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "fde61881-bf16-414a-aaf2-48df0cc4d129"
+        "uid": "P951FEA4DE68E13C5"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
           },
           "custom": {
-            "fillOpacity": 80,
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
-            "lineWidth": 1
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -2168,26 +2190,28 @@
       },
       "id": 12,
       "options": {
-        "bucketOffset": 0,
         "legend": {
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
         }
       },
       "pluginVersion": "10.2.2",
       "targets": [
         {
-          "alias": "ping",
           "datasource": {
             "type": "influxdb",
-            "uid": "fde61881-bf16-414a-aaf2-48df0cc4d129"
+            "uid": "P951FEA4DE68E13C5"
           },
           "groupBy": [
             {
               "params": [
-                "10s"
+                "$__interval"
               ],
               "type": "time"
             },
@@ -2198,12 +2222,11 @@
               "type": "fill"
             }
           ],
-          "hide": false,
           "measurement": "rtt",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
-          "resultFormat": "logs",
+          "resultFormat": "time_series",
           "select": [
             [
               {
@@ -2218,11 +2241,17 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "dst::tag",
+              "operator": "=",
+              "value": "google.com"
+            }
+          ]
         }
       ],
       "title": "Influxdb pinger",
-      "type": "histogram"
+      "type": "timeseries"
     }
   ],
   "refresh": "",
@@ -2239,6 +2268,6 @@
   "timezone": "",
   "title": "Main",
   "uid": "f7e0d7c7-cc44-43ea-8b59-a97b11d222f3",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
