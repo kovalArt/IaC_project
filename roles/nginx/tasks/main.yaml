@@ -18,10 +18,6 @@
   apt:
     name: prometheus-nginx-exporter
 
-- name: Pause for 10 seconds to start nginx exporter
-  ansible.builtin.pause:
-    seconds: 5
-
 - name: Run the nginx exporter
   service:
     name: prometheus-nginx-exporter

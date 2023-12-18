@@ -12,5 +12,5 @@
 
 - name: restart telegraf
   service:  
-    name: influxdb
+    name: telegraf
     state: restarted

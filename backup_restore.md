@@ -24,7 +24,7 @@
 
     mysql agama < /home/backup/restore/mysql/agama.sql
 
-    3. Check the result. MySQL should now have fresh data from backup 
+    3. Check the result. MySQL should now have fresh data from backup and agama database available
 
 # Restore InfluxDB data from the backup:
 
@@ -36,4 +36,4 @@
 
     influxd restore -portable -database telegraf /home/backup/restore/influxdb
 
-    3. Check the result. InfluxDB should now have fresh data from backup 
+    3. Check the result. InfluxDB should now have fresh data from backup and telegraf database available

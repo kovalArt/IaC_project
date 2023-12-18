@@ -8,7 +8,7 @@
   become: yes
   apt:    
     name:
-      prometheus-node-exporter
+      - prometheus-node-exporter
     state: present
 
 - name: Ensure the Node Exporters are started
@@ -36,6 +36,12 @@
     src: rsyslog.conf.j2
     dest: /etc/rsyslog.d/50-telegraf.conf
 
+- name: Run Rsyslog
+  service:
+    name: rsyslog
+    state: started
+    enabled: true
+
 # =========== BACKUP  ===========
 
 - name: Create backup user
@@ -59,6 +65,7 @@
     path: /home/backup/.ssh/id_rsa
     owner: backup
     size: 2048
+  no_log: true
 
 - name: Add backup server SSH key to known hosts
   template:

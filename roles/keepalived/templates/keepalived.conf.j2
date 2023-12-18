@@ -1,5 +1,10 @@
+global_defs {
+    enable_script_security
+    script_user root
+}
+
 vrrp_script check_haproxy {                 
-    script "/home/keepalived_script/check_script.sh" 
+    script "/root/check_script.sh" 
     weight 20                              
     interval 1
     fall 2

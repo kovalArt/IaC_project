@@ -1,6 +1,6 @@
 ---
 
-- name: Install Prometheus on Second VM
+- name: Install Prometheus
   apt:
     name:
       prometheus
@@ -8,7 +8,7 @@
 
 - name: Copy Prometheus Configuration
   template:
-    src: ../templates/prometheus_config.yaml.j2
+    src: prometheus_config.yaml.j2
     dest: /etc/prometheus/prometheus.yml
   notify:
     - restart prometheus
@@ -17,7 +17,7 @@
 
 - name: Copy Prometheus service configuration
   template:
-    src: ../templates/prom.service.j2
+    src: prom.service.j2
     dest: /etc/default/prometheus
   notify:
     - restart prometheus

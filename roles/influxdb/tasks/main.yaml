@@ -37,7 +37,7 @@
       dest: /etc/telegraf/telegraf.conf
     notify: restart telegraf
 
-  - name: Restart Telegraf service
+  - name: Start Telegraf service
     service:
       name: telegraf
       state: started
@@ -56,13 +56,13 @@
       mode: 0644
     notify: restart influxdb-stats-exporter
 
-#  - name: Restart Prometheus and InfluxDB Stats Exporter
-#    service:
-#      name: "{{ item }}"
-#      state: restarted
-#    loop:
-#      - prometheus
-#      - prometheus-influxdb-stats-exporter
+  - name: Start InfluxDB Stats Exporter
+    service:
+      name: "{{ item }}"
+      state: started
+      enabled: yes
+    loop:
+      - prometheus-influxdb-stats-exporter
 
 
 # ======= BACKUP =======

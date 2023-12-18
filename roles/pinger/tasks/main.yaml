@@ -29,8 +29,8 @@
     notify: restart pinger
     
   - name: Copy Pinger.conf file 
-    copy: 
-      src: ../files/pinger.conf
+    template: 
+      src: ../files/pinger.conf.j2
       dest: /etc/pinger/pinger.conf
       mode: 0777
     notify: restart pinger

@@ -8,7 +8,7 @@
 
 - name: Configure AGAMA application
   template:
-    src: roles/uwsgi/templates/agama.ini.j2
+    src: agama.ini.j2
     dest: /opt/agama/agama.ini
     owner: root 
     mode: 0600
@@ -36,6 +36,7 @@
       network: host
     source: build   
 
+#=== Create agama containers with loop. loop_control and loop_var are used to define the variable for the docker loop === 
 - name: Create Agama Containers
   docker_container:
     name: "agama{{ item }}"
@@ -43,20 +44,20 @@
     env:
       AGAMA_DATABASE_URI: "mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ mysql_database }}"
     ports:
-      - "{{ agama_start_port + (item - 1) }}:8000"
+      - "{{ agama_start_port + (item - 1) }}:{{ agama_docker_port }}"
     restart_policy: always
   loop: "{{ range(1, num_containers_per_machine|int + 1) }}"
   loop_control:
     loop_var: item
-#  register: existing_agama_containers
 
+#=== Get the number of running containers with the name 'agama' on the hosts. Register the output ===
 - name: Gather information about all running containers
   shell:
     cmd: "docker ps --format '{{ '{{.Names}}' }}' --filter 'status=running'"
   register: running_containers_info
   changed_when: "'agama' in running_containers_info.stdout_lines[-num_containers_per_machine|int:]"
 
-
+#=== Remove extra containers if the number near agama container is bigger then in the variable
 - name: Remove extra Agama Containers
   docker_container:
     name: "{{ item }}"
@@ -64,11 +65,11 @@
   loop: "{{ running_containers_info.stdout_lines }}"
   when: item | regex_replace('^agama', '') | int > num_containers_per_machine | int
 
-
+#=== Create CNAMES on the Master Bind === 
 - name: Create CNAME records for Agama instances
   community.general.nsupdate:
     key_name: "nsupdate.key"
-    server: "kovalart-3"
+    server: "{{ master_dns }}"
     key_algorithm: "hmac-sha256"
     key_secret: "{{ nsupdate_secret }}"
     zone: "{{ startup_name }}"

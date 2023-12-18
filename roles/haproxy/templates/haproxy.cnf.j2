@@ -25,17 +25,17 @@ defaults
 	errorfile 504 /etc/haproxy/errors/504.http
 
 listen my_ha_frontend
-    bind :88
+    bind :{{ haproxy_frontend }}
     
 {% for machine_num in ['1', '2'] %}
     {% for index in range(1, num_containers_per_machine|int + 1) %}
-        server docker{{ (machine_num|int - 1) * num_containers_per_machine|int + index }} kovalart-{{ machine_num }}:{{ agama_start_port + (index - 1) }} check
+        server docker{{ (machine_num|int - 1) * num_containers_per_machine|int + index }} www-{{ machine_num }}.{{ startup_name }}:{{ agama_start_port + (index - 1) }} check
     {% endfor %}
 {% endfor %}
 
 
 listen stats
-    bind :9188
+    bind :{{ haproxy_metrics }}
     mode http
     stats enable
     stats uri /metrics

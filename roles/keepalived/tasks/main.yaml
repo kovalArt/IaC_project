@@ -3,16 +3,12 @@
     pkg: 
       - keepalived
 
-- name: Create keepalived_script user
-  user:
-    name: keepalived_script
-
 - name: Copy check script to keepalived_script user's home folder
   copy:
     src: ../templates/script.sh
-    dest: /home/keepalived_script/check_script.sh
-    owner: keepalived_script
-    group: keepalived_script
+    dest: /root/check_script.sh
+    owner: root
+    group: root
     mode: '0755'
 
 - name: Copy the Keepalived config

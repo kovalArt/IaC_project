@@ -12,13 +12,13 @@
 ### Versioning and Retention
 -  Number of Full Backup Versions Stored: 4 (assuming one full backup each Friday for a month).
     
-- Number of Incremental Backup Versions Stored: 25 (assuming one incremental backup each day for the remaining  days of the month, excluding Fridays when full backups are done, 29 days in month as for example).
+- Number of Incremental Backup Versions Stored: 25 (assuming one incremental backup each day for the remaining  days of the month, excluding Sunday when full backups are done, 29 days in month as for example).
 
-- Retention Period for Full and Incremental Backups: 1 month
+- Retention Period for Full and Incremental Backups: 40 days
 
 ### Usability Checks
 - "Alpha" Team of Infrastructure Engineers are resposible to periodically check the usability of backups
-- Each Monday of a week, team should test full and incremental backups 
+- Each Monday of a week, team should test backups 
 - Periodic restores to a sandbox environment.
 
 ### Restoration Criteria
@@ -41,9 +41,9 @@
 ### Versioning and Retention
 -  Number of Full Backup Versions Stored: 4 (assuming one full backup each Friday for a month).
     
-- Number of Incremental Backup Versions Stored: 25 (assuming one incremental backup each day for the remaining  days of the month, excluding Fridays when full backups are done, 29 days in month as for example).
+- Number of Incremental Backup Versions Stored: 25 (assuming one incremental backup each day for the remaining  days of the month, excluding Sunday when full backups are done, 29 days in month as for example).
 
-- Retention Period for Full and Incremental Backups: 1 month
+- Retention Period for Full and Incremental Backups: 40 days
 
 ### Usability Checks
 - "Beta" Team of Infrastructure Engineers are resposible to periodically check the usability of backups
@@ -68,7 +68,7 @@
 - Acceptable data loss: Up to 1 day.
 
 ### Versioning and Retention
-- Number of backup versions stored: 20.
+- Number of backup versions stored: 20
 - Retention period: 6 months.
 
 ### Usability Checks

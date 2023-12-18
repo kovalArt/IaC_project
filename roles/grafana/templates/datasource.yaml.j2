@@ -4,17 +4,20 @@ datasources:
   - name: Prometheus
     type: prometheus
     access: proxy
-    # Access mode - proxy (server in the UI) or direct (browser in the UI).
-    url: 	http://kovalart-3:9090/prometheus
+    url: 	http://prometheus.{{ startup_name }}:{{ prometheus_port }}/prometheus
 
   - name: InfluxDB
     type: influxdb
     access: proxy
     database: pinger
-    url: http://influxdb.infocare.io:8086
+    url: http://influxdb.{{ startup_name }}:{{ influxdb_port }}
+    jsonData:
+      httpMode: POST
 
   - name: InfluxDB-telegraf
     type: influxdb
     access: proxy
     database: telegraf
-    url: http://influxdb.infocare.io:8086
+    url: http://influxdb.{{ startup_name }}:{{ influxdb_port }}
+    jsonData:
+      httpMode: POST

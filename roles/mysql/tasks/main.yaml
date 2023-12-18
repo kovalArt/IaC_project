@@ -113,7 +113,7 @@
 
 # ====== REPLICATION ======
 
-- name: Create MySQL user named backup with required privileges
+- name: Create MySQL user named replica with required privileges
   mysql_user:
     name: "{{ mysql_replication_user }}"
     password: "{{ mysql_replica_user_password }}" 
