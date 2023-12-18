@@ -3,11 +3,11 @@
     become: yes
     get_url:
       url: "https://dl.influxdata.com/influxdb/releases/influxdb_1.8.10_amd64.deb"
-      dest: "/tmp/influxdb_1.8.10_amd64.deb"
+      dest: "/home/ubuntu/influxdb_1.8.10_amd64.deb"
 
   - name: Dpkg InfluxDB
     apt:
-      deb: "/tmp/influxdb_1.8.10_amd64.deb"
+      deb: "/home/ubuntu/influxdb_1.8.10_amd64.deb"
 
   - name: Change the config for Influxdb
     copy:
@@ -21,14 +21,14 @@
       state: started
       enabled: true
   
-  - name: Download and install Telegraf
+  - name: Download Telegraf
     get_url:
       url: "https://dl.influxdata.com/telegraf/releases/telegraf_1.28.2-1_amd64.deb"
-      dest: "/tmp/telegraf.deb"
+      dest: "/home/ubuntu/telegraf.deb"
 
   - name: Install Telegraf
     apt:
-      deb: "/tmp/telegraf.deb"
+      deb: "/home/ubuntu/telegraf.deb"
       state: present
 
   - name: Configure Telegraf for syslog input and InfluxDB output

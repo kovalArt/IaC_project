@@ -20,7 +20,7 @@
 
 - name: Pause for 10 seconds to start nginx exporter
   ansible.builtin.pause:
-    seconds: 10
+    seconds: 5
 
 - name: Run the nginx exporter
   service:

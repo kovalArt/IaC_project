@@ -1,45 +1,55 @@
 # Backup SLA Document
 
-## Database Servers
+## Database (MySQL) Servers
 
 ### Backup Coverage
-- What is backed up: Database contents, configuration files.
-- What is not backed up: System binaries, temporary files.
+- What is backed up: Database contents
+- What is not backed up: System binaries, temporary files, configurations
 
 ### RPO (Recovery Point Objective)
-- Acceptable data loss: Up to 1 hour.
+- Acceptable data loss: Up to 1 day
 
 ### Versioning and Retention
-- Number of backup versions stored: 7.
-- Retention period: 30 days.
+-  Number of Full Backup Versions Stored: 4 (assuming one full backup each Friday for a month).
+    
+- Number of Incremental Backup Versions Stored: 25 (assuming one incremental backup each day for the remaining  days of the month, excluding Fridays when full backups are done, 29 days in month as for example).
+
+- Retention Period for Full and Incremental Backups: 1 month
 
 ### Usability Checks
-- Regular automated integrity checks.
-- Periodic test restores to a sandbox environment.
+- "Alpha" Team of Infrastructure Engineers are resposible to periodically check the usability of backups
+- Each Monday of a week, team should test full and incremental backups 
+- Periodic restores to a sandbox environment.
 
 ### Restoration Criteria
 - Database corruption.
 - Accidental data deletion.
+- Database encryption by ransomware
 
 ### RTO (Recovery Time Objective)
-- Target recovery time: Within 4 hours.
+- Target recovery time: Within 2 hours.
 
 ## InfluxDB
 
 ### Backup Coverage
-- What is backed up: InfluxDB data directory, MySQL data
-- What is not backed up: Temporary files, Bind, nginx, agama
+- What is backed up: InfluxDB data 
+- What is not backed up: Temporary files, Bind, nginx, agama, haproxy, keepalived
 
 ### RPO (Recovery Point Objective)
-- Acceptable data loss: Up to 1 hour.
+- Acceptable data loss: Up to 1 day
 
 ### Versioning and Retention
-- Number of backup versions stored: 0.
-- Retention period: 14 days.
+-  Number of Full Backup Versions Stored: 4 (assuming one full backup each Friday for a month).
+    
+- Number of Incremental Backup Versions Stored: 25 (assuming one incremental backup each day for the remaining  days of the month, excluding Fridays when full backups are done, 29 days in month as for example).
+
+- Retention Period for Full and Incremental Backups: 1 month
 
 ### Usability Checks
+- "Beta" Team of Infrastructure Engineers are resposible to periodically check the usability of backups
 - Regular automated backups checks.
 - Periodic test restores to a separate instance.
+- Periodic test restores to a sandbox environment.
 
 ### Restoration Criteria
 - Database corruption.
@@ -58,8 +68,8 @@
 - Acceptable data loss: Up to 1 day.
 
 ### Versioning and Retention
-- Number of backup versions stored: 3.
-- Retention period: 7 days.
+- Number of backup versions stored: 20.
+- Retention period: 6 months.
 
 ### Usability Checks
 - Regular automated backup checks.
@@ -70,6 +80,6 @@
 - Repository corruption.
 
 ### RTO (Recovery Time Objective)
-- Target recovery time: Within 6 hours.
+- Target recovery time: Within 2 hours.
 
 ---

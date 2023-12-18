@@ -5,6 +5,7 @@
   systemd:
     name: systemd-resolved
     state: stopped
+    enabled: false
 
 - name: Change resolv.conf on both VMs
   become: yes
