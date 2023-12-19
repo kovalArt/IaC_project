@@ -3,8 +3,10 @@
     service:
       name: prometheus
       state: restarted
+      enabled: true
   
   - name: restart nginx
     service:
       name: nginx
       state: restarted 
+      enabled: true

@@ -6,6 +6,7 @@
   template:
     src: default
     dest: /etc/nginx/sites-enabled/default
+  no_log: true
   notify: restart nginx
 
 - name: start nginx

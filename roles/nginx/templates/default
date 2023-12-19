@@ -4,9 +4,7 @@ server {
 
 	location / {
 		proxy_set_header Host $http_host;
-		uwsgi_pass localhost:5000;
-		include uwsgi_params;
-	}
+	}	
 
 	location /prometheus {
 		proxy_pass http://prometheus.{{ startup_name }}:{{ prometheus_port }};

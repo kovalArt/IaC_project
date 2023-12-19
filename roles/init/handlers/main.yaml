@@ -1,5 +1,5 @@
-- name: restart pinger
+- name: restart rsyslog
   service:
-    name: pinger
+    name: rsyslog
     state: restarted
     enabled: true

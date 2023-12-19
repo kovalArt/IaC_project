@@ -23,12 +23,6 @@
       - mysql
     tags: db
   
-  - name: Web server tasks
-    hosts: web_servers
-    roles:
-      - nginx
-    tags: w
-
   - name: Prometheus tasks
     hosts: prometheus 
     roles:
@@ -52,6 +46,12 @@
     roles:
       - agama
     tags: a
+
+  - name: Web server tasks
+    hosts: web_servers
+    roles:
+      - nginx
+    tags: w
 
   - name: Influxdb tasks
     hosts: influxdb

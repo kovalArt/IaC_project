@@ -10,6 +10,7 @@
   template:
     src: prometheus_config.yaml.j2
     dest: /etc/prometheus/prometheus.yml
+  no_log: true
   notify:
     - restart prometheus
 
@@ -19,6 +20,7 @@
   template:
     src: prom.service.j2
     dest: /etc/default/prometheus
+  no_log: true
   notify:
     - restart prometheus
 

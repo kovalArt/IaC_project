@@ -1,20 +1,16 @@
 - name: restart mysql
+  become: yes
   service:
     name: mysql
     state: restarted
-  become: yes
+    enabled: true
 
 - name: restart mysql-exporter
+  become: yes
   service: 
     name: prometheus-mysqld-exporter
     state: restarted
-  become: yes
-
-- name: reload cron 
-  service: 
-    name: cron
-    state: restarted
-  become: yes
+    enabled: true
 
 - name: Reset MySQL source
   community.mysql.mysql_replication:

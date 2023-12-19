@@ -1,13 +1,10 @@
-kovalart-1 ansible_host=193.40.156.67 ansible_port=41022 ansible_user=ubuntu
-kovalart-2 ansible_host=193.40.156.67 ansible_port=28122 ansible_user=ubuntu
-kovalart-3 ansible_host=193.40.156.67 ansible_port=31222 ansible_user=ubuntu
+kovalart-1 ansible_host=193.40.156.67 ansible_port=17422 ansible_user=ubuntu
+kovalart-2 ansible_host=193.40.156.67 ansible_port=4022 ansible_user=ubuntu
+kovalart-3 ansible_host=193.40.156.67 ansible_port=4422 ansible_user=ubuntu
 
 [all_vms]
 kovalart-1
 kovalart-2
-kovalart-3
-
-[web_servers]
 kovalart-3
 
 [db_servers]
@@ -29,6 +26,9 @@ kovalart-2
 kovalart-3
 
 [grafana]
+kovalart-3
+
+[web_servers]
 kovalart-3
 
 [influxdb]

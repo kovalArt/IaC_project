@@ -8,6 +8,7 @@
     src: haproxy.cnf.j2
     dest: /etc/haproxy/haproxy.cfg
   notify: Restart Haproxy
+  no_log: true
 
 - name: Start the service
   service:
@@ -27,6 +28,7 @@
     src: prometheus_haproxy
     dest: /etc/default/prometheus-haproxy-exporter
   notify: restart prometheus-haproxy-exporter
+  no_log: true
 
 - name: Start haproxy exporter
   service:

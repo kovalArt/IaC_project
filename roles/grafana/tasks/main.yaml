@@ -20,6 +20,7 @@
     dest: "{{ item.dest }}"
   notify:
     - restart grafana
+  no_log: true
 
 - name: Pull Grafana Docker image
   community.docker.docker_image:
@@ -38,7 +39,7 @@
 - name: Create CNAME record for Grafana
   community.general.nsupdate:
     key_name: "nsupdate.key"
-    server: "{{ master_dns }}"
+    server: "kovalart-3"
     key_algorithm: "hmac-sha256"
     key_secret: "{{ nsupdate_secret }}"
     zone: "{{ startup_name }}"

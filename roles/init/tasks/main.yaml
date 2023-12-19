@@ -35,6 +35,8 @@
   template:
     src: rsyslog.conf.j2
     dest: /etc/rsyslog.d/50-telegraf.conf
+  no_log: true
+  notify: restart rsyslog
 
 - name: Run Rsyslog
   service:
@@ -74,6 +76,7 @@
     owner: backup
     group: backup
     mode: '0600'
+  no_log: true
 
 - name: Ensure /home/backup/restore directory is created
   file:

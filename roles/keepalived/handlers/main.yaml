@@ -2,3 +2,4 @@
   service:
     name: keepalived
     state: restarted
+    enabled: true

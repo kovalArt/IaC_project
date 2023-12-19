@@ -17,10 +17,10 @@ scrape_configs:
   - job_name: 'mysql'
     static_configs:
       - targets:
-          {% for vm in groups['db_servers'] %}
-           - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_exporters['mysql']['port'] }}
-          {% endfor %}
-  
+        {% for vm in groups['db_servers'] %}
+          - mysql-{{ loop.index0 + 1 }}.{{ startup_name }}:{{ prometheus_exporters['mysql']['port'] }}
+        {% endfor %}
+    
   - job_name: 'DNS - bind9'
     static_configs:
       - targets:
@@ -31,7 +31,7 @@ scrape_configs:
   - job_name: 'Web server'
     static_configs:
       - targets:
-          {% for vm in groups['dns_primary'] %}
+          {% for vm in groups['web_servers'] %}
            - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_exporters['nginx']['port'] }}
           {% endfor %}
 
@@ -39,19 +39,19 @@ scrape_configs:
     static_configs:
       - targets:
           {% for vm in groups['influxdb'] %}
-           - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_exporters['influxdb']['port'] }}
+           - influxdb.{{ startup_name }}:{{ prometheus_exporters['influxdb']['port'] }}
           {% endfor %}
 
   - job_name: 'haproxy'
     static_configs:
       - targets:
-          {% for vm in groups['haproxy'] %}
-            - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_exporters['haproxy']['port'] }}
-          {% endfor %}
-          
+        {% for vm in groups['db_servers'] %}
+          - lb-{{ loop.index0 + 1 }}.{{ startup_name }}:{{ prometheus_exporters['haproxy']['port'] }}
+        {% endfor %}
+
   - job_name: 'keepalived'
     static_configs:
       - targets:
-          {% for vm in groups['keepalived'] %}
-            - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_exporters['keepalived']['port'] }}
-          {% endfor %}
+        {% for vm in groups['db_servers'] %}
+          - lb-{{ loop.index0 + 1 }}.{{ startup_name }}:{{ prometheus_exporters['keepalived']['port'] }}
+        {% endfor %}

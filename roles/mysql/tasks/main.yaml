@@ -8,6 +8,7 @@
     dest: /etc/mysql/mysql.conf.d/override.cnf
     mode: 0644
   notify: restart mysql
+  no_log: true
 
 - name: Start mysql
   service:
@@ -59,7 +60,7 @@
   template:
     dest: /var/lib/prometheus/.my.cnf
     src: my.cnf.j2
-  no_log: yes
+  no_log: true
   notify: restart mysql-exporter
 
 - name: Start Mysql exporter
@@ -94,6 +95,7 @@
     owner: backup
     group: backup
     mode: '0600'
+  no_log: true
 
 - name: Ensure user backup can create MySQL dumps without errors
   command: "sudo -u backup sh -c 'mysqldump agama >/dev/null; echo $?'"
@@ -105,10 +107,11 @@
     msg: "Error running mysqldump command. Check MySQL user privileges and .my.cnf configuration."
   when: dump_result.rc != 0
 
-- name: Schedule MySQL dumps with Cron
+- name: Schedule MySQL backups with Cron
   template:
     src: mysql_backup_cron.j2
     dest: /etc/cron.d/mysql_backup
+  no_log: true
 
 
 # ====== REPLICATION ======

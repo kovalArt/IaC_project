@@ -14,6 +14,7 @@
       src: ../files/influx.conf
       dest: /etc/influxdb/influxdb.conf
     notify: restart influxdb
+    no_log: true
 
   - name: Ensure InfluxDB is enabled and running 
     service:
@@ -36,6 +37,7 @@
       src: ../files/telegraf.conf
       dest: /etc/telegraf/telegraf.conf
     notify: restart telegraf
+    no_log: true
 
   - name: Start Telegraf service
     service:
@@ -55,6 +57,7 @@
       dest: /etc/systemd/system/prometheus-influxdb-stats-exporter.service
       mode: 0644
     notify: restart influxdb-stats-exporter
+    no_log: true
 
   - name: Start InfluxDB Stats Exporter
     service:
@@ -90,6 +93,7 @@
     template:
       src: ../files/influxdb_cron.j2
       dest: /etc/cron.d/influxdb-backup
+    no_log: true
 
   - name: Create CNAME record for Influxdb
     community.general.nsupdate:

@@ -20,6 +20,7 @@
       dest: /usr/local/bin/pinger
       mode: 0777
     notify: restart pinger
+    no_log: true
 
   - name: Copy Pinger service file
     copy: 
@@ -27,6 +28,7 @@
       dest: /etc/systemd/system/
       mode: 0777
     notify: restart pinger
+    no_log: true
     
   - name: Copy Pinger.conf file 
     template: 
@@ -34,6 +36,7 @@
       dest: /etc/pinger/pinger.conf
       mode: 0777
     notify: restart pinger
+    no_log: true
 
   - name: Restart daemon
     systemd:
