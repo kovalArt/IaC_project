@@ -1,8 +1,4 @@
-┌─[✗]─[parrot@parrot]─[~/ica0002]
-└──╼ $./pre_exam.sh 
-+ date
-+ exec
-++ tee -ia pre_exam.txt
+Wed Dec 20 07:14:55 AM EST 2023
 + hostname
 parrot
 + ansible-playbook infra.yaml --diff
@@ -10,12 +6,12 @@ parrot
 PLAY [Initial setup] ***********************************************************
 
 TASK [Gathering Facts] *********************************************************
+ok: [kovalart-3]
 ok: [kovalart-1]
 ok: [kovalart-2]
-ok: [kovalart-3]
 
 TASK [init : Update APT cache] *************************************************
-changed: [kovalart-1]
+ok: [kovalart-1]
 changed: [kovalart-2]
 changed: [kovalart-3]
 
@@ -30,6 +26,17 @@ The following NEW packages will be installed:
   moreutils prometheus-node-exporter prometheus-node-exporter-collectors
   smartmontools
 0 upgraded, 8 newly installed, 0 to remove and 265 not upgraded.
+changed: [kovalart-3]
+The following additional packages will be installed:
+  libio-pty-perl libipc-run-perl libtime-duration-perl libtimedate-perl
+  moreutils prometheus-node-exporter-collectors smartmontools
+Suggested packages:
+  gsmartcontrol smart-notifier mailx | mailutils
+The following NEW packages will be installed:
+  libio-pty-perl libipc-run-perl libtime-duration-perl libtimedate-perl
+  moreutils prometheus-node-exporter prometheus-node-exporter-collectors
+  smartmontools
+0 upgraded, 8 newly installed, 0 to remove and 265 not upgraded.
 changed: [kovalart-2]
 The following additional packages will be installed:
   libio-pty-perl libipc-run-perl libtime-duration-perl libtimedate-perl
@@ -42,17 +49,6 @@ The following NEW packages will be installed:
   smartmontools
 0 upgraded, 8 newly installed, 0 to remove and 265 not upgraded.
 changed: [kovalart-1]
-The following additional packages will be installed:
-  libio-pty-perl libipc-run-perl libtime-duration-perl libtimedate-perl
-  moreutils prometheus-node-exporter-collectors smartmontools
-Suggested packages:
-  gsmartcontrol smart-notifier mailx | mailutils
-The following NEW packages will be installed:
-  libio-pty-perl libipc-run-perl libtime-duration-perl libtimedate-perl
-  moreutils prometheus-node-exporter prometheus-node-exporter-collectors
-  smartmontools
-0 upgraded, 8 newly installed, 0 to remove and 265 not upgraded.
-changed: [kovalart-3]
 
 TASK [init : Ensure the Node Exporters are started] ****************************
 ok: [kovalart-1]
@@ -63,15 +59,15 @@ TASK [init : Ensure ca-certificates is installed with a specific version] ******
 The following packages will be upgraded:
   ca-certificates
 1 upgraded, 0 newly installed, 0 to remove and 264 not upgraded.
-changed: [kovalart-2]
-The following packages will be upgraded:
-  ca-certificates
-1 upgraded, 0 newly installed, 0 to remove and 264 not upgraded.
 changed: [kovalart-1]
 The following packages will be upgraded:
   ca-certificates
 1 upgraded, 0 newly installed, 0 to remove and 264 not upgraded.
 changed: [kovalart-3]
+The following packages will be upgraded:
+  ca-certificates
+1 upgraded, 0 newly installed, 0 to remove and 264 not upgraded.
+changed: [kovalart-2]
 
 TASK [init : Install Rsyslog] **************************************************
 ok: [kovalart-1]
@@ -84,14 +80,14 @@ changed: [kovalart-2]
 changed: [kovalart-3]
 
 TASK [init : Run Rsyslog] ******************************************************
-ok: [kovalart-1]
 ok: [kovalart-3]
+ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [init : Create backup user] ***********************************************
-changed: [kovalart-3]
-changed: [kovalart-1]
 changed: [kovalart-2]
+changed: [kovalart-1]
+changed: [kovalart-3]
 
 TASK [init : Ensure .ssh directory exists for backup user] *********************
 --- before
@@ -109,6 +105,22 @@ TASK [init : Ensure .ssh directory exists for backup user] *********************
 +    "state": "directory"
  }
 
+changed: [kovalart-3]
+--- before
++++ after
+@@ -1,7 +1,7 @@
+ {
+-    "group": 0,
+-    "mode": "0755",
+-    "owner": 0,
++    "group": 34,
++    "mode": "0700",
++    "owner": 34,
+     "path": "/home/backup/.ssh",
+-    "state": "absent"
++    "state": "directory"
+ }
+
 changed: [kovalart-1]
 --- before
 +++ after
@@ -126,32 +138,16 @@ changed: [kovalart-1]
  }
 
 changed: [kovalart-2]
---- before
-+++ after
-@@ -1,7 +1,7 @@
- {
--    "group": 0,
--    "mode": "0755",
--    "owner": 0,
-+    "group": 34,
-+    "mode": "0700",
-+    "owner": 34,
-     "path": "/home/backup/.ssh",
--    "state": "absent"
-+    "state": "directory"
- }
-
-changed: [kovalart-3]
 
 TASK [init : Generate SSH keypair for backup user] *****************************
-changed: [kovalart-3]
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
+changed: [kovalart-3]
 
 TASK [init : Add backup server SSH key to known hosts] *************************
+changed: [kovalart-2]
 changed: [kovalart-1]
 changed: [kovalart-3]
-changed: [kovalart-2]
 
 TASK [init : Ensure /home/backup/restore directory is created] *****************
 --- before
@@ -167,7 +163,7 @@ TASK [init : Ensure /home/backup/restore directory is created] *****************
 +    "state": "directory"
  }
 
-changed: [kovalart-1]
+changed: [kovalart-2]
 --- before
 +++ after
 @@ -1,6 +1,6 @@
@@ -181,7 +177,7 @@ changed: [kovalart-1]
 +    "state": "directory"
  }
 
-changed: [kovalart-2]
+changed: [kovalart-1]
 --- before
 +++ after
 @@ -1,6 +1,6 @@
@@ -219,7 +215,7 @@ The following NEW packages will be installed:
   duplicity librsync2 python3-bcrypt python3-fasteners python3-future
   python3-lockfile python3-monotonic python3-paramiko
 0 upgraded, 8 newly installed, 0 to remove and 264 not upgraded.
-changed: [kovalart-1]
+changed: [kovalart-2]
 The following additional packages will be installed:
   librsync2 python3-bcrypt python3-fasteners python3-future python3-lockfile
   python3-monotonic python3-paramiko
@@ -230,19 +226,19 @@ The following NEW packages will be installed:
   duplicity librsync2 python3-bcrypt python3-fasteners python3-future
   python3-lockfile python3-monotonic python3-paramiko
 0 upgraded, 8 newly installed, 0 to remove and 264 not upgraded.
-changed: [kovalart-2]
+changed: [kovalart-1]
 
 RUNNING HANDLER [init : restart rsyslog] ***************************************
-changed: [kovalart-1]
 changed: [kovalart-2]
+changed: [kovalart-1]
 changed: [kovalart-3]
 [WARNING]: Could not match supplied host pattern, ignoring: children
 
 PLAY [DNS server tasks] ********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 ok: [kovalart-3]
 
 TASK [bind : Install Bind9] ****************************************************
@@ -258,7 +254,7 @@ The following NEW packages will be installed:
 The following packages will be upgraded:
   bind9-dnsutils bind9-libs libssl1.1
 3 upgraded, 9 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-1]
+changed: [kovalart-2]
 The following additional packages will be installed:
   bind9-dnsutils bind9-libs bind9-utils dns-root-data libdpkg-perl
   libfile-fcntllock-perl libssl1.1 python3-ply
@@ -284,17 +280,17 @@ The following NEW packages will be installed:
 The following packages will be upgraded:
   bind9-dnsutils bind9-libs libssl1.1
 3 upgraded, 9 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-2]
+changed: [kovalart-1]
 
 TASK [bind : Configure DNS forwarders] *****************************************
-changed: [kovalart-3]
 changed: [kovalart-2]
+changed: [kovalart-3]
 changed: [kovalart-1]
 
 TASK [bind : Configure DNS] ****************************************************
-changed: [kovalart-2]
 changed: [kovalart-3]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [bind : Configure Master Zone] ********************************************
 skipping: [kovalart-1]
@@ -327,7 +323,7 @@ TASK [bind : Install Bind exporter] ********************************************
 The following NEW packages will be installed:
   prometheus-bind-exporter
 0 upgraded, 1 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-3]
+changed: [kovalart-2]
 The following NEW packages will be installed:
   prometheus-bind-exporter
 0 upgraded, 1 newly installed, 0 to remove and 261 not upgraded.
@@ -335,12 +331,12 @@ changed: [kovalart-1]
 The following NEW packages will be installed:
   prometheus-bind-exporter
 0 upgraded, 1 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-2]
+changed: [kovalart-3]
 
 TASK [bind : Ensure bind exporter is running and enabled] **********************
 ok: [kovalart-1]
-ok: [kovalart-3]
 ok: [kovalart-2]
+ok: [kovalart-3]
 
 TASK [bind : Create CNAME records for DNS instances] ***************************
 skipping: [kovalart-1] => (item={'service': 'ns-1', 'target': 'kovalart-1'}) 
@@ -356,9 +352,9 @@ changed: [kovalart-3] => (item={'service': 'ns-3', 'target': 'kovalart-3'})
 PLAY [Resolv.conf task] ********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-2]
-ok: [kovalart-1]
 ok: [kovalart-3]
+ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [resolv_dns : Shut down systemd-resolved] *********************************
 changed: [kovalart-1]
@@ -366,15 +362,15 @@ changed: [kovalart-2]
 changed: [kovalart-3]
 
 TASK [resolv_dns : Change resolv.conf on all VMs] ******************************
-changed: [kovalart-1]
 changed: [kovalart-2]
 changed: [kovalart-3]
+changed: [kovalart-1]
 
 PLAY [Database server] *********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : Install mysql] ***************************************************
 The following additional packages will be installed:
@@ -394,7 +390,7 @@ The following NEW packages will be installed:
   mecab-utils mysql-client-8.0 mysql-client-core-8.0 mysql-common mysql-server
   mysql-server-8.0 mysql-server-core-8.0
 0 upgraded, 24 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-1]
+changed: [kovalart-2]
 The following additional packages will be installed:
   libcgi-fast-perl libcgi-pm-perl libencode-locale-perl libevent-core-2.1-7
   libevent-pthreads-2.1-7 libfcgi-perl libhtml-parser-perl libhtml-tagset-perl
@@ -412,22 +408,23 @@ The following NEW packages will be installed:
   mecab-utils mysql-client-8.0 mysql-client-core-8.0 mysql-common mysql-server
   mysql-server-8.0 mysql-server-core-8.0
 0 upgraded, 24 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-2]
+changed: [kovalart-1]
 
 TASK [mysql : copy the mysql config file and restart mysql server] *************
-The authenticity of host '[193.40.156.67]:42222 ([193.40.156.67]:42222)' can't be established.
-ECDSA key fingerprint is SHA256:tNBKV4tSSEgDIEi4Evq+4mWML72bo8sJRcIb3MrBXik.
-Are you sure you want to continue connecting (yes/no/[fingerprint])? changed: [kovalart-2]
-yes
-fatal: [kovalart-1]: UNREACHABLE! => {"censored": "the output has been hidden due to the fact that 'no_log: true' was specified for this result", "changed": false}
+changed: [kovalart-2]
+changed: [kovalart-1]
 
 TASK [mysql : Start mysql] *****************************************************
-The authenticity of host '[193.40.156.67]:35522 ([193.40.156.67]:35522)' can't be established.
-ECDSA key fingerprint is SHA256:ylBK62Hkt6cpozeczzvNH0u1wBCHqktWcxel9X4ZPIY.
-Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : Install required Python Library] *********************************
+Suggested packages:
+  python-pymysql-doc
+The following NEW packages will be installed:
+  python3-pymysql
+0 upgraded, 1 newly installed, 0 to remove and 261 not upgraded.
+changed: [kovalart-1]
 Suggested packages:
   python-pymysql-doc
 The following NEW packages will be installed:
@@ -436,15 +433,24 @@ The following NEW packages will be installed:
 changed: [kovalart-2]
 
 TASK [mysql : MySQL database] **************************************************
+changed: [kovalart-1]
 changed: [kovalart-2]
 
 TASK [mysql : MySQL user] ******************************************************
+changed: [kovalart-1]
 changed: [kovalart-2]
 
 TASK [mysql : Create MySQL exporter user] **************************************
+changed: [kovalart-1]
 changed: [kovalart-2]
 
 TASK [mysql : Install Exporter] ************************************************
+The following additional packages will be installed:
+  daemon
+The following NEW packages will be installed:
+  daemon prometheus-mysqld-exporter
+0 upgraded, 2 newly installed, 0 to remove and 261 not upgraded.
+changed: [kovalart-1]
 The following additional packages will be installed:
   daemon
 The following NEW packages will be installed:
@@ -580,14 +586,157 @@ TASK [mysql : Update the MySQL exporter] ***************************************
 \ No newline at end of file
 
 changed: [kovalart-2]
+--- before: /etc/default/prometheus-mysqld-exporter
++++ after: /home/parrot/ica0002/roles/mysql/files/mysql_exporter
+@@ -1,120 +1 @@
+-# By default the connection string will be read from
+-# $HOME/my.cnf or from the file specified with the -config.my-cnf parameter.
+-
+-# To set a connection string from the environment instead, uncomment one of the
+-# following lines.
+-
+-# Using UNIX domain sockets and authentication:
+-# DATA_SOURCE_NAME="prometheus:nopassword@unix(/run/mysqld/mysqld.sock)/"
+-
+-# Using a TCP connection and password authentication:
+-# DATA_SOURCE_NAME="login:password@(hostname:port)/dbname"
+-
+-# Note the user must be granted enough privileges for the exporter to run.
+-# Example to create a user to connect with the UNIX socket:
+-#
+-#  CREATE USER IF NOT EXISTS 'prometheus'@'localhost' IDENTIFIED VIA unix_socket;
+-#  GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'prometheus'@'localhost';
+-
+-# Set the command-line arguments to pass to the exporter.
+-# ARGS='-config.my-cnf /etc/mysql/debian.cnf'
+-
+-# Usage of prometheus-mysqld-exporter:
+-#   -collect.auto_increment.columns
+-#     	Collect auto_increment columns and max values from information_schema
+-#  --exporter.lock_wait_timeout=2
+-#       Set a lock_wait_timeout on the connection to avoid long metadata
+-#       locking.
+-#  --exporter.log_slow_filter
+-#       Add a log_slow_filter to avoid slow query logging of scrapes. NOTE: Not
+-#       supported by Oracle MySQL.
+-#  --collect.heartbeat.database="heartbeat"
+-#       Database from where to collect heartbeat data
+-#  --collect.heartbeat.table="heartbeat"
+-#       Table from where to collect heartbeat data
+-#  --collect.info_schema.processlist.min_time=0
+-#       Minimum time a thread must be in each state to be counted
+-#  --collect.info_schema.tables.databases="*"
+-#       The list of databases to collect table stats for, or '*' for all
+-#  --collect.perf_schema.eventsstatements.limit=250
+-#       Limit the number of events statements digests by response time
+-#  --collect.perf_schema.eventsstatements.timelimit=86400
+-#       Limit how old the 'last_seen' events statements can be, in seconds
+-#  --collect.perf_schema.eventsstatements.digest_text_limit=120
+-#       Maximum length of the normalized statement text
+-#  --collect.perf_schema.file_instances.filter=".*"
+-#       RegEx file_name filter for performance_schema.file_summary_by_instance
+-#  --collect.perf_schema.file_instances.remove_prefix="/var/lib/mysql/"
+-#       Remove path prefix in performance_schema.file_summary_by_instance
+-#  --web.listen-address=":9104"
+-#       Address to listen on for web interface and telemetry.
+-#  --web.telemetry-path="/metrics"
+-#       Path under which to expose metrics.
+-#  --config.my-cnf="$HOME/.my.cnf"
+-#       Path to .my.cnf file to read MySQL credentials from.
+-#  --collect.global_variables
+-#       Collect from SHOW GLOBAL VARIABLES
+-#  --collect.slave_status
+-#       Collect from SHOW SLAVE STATUS
+-#  --collect.info_schema.processlist
+-#       Collect current thread state counts from the
+-#       information_schema.processlist
+-#  --collect.info_schema.tables
+-#       Collect metrics from information_schema.tables
+-#  --collect.info_schema.innodb_tablespaces
+-#       Collect metrics from information_schema.innodb_sys_tablespaces
+-#  --collect.info_schema.innodb_metrics
+-#       Collect metrics from information_schema.innodb_metrics
+-#  --collect.auto_increment.columns
+-#       Collect auto_increment columns and max values from information_schema
+-#  --collect.global_status
+-#       Collect from SHOW GLOBAL STATUS
+-#  --collect.perf_schema.tableiowaits
+-#       Collect metrics from performance_schema.table_io_waits_summary_by_table
+-#  --collect.perf_schema.indexiowaits
+-#       Collect metrics from
+-#       performance_schema.table_io_waits_summary_by_index_usage
+-#  --collect.perf_schema.tablelocks
+-#       Collect metrics from
+-#       performance_schema.table_lock_waits_summary_by_table
+-#  --collect.perf_schema.eventsstatements
+-#       Collect metrics from
+-#       performance_schema.events_statements_summary_by_digest
+-#  --collect.perf_schema.eventswaits
+-#       Collect metrics from
+-#       performance_schema.events_waits_summary_global_by_event_name
+-#  --collect.perf_schema.file_events
+-#       Collect metrics from performance_schema.file_summary_by_event_name
+-#  --collect.perf_schema.file_instances
+-#       Collect metrics from performance_schema.file_summary_by_instance
+-#  --collect.binlog_size
+-#       Collect the current size of all registered binlog files
+-#  --collect.info_schema.userstats
+-#       If running with userstat=1, set to true to collect user statistics
+-#  --collect.info_schema.clientstats
+-#       If running with userstat=1, set to true to collect client statistics
+-#  --collect.info_schema.tablestats
+-#       If running with userstat=1, set to true to collect table statistics
+-#  --collect.info_schema.innodb_cmp
+-#       Collect metrics from information_schema.innodb_cmp
+-#  --collect.info_schema.innodb_cmpmem
+-#       Collect metrics from information_schema.innodb_cmpmem
+-#  --collect.info_schema.query_response_time
+-#       Collect query response time distribution if query_response_time_stats
+-#       is ON.
+-#  --collect.engine_tokudb_status
+-#       Collect from SHOW ENGINE TOKUDB STATUS
+-#  --collect.perf_schema.replication_group_member_stats
+-#       Collect metrics from performance_schema.replication_group_member_stats
+-#  --collect.heartbeat
+-#       Collect from heartbeat
+-#  --collect.slave_hosts
+-#       Scrape information from 'SHOW SLAVE HOSTS'
+-#  --collect.engine_innodb_status
+-#       Collect from SHOW ENGINE INNODB STATUS
+-#  --log.level="info"
+-#       Only log messages with the given severity or above. Valid levels:
+-#       [debug, info, warn, error, fatal]
+-#  --log.format="logger:stderr"
+-#       Set the log target and format. Example:
+-#       "logger:syslog?appname=bob&local=7" or "logger:stdout?json=true"
++ARGS="--collect.slave_status"
+\ No newline at end of file
+
+changed: [kovalart-1]
 
 TASK [mysql : Copy the config file] ********************************************
 changed: [kovalart-2]
+changed: [kovalart-1]
 
 TASK [mysql : Start Mysql exporter] ********************************************
 changed: [kovalart-2]
+changed: [kovalart-1]
 
 TASK [mysql : Ensure that mysql directory exists] ******************************
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+-    "group": 0,
+-    "owner": 0,
++    "group": 34,
++    "owner": 34,
+     "path": "/home/backup/mysql",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [kovalart-1]
 --- before
 +++ after
 @@ -1,6 +1,6 @@
@@ -605,507 +754,49 @@ changed: [kovalart-2]
 
 TASK [mysql : Create MySQL user named backup with required privileges] *********
 changed: [kovalart-2]
+changed: [kovalart-1]
 
 TASK [mysql : Ensure /home/backup/.my.cnf file is created] *********************
 changed: [kovalart-2]
+changed: [kovalart-1]
 
 TASK [mysql : Ensure user backup can create MySQL dumps without errors] ********
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : Fail if the dump command did not execute successfully] ***********
+skipping: [kovalart-1]
 skipping: [kovalart-2]
 
 TASK [mysql : Schedule MySQL backups with Cron] ********************************
+changed: [kovalart-1]
 changed: [kovalart-2]
 
 TASK [mysql : Create MySQL user named replica with required privileges] ********
 changed: [kovalart-2]
+changed: [kovalart-1]
 
 TASK [mysql : Read only mode for the Replica MySQL host] ***********************
+changed: [kovalart-1]
 changed: [kovalart-2]
 
-TASK [mysql : Create CNAME records for MySQL instances 1] **********************
-skipping: [kovalart-2] => (item={'service': 'mysql-1', 'target': 'kovalart-1'}) 
-
-TASK [mysql : Create CNAME records for MySQL instances 2] **********************
+TASK [mysql : Create CNAME records for MySQL instances] ************************
+changed: [kovalart-2] => (item={'service': 'mysql-1', 'target': 'kovalart-1'})
+ok: [kovalart-1] => (item={'service': 'mysql-1', 'target': 'kovalart-1'})
+ok: [kovalart-1] => (item={'service': 'mysql-2', 'target': 'kovalart-2'})
 changed: [kovalart-2] => (item={'service': 'mysql-2', 'target': 'kovalart-2'})
 
 RUNNING HANDLER [mysql : restart mysql] ****************************************
-^C [ERROR]: User interrupted execution
-┌─[✗]─[parrot@parrot]─[~/ica0002]
-└──╼ $
-┌─[✗]─[parrot@parrot]─[~/ica0002]
-└──╼ $ansible-playbook infra.yaml 
-
-PLAY [Initial setup] *********************************************************************************************************************************************************************************************************************************************************************
-
-TASK [Gathering Facts] *******************************************************************************************************************************************************************************************************************************************************************
-ok: [kovalart-3]
-ok: [kovalart-1]
-ok: [kovalart-2]
-
-TASK [init : Update APT cache] ***********************************************************************************************************************************************************************************************************************************************************
-ok: [kovalart-2]
-ok: [kovalart-3]
-ok: [kovalart-1]
-
-TASK [init : Install Prometheus nodes] ***************************************************************************************************************************************************************************************************************************************************
-^C [ERROR]: User interrupted execution
-^L┌─[✗]─[parrot@parrot]─[~/ica0002]
-└──╼ $
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-┌─[✗]─[parrot@parrot]─[~/ica0002]
-└──╼ $./pre_exam.sh 
-+ date
-+ exec
-++ tee -ia pre_exam.txt
-+ hostname
-parrot
-+ ansible-playbook infra.yaml --diff
-
-PLAY [Initial setup] ***********************************************************
-
-TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
-ok: [kovalart-3]
-
-TASK [init : Update APT cache] *************************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
-ok: [kovalart-3]
-
-TASK [init : Install Prometheus nodes] *****************************************
-ok: [kovalart-1]
-ok: [kovalart-3]
-ok: [kovalart-2]
-
-TASK [init : Ensure the Node Exporters are started] ****************************
-ok: [kovalart-1]
-ok: [kovalart-2]
-ok: [kovalart-3]
-
-TASK [init : Ensure ca-certificates is installed with a specific version] ******
-ok: [kovalart-1]
-ok: [kovalart-2]
-ok: [kovalart-3]
-
-TASK [init : Install Rsyslog] **************************************************
-ok: [kovalart-1]
-ok: [kovalart-3]
-ok: [kovalart-2]
-
-TASK [init : Add the Rsyslog configuration for the Telegraf] *******************
-ok: [kovalart-1]
-ok: [kovalart-3]
-ok: [kovalart-2]
-
-TASK [init : Run Rsyslog] ******************************************************
-ok: [kovalart-1]
-ok: [kovalart-3]
-ok: [kovalart-2]
-
-TASK [init : Create backup user] ***********************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
-ok: [kovalart-3]
-
-TASK [init : Ensure .ssh directory exists for backup user] *********************
-ok: [kovalart-2]
-ok: [kovalart-1]
-ok: [kovalart-3]
-
-TASK [init : Generate SSH keypair for backup user] *****************************
-ok: [kovalart-2]
-ok: [kovalart-3]
-ok: [kovalart-1]
-
-TASK [init : Add backup server SSH key to known hosts] *************************
-ok: [kovalart-3]
-ok: [kovalart-1]
-ok: [kovalart-2]
-
-TASK [init : Ensure /home/backup/restore directory is created] *****************
-ok: [kovalart-1]
-ok: [kovalart-2]
-ok: [kovalart-3]
-
-TASK [init : Ensure Duplicity is installed] ************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
-ok: [kovalart-3]
-[WARNING]: Could not match supplied host pattern, ignoring: children
-
-PLAY [DNS server tasks] ********************************************************
-
-TASK [Gathering Facts] *********************************************************
-ok: [kovalart-3]
-ok: [kovalart-1]
-ok: [kovalart-2]
-
-TASK [bind : Install Bind9] ****************************************************
-ok: [kovalart-3]
-ok: [kovalart-1]
-ok: [kovalart-2]
-
-TASK [bind : Configure DNS forwarders] *****************************************
-ok: [kovalart-3]
-ok: [kovalart-2]
-ok: [kovalart-1]
-
-TASK [bind : Configure DNS] ****************************************************
-ok: [kovalart-1]
-ok: [kovalart-3]
-ok: [kovalart-2]
-
-TASK [bind : Configure Master Zone] ********************************************
-skipping: [kovalart-1]
-skipping: [kovalart-2]
-ok: [kovalart-3]
-
-TASK [bind : Configure Reverse Zone] *******************************************
-skipping: [kovalart-1]
-skipping: [kovalart-2]
-ok: [kovalart-3]
-
-TASK [bind : Run handlers] *****************************************************
-
-TASK [bind : Ensure Bind9 service is running and enabled] **********************
-ok: [kovalart-1]
-ok: [kovalart-2]
-ok: [kovalart-3]
-
-TASK [bind : Install Bind exporter] ********************************************
-ok: [kovalart-3]
-ok: [kovalart-1]
-ok: [kovalart-2]
-
-TASK [bind : Ensure bind exporter is running and enabled] **********************
-ok: [kovalart-3]
-ok: [kovalart-1]
-ok: [kovalart-2]
-
-TASK [bind : Create CNAME records for DNS instances] ***************************
-skipping: [kovalart-1] => (item={'service': 'ns-1', 'target': 'kovalart-1'}) 
-skipping: [kovalart-1] => (item={'service': 'ns-2', 'target': 'kovalart-2'}) 
-skipping: [kovalart-1] => (item={'service': 'ns-3', 'target': 'kovalart-3'}) 
-skipping: [kovalart-2] => (item={'service': 'ns-1', 'target': 'kovalart-1'}) 
-skipping: [kovalart-2] => (item={'service': 'ns-2', 'target': 'kovalart-2'}) 
-skipping: [kovalart-2] => (item={'service': 'ns-3', 'target': 'kovalart-3'}) 
-ok: [kovalart-3] => (item={'service': 'ns-1', 'target': 'kovalart-1'})
-ok: [kovalart-3] => (item={'service': 'ns-2', 'target': 'kovalart-2'})
-ok: [kovalart-3] => (item={'service': 'ns-3', 'target': 'kovalart-3'})
-
-PLAY [Resolv.conf task] ********************************************************
-
-TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
-ok: [kovalart-3]
-ok: [kovalart-2]
-
-TASK [resolv_dns : Shut down systemd-resolved] *********************************
-ok: [kovalart-1]
-ok: [kovalart-2]
-ok: [kovalart-3]
-
-TASK [resolv_dns : Change resolv.conf on all VMs] ******************************
-ok: [kovalart-2]
-ok: [kovalart-1]
-ok: [kovalart-3]
-
-PLAY [Database server] *********************************************************
-
-TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
-
-TASK [mysql : Install mysql] ***************************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
-
-TASK [mysql : copy the mysql config file and restart mysql server] *************
-ok: [kovalart-2]
 changed: [kovalart-1]
-
-TASK [mysql : Start mysql] *****************************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
-
-TASK [mysql : Install required Python Library] *********************************
-ok: [kovalart-2]
-Suggested packages:
-  python-pymysql-doc
-The following NEW packages will be installed:
-  python3-pymysql
-0 upgraded, 1 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-1]
-
-TASK [mysql : MySQL database] **************************************************
-ok: [kovalart-2]
-changed: [kovalart-1]
-
-TASK [mysql : MySQL user] ******************************************************
-ok: [kovalart-2]
-changed: [kovalart-1]
-
-TASK [mysql : Create MySQL exporter user] **************************************
-ok: [kovalart-2]
-changed: [kovalart-1]
-
-TASK [mysql : Install Exporter] ************************************************
-ok: [kovalart-2]
-The following additional packages will be installed:
-  daemon
-The following NEW packages will be installed:
-  daemon prometheus-mysqld-exporter
-0 upgraded, 2 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-1]
-
-TASK [mysql : Update the MySQL exporter] ***************************************
-ok: [kovalart-2]
---- before: /etc/default/prometheus-mysqld-exporter
-+++ after: /home/parrot/ica0002/roles/mysql/files/mysql_exporter
-@@ -1,120 +1 @@
--# By default the connection string will be read from
--# $HOME/my.cnf or from the file specified with the -config.my-cnf parameter.
--
--# To set a connection string from the environment instead, uncomment one of the
--# following lines.
--
--# Using UNIX domain sockets and authentication:
--# DATA_SOURCE_NAME="prometheus:nopassword@unix(/run/mysqld/mysqld.sock)/"
--
--# Using a TCP connection and password authentication:
--# DATA_SOURCE_NAME="login:password@(hostname:port)/dbname"
--
--# Note the user must be granted enough privileges for the exporter to run.
--# Example to create a user to connect with the UNIX socket:
--#
--#  CREATE USER IF NOT EXISTS 'prometheus'@'localhost' IDENTIFIED VIA unix_socket;
--#  GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'prometheus'@'localhost';
--
--# Set the command-line arguments to pass to the exporter.
--# ARGS='-config.my-cnf /etc/mysql/debian.cnf'
--
--# Usage of prometheus-mysqld-exporter:
--#   -collect.auto_increment.columns
--#     	Collect auto_increment columns and max values from information_schema
--#  --exporter.lock_wait_timeout=2
--#       Set a lock_wait_timeout on the connection to avoid long metadata
--#       locking.
--#  --exporter.log_slow_filter
--#       Add a log_slow_filter to avoid slow query logging of scrapes. NOTE: Not
--#       supported by Oracle MySQL.
--#  --collect.heartbeat.database="heartbeat"
--#       Database from where to collect heartbeat data
--#  --collect.heartbeat.table="heartbeat"
--#       Table from where to collect heartbeat data
--#  --collect.info_schema.processlist.min_time=0
--#       Minimum time a thread must be in each state to be counted
--#  --collect.info_schema.tables.databases="*"
--#       The list of databases to collect table stats for, or '*' for all
--#  --collect.perf_schema.eventsstatements.limit=250
--#       Limit the number of events statements digests by response time
--#  --collect.perf_schema.eventsstatements.timelimit=86400
--#       Limit how old the 'last_seen' events statements can be, in seconds
--#  --collect.perf_schema.eventsstatements.digest_text_limit=120
--#       Maximum length of the normalized statement text
--#  --collect.perf_schema.file_instances.filter=".*"
--#       RegEx file_name filter for performance_schema.file_summary_by_instance
--#  --collect.perf_schema.file_instances.remove_prefix="/var/lib/mysql/"
--#       Remove path prefix in performance_schema.file_summary_by_instance
--#  --web.listen-address=":9104"
--#       Address to listen on for web interface and telemetry.
--#  --web.telemetry-path="/metrics"
--#       Path under which to expose metrics.
--#  --config.my-cnf="$HOME/.my.cnf"
--#       Path to .my.cnf file to read MySQL credentials from.
--#  --collect.global_variables
--#       Collect from SHOW GLOBAL VARIABLES
--#  --collect.slave_status
--#       Collect from SHOW SLAVE STATUS
--#  --collect.info_schema.processlist
--#       Collect current thread state counts from the
--#       information_schema.processlist
--#  --collect.info_schema.tables
--#       Collect metrics from information_schema.tables
--#  --collect.info_schema.innodb_tablespaces
--#       Collect metrics from information_schema.innodb_sys_tablespaces
--#  --collect.info_schema.innodb_metrics
--#       Collect metrics from information_schema.innodb_metrics
--#  --collect.auto_increment.columns
--#       Collect auto_increment columns and max values from information_schema
--#  --collect.global_status
--#       Collect from SHOW GLOBAL STATUS
--#  --collect.perf_schema.tableiowaits
--#       Collect metrics from performance_schema.table_io_waits_summary_by_table
--#  --collect.perf_schema.indexiowaits
--#       Collect metrics from
--#       performance_schema.table_io_waits_summary_by_index_usage
--#  --collect.perf_schema.tablelocks
--#       Collect metrics from
--#       performance_schema.table_lock_waits_summary_by_table
--#  --collect.perf_schema.eventsstatements
--#       Collect metrics from
--#       performance_schema.events_statements_summary_by_digest
--#  --collect.perf_schema.eventswaits
--#       Collect metrics from
--#       performance_schema.events_waits_summary_global_by_event_name
--#  --collect.perf_schema.file_events
--#       Collect metrics from performance_schema.file_summary_by_event_name
--#  --collect.perf_schema.file_instances
--#       Collect metrics from performance_schema.file_summary_by_instance
--#  --collect.binlog_size
--#       Collect the current size of all registered binlog files
--#  --collect.info_schema.userstats
--#       If running with userstat=1, set to true to collect user statistics
--#  --collect.info_schema.clientstats
--#       If running with userstat=1, set to true to collect client statistics
--#  --collect.info_schema.tablestats
--#       If running with userstat=1, set to true to collect table statistics
--#  --collect.info_schema.innodb_cmp
--#       Collect metrics from information_schema.innodb_cmp
--#  --collect.info_schema.innodb_cmpmem
--#       Collect metrics from information_schema.innodb_cmpmem
--#  --collect.info_schema.query_response_time
--#       Collect query response time distribution if query_response_time_stats
--#       is ON.
--#  --collect.engine_tokudb_status
--#       Collect from SHOW ENGINE TOKUDB STATUS
--#  --collect.perf_schema.replication_group_member_stats
--#       Collect metrics from performance_schema.replication_group_member_stats
--#  --collect.heartbeat
--#       Collect from heartbeat
--#  --collect.slave_hosts
--#       Scrape information from 'SHOW SLAVE HOSTS'
--#  --collect.engine_innodb_status
--#       Collect from SHOW ENGINE INNODB STATUS
--#  --log.level="info"
--#       Only log messages with the given severity or above. Valid levels:
--#       [debug, info, warn, error, fatal]
--#  --log.format="logger:stderr"
--#       Set the log target and format. Example:
--#       "logger:syslog?appname=bob&local=7" or "logger:stdout?json=true"
-+ARGS="--collect.slave_status"
-\ No newline at end of file
-
-changed: [kovalart-1]
-
-TASK [mysql : Copy the config file] ********************************************
-ok: [kovalart-2]
-changed: [kovalart-1]
-
-TASK [mysql : Start Mysql exporter] ********************************************
-ok: [kovalart-2]
-changed: [kovalart-1]
-
-TASK [mysql : Ensure that mysql directory exists] ******************************
---- before
-+++ after
-@@ -1,6 +1,6 @@
- {
--    "group": 0,
--    "owner": 0,
-+    "group": 34,
-+    "owner": 34,
-     "path": "/home/backup/mysql",
--    "state": "absent"
-+    "state": "directory"
- }
-
-changed: [kovalart-1]
-ok: [kovalart-2]
-
-TASK [mysql : Create MySQL user named backup with required privileges] *********
-ok: [kovalart-2]
-changed: [kovalart-1]
-
-TASK [mysql : Ensure /home/backup/.my.cnf file is created] *********************
-ok: [kovalart-2]
-changed: [kovalart-1]
-
-TASK [mysql : Ensure user backup can create MySQL dumps without errors] ********
-ok: [kovalart-1]
-ok: [kovalart-2]
-
-TASK [mysql : Fail if the dump command did not execute successfully] ***********
-skipping: [kovalart-1]
-skipping: [kovalart-2]
-
-TASK [mysql : Schedule MySQL backups with Cron] ********************************
-ok: [kovalart-2]
-changed: [kovalart-1]
-
-TASK [mysql : Create MySQL user named replica with required privileges] ********
-ok: [kovalart-2]
-changed: [kovalart-1]
-
-TASK [mysql : Read only mode for the Replica MySQL host] ***********************
-ok: [kovalart-2]
-changed: [kovalart-1]
-
-TASK [mysql : Create CNAME records for MySQL instances 1] **********************
-skipping: [kovalart-2] => (item={'service': 'mysql-1', 'target': 'kovalart-1'}) 
-changed: [kovalart-1] => (item={'service': 'mysql-1', 'target': 'kovalart-1'})
-
-TASK [mysql : Create CNAME records for MySQL instances 2] **********************
-skipping: [kovalart-1] => (item={'service': 'mysql-2', 'target': 'kovalart-2'}) 
-ok: [kovalart-2] => (item={'service': 'mysql-2', 'target': 'kovalart-2'})
-
-RUNNING HANDLER [mysql : restart mysql] ****************************************
-changed: [kovalart-1]
+changed: [kovalart-2]
 
 RUNNING HANDLER [mysql : restart mysql-exporter] *******************************
+changed: [kovalart-2]
 changed: [kovalart-1]
 
 RUNNING HANDLER [mysql : Reset MySQL source] ***********************************
+skipping: [kovalart-2] => (item=stopreplica) 
+skipping: [kovalart-2] => (item=resetprimary) 
 ok: [kovalart-1] => (item=stopreplica)
 changed: [kovalart-1] => (item=resetprimary)
 
@@ -1114,6 +805,10 @@ skipping: [kovalart-1] => (item=stopreplica)
 skipping: [kovalart-1] => (item=changeprimary) 
 skipping: [kovalart-1] => (item=resetreplica) 
 skipping: [kovalart-1] => (item=startreplica) 
+ok: [kovalart-2] => (item=stopreplica)
+changed: [kovalart-2] => (item=changeprimary)
+changed: [kovalart-2] => (item=resetreplica)
+changed: [kovalart-2] => (item=startreplica)
 
 PLAY [Prometheus tasks] ********************************************************
 
@@ -1154,8 +849,8 @@ PLAY [Docker tasks] ************************************************************
 
 TASK [Gathering Facts] *********************************************************
 ok: [kovalart-3]
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [docker : Install Docker.io package] **************************************
 The following additional packages will be installed:
@@ -1175,7 +870,7 @@ Suggested packages:
 The following NEW packages will be installed:
   bridge-utils containerd dnsmasq-base docker.io libidn11 pigz runc ubuntu-fan
 0 upgraded, 8 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-1]
+changed: [kovalart-2]
 The following additional packages will be installed:
   bridge-utils containerd dnsmasq-base libidn11 pigz runc ubuntu-fan
 Suggested packages:
@@ -1184,7 +879,7 @@ Suggested packages:
 The following NEW packages will be installed:
   bridge-utils containerd dnsmasq-base docker.io libidn11 pigz runc ubuntu-fan
 0 upgraded, 8 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-2]
+changed: [kovalart-1]
 
 TASK [docker : Install python3-docker package] *********************************
 The following additional packages will be installed:
@@ -1198,18 +893,18 @@ The following additional packages will be installed:
 The following NEW packages will be installed:
   python3-docker python3-websocket
 0 upgraded, 2 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-2]
+changed: [kovalart-1]
 The following additional packages will be installed:
   python3-websocket
 The following NEW packages will be installed:
   python3-docker python3-websocket
 0 upgraded, 2 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [docker : Ensure Docker daemon is running and enabled] ********************
 ok: [kovalart-1]
-ok: [kovalart-3]
 ok: [kovalart-2]
+ok: [kovalart-3]
 
 PLAY [Grafana Tasks] ***********************************************************
 
@@ -1281,8 +976,8 @@ changed: [kovalart-3]
 PLAY [Agama tasks] *************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [agama : Agama directory] *************************************************
 --- before
@@ -1311,12 +1006,12 @@ changed: [kovalart-1]
 changed: [kovalart-2]
 
 TASK [agama : Download agama.py] ***********************************************
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [agama : Download Dockerfile] *********************************************
-changed: [kovalart-1]
 changed: [kovalart-2]
+changed: [kovalart-1]
 
 TASK [agama : Build agama image] ***********************************************
 changed: [kovalart-1]
@@ -1329,20 +1024,18 @@ changed: [kovalart-1] => (item=None)
 changed: [kovalart-1]
 
 TASK [agama : Gather information about all running containers] *****************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [agama : Remove extra Agama Containers] ***********************************
 skipping: [kovalart-1] => (item=agama1) 
 skipping: [kovalart-2] => (item=agama1) 
 
-TASK [agama : Create CNAME records for Agama instances 1] **********************
-skipping: [kovalart-2] => (item={'service': 'www-1', 'target': 'kovalart-1'}) 
+TASK [agama : Create CNAME records for Agama instances] ************************
+ok: [kovalart-2] => (item={'service': 'www-1', 'target': 'kovalart-1'})
 changed: [kovalart-1] => (item={'service': 'www-1', 'target': 'kovalart-1'})
-
-TASK [agama : Create CNAME records for Agama instances 2] **********************
-skipping: [kovalart-1] => (item={'service': 'www-2', 'target': 'kovalart-2'}) 
-changed: [kovalart-2] => (item={'service': 'www-2', 'target': 'kovalart-2'})
+changed: [kovalart-1] => (item={'service': 'www-2', 'target': 'kovalart-2'})
+ok: [kovalart-2] => (item={'service': 'www-2', 'target': 'kovalart-2'})
 
 PLAY [Web server tasks] ********************************************************
 
@@ -1525,7 +1218,7 @@ Suggested packages:
 The following NEW packages will be installed:
   haproxy liblua5.3-0
 0 upgraded, 2 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-1]
+changed: [kovalart-2]
 The following additional packages will be installed:
   liblua5.3-0
 Suggested packages:
@@ -1533,55 +1226,53 @@ Suggested packages:
 The following NEW packages will be installed:
   haproxy liblua5.3-0
 0 upgraded, 2 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-2]
+changed: [kovalart-1]
 
 TASK [haproxy : Copy the Haproxy config] ***************************************
-changed: [kovalart-1]
 changed: [kovalart-2]
+changed: [kovalart-1]
 
 TASK [haproxy : Start the service] *********************************************
-ok: [kovalart-1] => (item=haproxy)
 ok: [kovalart-2] => (item=haproxy)
+ok: [kovalart-1] => (item=haproxy)
 
 TASK [haproxy : Install prometheus-haproxy-exporter using APT] *****************
 The following NEW packages will be installed:
   prometheus-haproxy-exporter
 0 upgraded, 1 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-1]
+changed: [kovalart-2]
 The following NEW packages will be installed:
   prometheus-haproxy-exporter
 0 upgraded, 1 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-2]
+changed: [kovalart-1]
 
 TASK [haproxy : Configure haproxy.scrape-uri in /etc/default/prometheus-haproxy-exporter] ***
-changed: [kovalart-1]
 changed: [kovalart-2]
+changed: [kovalart-1]
 
 TASK [haproxy : Start haproxy exporter] ****************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
-TASK [haproxy : Create CNAME records for HAproxy instances 1] ******************
-changed: [kovalart-2] => (item={'service': 'lb-1', 'target': 'kovalart-1'})
-ok: [kovalart-1] => (item={'service': 'lb-1', 'target': 'kovalart-1'})
-
-TASK [haproxy : Create CNAME records for HAproxy instances 2] ******************
+TASK [haproxy : Create CNAME records for HAproxy instances] ********************
+changed: [kovalart-1] => (item={'service': 'lb-1', 'target': 'kovalart-1'})
+ok: [kovalart-2] => (item={'service': 'lb-1', 'target': 'kovalart-1'})
 changed: [kovalart-1] => (item={'service': 'lb-2', 'target': 'kovalart-2'})
 ok: [kovalart-2] => (item={'service': 'lb-2', 'target': 'kovalart-2'})
 
 RUNNING HANDLER [haproxy : Restart Haproxy] ************************************
-changed: [kovalart-1]
 changed: [kovalart-2]
+changed: [kovalart-1]
 
 RUNNING HANDLER [haproxy : restart prometheus-haproxy-exporter] ****************
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 PLAY [Keepalived tasks] ********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [keepalived : Install keepalived] *****************************************
 The following additional packages will be installed:
@@ -1593,7 +1284,7 @@ The following NEW packages will be installed:
   ipvsadm keepalived libmysqlclient21 libnl-3-200 libnl-genl-3-200
   libsensors-config libsensors5 libsnmp-base libsnmp35
 0 upgraded, 9 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-1]
+changed: [kovalart-2]
 The following additional packages will be installed:
   ipvsadm libmysqlclient21 libnl-3-200 libnl-genl-3-200 libsensors-config
   libsensors5 libsnmp-base libsnmp35
@@ -1603,19 +1294,19 @@ The following NEW packages will be installed:
   ipvsadm keepalived libmysqlclient21 libnl-3-200 libnl-genl-3-200
   libsensors-config libsensors5 libsnmp-base libsnmp35
 0 upgraded, 9 newly installed, 0 to remove and 261 not upgraded.
-changed: [kovalart-2]
+changed: [kovalart-1]
 
 TASK [keepalived : Copy check script to keepalived_script user's home folder] ***
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [keepalived : Copy the Keepalived config] *********************************
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [keepalived : Start the service] ******************************************
-changed: [kovalart-1] => (item=keepalived)
 changed: [kovalart-2] => (item=keepalived)
+changed: [kovalart-1] => (item=keepalived)
 
 TASK [keepalived : Download Keepalived Exporter] *******************************
 changed: [kovalart-1]
@@ -1630,21 +1321,21 @@ changed: [kovalart-1]
 changed: [kovalart-2]
 
 TASK [keepalived : Reload systemd] *********************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [keepalived : Start and enable Keepalived Exporter service] ***************
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 RUNNING HANDLER [keepalived : Restart keepalived] ******************************
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 PLAY RECAP *********************************************************************
-kovalart-1                 : ok=82   changed=44   unreachable=0    failed=0    skipped=8    rescued=0    ignored=0   
-kovalart-2                 : ok=79   changed=25   unreachable=0    failed=0    skipped=7    rescued=0    ignored=0   
-kovalart-3                 : ok=80   changed=44   unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+kovalart-1                 : ok=84   changed=62   unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
+kovalart-2                 : ok=84   changed=62   unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
+kovalart-3                 : ok=83   changed=66   unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
 
 + ansible-playbook infra.yaml --diff
 
@@ -1657,8 +1348,8 @@ ok: [kovalart-3]
 
 TASK [init : Update APT cache] *************************************************
 ok: [kovalart-1]
-ok: [kovalart-3]
 ok: [kovalart-2]
+ok: [kovalart-3]
 
 TASK [init : Install Prometheus nodes] *****************************************
 ok: [kovalart-1]
@@ -1666,9 +1357,9 @@ ok: [kovalart-2]
 ok: [kovalart-3]
 
 TASK [init : Ensure the Node Exporters are started] ****************************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [init : Ensure ca-certificates is installed with a specific version] ******
 ok: [kovalart-1]
@@ -1686,29 +1377,29 @@ ok: [kovalart-3]
 ok: [kovalart-1]
 
 TASK [init : Run Rsyslog] ******************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-1]
 
 TASK [init : Create backup user] ***********************************************
 ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-2]
 
 TASK [init : Ensure .ssh directory exists for backup user] *********************
+ok: [kovalart-2]
 ok: [kovalart-1]
 ok: [kovalart-3]
-ok: [kovalart-2]
 
 TASK [init : Generate SSH keypair for backup user] *****************************
 ok: [kovalart-1]
-ok: [kovalart-3]
 ok: [kovalart-2]
+ok: [kovalart-3]
 
 TASK [init : Add backup server SSH key to known hosts] *************************
 ok: [kovalart-1]
-ok: [kovalart-3]
 ok: [kovalart-2]
+ok: [kovalart-3]
 
 TASK [init : Ensure /home/backup/restore directory is created] *****************
 ok: [kovalart-1]
@@ -1730,18 +1421,18 @@ ok: [kovalart-2]
 
 TASK [bind : Install Bind9] ****************************************************
 ok: [kovalart-1]
-ok: [kovalart-3]
 ok: [kovalart-2]
+ok: [kovalart-3]
 
 TASK [bind : Configure DNS forwarders] *****************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [bind : Configure DNS] ****************************************************
 ok: [kovalart-1]
-ok: [kovalart-3]
 ok: [kovalart-2]
+ok: [kovalart-3]
 
 TASK [bind : Configure Master Zone] ********************************************
 skipping: [kovalart-1]
@@ -1756,9 +1447,9 @@ ok: [kovalart-3]
 TASK [bind : Run handlers] *****************************************************
 
 TASK [bind : Ensure Bind9 service is running and enabled] **********************
-ok: [kovalart-3]
 ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-3]
 
 TASK [bind : Install Bind exporter] ********************************************
 ok: [kovalart-1]
@@ -1766,8 +1457,8 @@ ok: [kovalart-3]
 ok: [kovalart-2]
 
 TASK [bind : Ensure bind exporter is running and enabled] **********************
-ok: [kovalart-1]
 ok: [kovalart-3]
+ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [bind : Create CNAME records for DNS instances] ***************************
@@ -1784,9 +1475,9 @@ ok: [kovalart-3] => (item={'service': 'ns-3', 'target': 'kovalart-3'})
 PLAY [Resolv.conf task] ********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [resolv_dns : Shut down systemd-resolved] *********************************
 ok: [kovalart-1]
@@ -1794,15 +1485,15 @@ ok: [kovalart-2]
 ok: [kovalart-3]
 
 TASK [resolv_dns : Change resolv.conf on all VMs] ******************************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-2]
+ok: [kovalart-1]
 
 PLAY [Database server] *********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : Install mysql] ***************************************************
 ok: [kovalart-1]
@@ -1813,16 +1504,16 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [mysql : Start mysql] *****************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : Install required Python Library] *********************************
 ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [mysql : MySQL database] **************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : MySQL user] ******************************************************
 ok: [kovalart-1]
@@ -1837,16 +1528,16 @@ ok: [kovalart-2]
 ok: [kovalart-1]
 
 TASK [mysql : Update the MySQL exporter] ***************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : Copy the config file] ********************************************
 ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [mysql : Start Mysql exporter] ********************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [mysql : Ensure that mysql directory exists] ******************************
 ok: [kovalart-1]
@@ -1857,12 +1548,12 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [mysql : Ensure /home/backup/.my.cnf file is created] *********************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [mysql : Ensure user backup can create MySQL dumps without errors] ********
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [mysql : Fail if the dump command did not execute successfully] ***********
 skipping: [kovalart-1]
@@ -1873,20 +1564,18 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [mysql : Create MySQL user named replica with required privileges] ********
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [mysql : Read only mode for the Replica MySQL host] ***********************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
-TASK [mysql : Create CNAME records for MySQL instances 1] **********************
-skipping: [kovalart-2] => (item={'service': 'mysql-1', 'target': 'kovalart-1'}) 
+TASK [mysql : Create CNAME records for MySQL instances] ************************
 ok: [kovalart-1] => (item={'service': 'mysql-1', 'target': 'kovalart-1'})
-
-TASK [mysql : Create CNAME records for MySQL instances 2] **********************
-skipping: [kovalart-1] => (item={'service': 'mysql-2', 'target': 'kovalart-2'}) 
+ok: [kovalart-2] => (item={'service': 'mysql-1', 'target': 'kovalart-1'})
 ok: [kovalart-2] => (item={'service': 'mysql-2', 'target': 'kovalart-2'})
+ok: [kovalart-1] => (item={'service': 'mysql-2', 'target': 'kovalart-2'})
 
 PLAY [Prometheus tasks] ********************************************************
 
@@ -1914,13 +1603,13 @@ ok: [kovalart-3]
 
 TASK [docker : Install Docker.io package] **************************************
 ok: [kovalart-1]
-ok: [kovalart-3]
 ok: [kovalart-2]
+ok: [kovalart-3]
 
 TASK [docker : Install python3-docker package] *********************************
-ok: [kovalart-1]
 ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-1]
 
 TASK [docker : Ensure Docker daemon is running and enabled] ********************
 ok: [kovalart-1]
@@ -1957,49 +1646,47 @@ ok: [kovalart-3]
 PLAY [Agama tasks] *************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [agama : Agama directory] *************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [agama : Configure AGAMA application] *************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [agama : Download agama.py] ***********************************************
 ok: [kovalart-2]
 ok: [kovalart-1]
 
 TASK [agama : Download Dockerfile] *********************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [agama : Build agama image] ***********************************************
 ok: [kovalart-2]
 ok: [kovalart-1]
 
 TASK [agama : Create Agama Containers] *****************************************
-ok: [kovalart-2] => (item=None)
-ok: [kovalart-2]
 ok: [kovalart-1] => (item=None)
 ok: [kovalart-1]
+ok: [kovalart-2] => (item=None)
+ok: [kovalart-2]
 
 TASK [agama : Gather information about all running containers] *****************
 ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [agama : Remove extra Agama Containers] ***********************************
-skipping: [kovalart-1] => (item=agama1) 
 skipping: [kovalart-2] => (item=agama1) 
+skipping: [kovalart-1] => (item=agama1) 
 
-TASK [agama : Create CNAME records for Agama instances 1] **********************
-skipping: [kovalart-2] => (item={'service': 'www-1', 'target': 'kovalart-1'}) 
+TASK [agama : Create CNAME records for Agama instances] ************************
 ok: [kovalart-1] => (item={'service': 'www-1', 'target': 'kovalart-1'})
-
-TASK [agama : Create CNAME records for Agama instances 2] **********************
-skipping: [kovalart-1] => (item={'service': 'www-2', 'target': 'kovalart-2'}) 
+ok: [kovalart-2] => (item={'service': 'www-1', 'target': 'kovalart-1'})
+ok: [kovalart-1] => (item={'service': 'www-2', 'target': 'kovalart-2'})
 ok: [kovalart-2] => (item={'service': 'www-2', 'target': 'kovalart-2'})
 
 PLAY [Web server tasks] ********************************************************
@@ -2102,24 +1789,24 @@ ok: [kovalart-3]
 PLAY [Haproxy tasks] ***********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [haproxy : Install haproxy] ***********************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [haproxy : Copy the Haproxy config] ***************************************
 ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [haproxy : Start the service] *********************************************
-ok: [kovalart-1] => (item=haproxy)
 ok: [kovalart-2] => (item=haproxy)
+ok: [kovalart-1] => (item=haproxy)
 
 TASK [haproxy : Install prometheus-haproxy-exporter using APT] *****************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [haproxy : Configure haproxy.scrape-uri in /etc/default/prometheus-haproxy-exporter] ***
 ok: [kovalart-1]
@@ -2129,27 +1816,25 @@ TASK [haproxy : Start haproxy exporter] ****************************************
 ok: [kovalart-1]
 ok: [kovalart-2]
 
-TASK [haproxy : Create CNAME records for HAproxy instances 1] ******************
+TASK [haproxy : Create CNAME records for HAproxy instances] ********************
 ok: [kovalart-2] => (item={'service': 'lb-1', 'target': 'kovalart-1'})
 ok: [kovalart-1] => (item={'service': 'lb-1', 'target': 'kovalart-1'})
-
-TASK [haproxy : Create CNAME records for HAproxy instances 2] ******************
 ok: [kovalart-1] => (item={'service': 'lb-2', 'target': 'kovalart-2'})
 ok: [kovalart-2] => (item={'service': 'lb-2', 'target': 'kovalart-2'})
 
 PLAY [Keepalived tasks] ********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [keepalived : Install keepalived] *****************************************
 ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [keepalived : Copy check script to keepalived_script user's home folder] ***
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [keepalived : Copy the Keepalived config] *********************************
 ok: [kovalart-1]
@@ -2160,8 +1845,8 @@ ok: [kovalart-2] => (item=keepalived)
 ok: [kovalart-1] => (item=keepalived)
 
 TASK [keepalived : Download Keepalived Exporter] *******************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [keepalived : Extract Keepalived Exporter] ********************************
 ok: [kovalart-2]
@@ -2180,24 +1865,24 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 PLAY RECAP *********************************************************************
-kovalart-1                 : ok=76   changed=0    unreachable=0    failed=0    skipped=7    rescued=0    ignored=0   
-kovalart-2                 : ok=76   changed=0    unreachable=0    failed=0    skipped=7    rescued=0    ignored=0   
+kovalart-1                 : ok=75   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
+kovalart-2                 : ok=75   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
 kovalart-3                 : ok=72   changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
 
 + ansible all -b -m reboot -a test_command=uptime
+kovalart-1 | CHANGED => {
+    "changed": true,
+    "elapsed": 34,
+    "rebooted": true
+}
 kovalart-3 | CHANGED => {
     "changed": true,
-    "elapsed": 50,
+    "elapsed": 34,
     "rebooted": true
 }
 kovalart-2 | CHANGED => {
     "changed": true,
-    "elapsed": 57,
-    "rebooted": true
-}
-kovalart-1 | CHANGED => {
-    "changed": true,
-    "elapsed": 58,
+    "elapsed": 42,
     "rebooted": true
 }
 + ansible-playbook infra.yaml --diff
@@ -2205,69 +1890,69 @@ kovalart-1 | CHANGED => {
 PLAY [Initial setup] ***********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
 ok: [kovalart-3]
+ok: [kovalart-2]
 
 TASK [init : Update APT cache] *************************************************
-ok: [kovalart-1]
 ok: [kovalart-3]
+ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [init : Install Prometheus nodes] *****************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-1]
 
 TASK [init : Ensure the Node Exporters are started] ****************************
+ok: [kovalart-3]
 ok: [kovalart-2]
 ok: [kovalart-1]
-ok: [kovalart-3]
 
 TASK [init : Ensure ca-certificates is installed with a specific version] ******
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 ok: [kovalart-3]
 
 TASK [init : Install Rsyslog] **************************************************
-ok: [kovalart-1]
-ok: [kovalart-3]
 ok: [kovalart-2]
+ok: [kovalart-3]
+ok: [kovalart-1]
 
 TASK [init : Add the Rsyslog configuration for the Telegraf] *******************
 ok: [kovalart-3]
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [init : Run Rsyslog] ******************************************************
 ok: [kovalart-1]
-ok: [kovalart-3]
 ok: [kovalart-2]
+ok: [kovalart-3]
 
 TASK [init : Create backup user] ***********************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [init : Ensure .ssh directory exists for backup user] *********************
 ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-2]
 
 TASK [init : Generate SSH keypair for backup user] *****************************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [init : Add backup server SSH key to known hosts] *************************
+ok: [kovalart-1]
 ok: [kovalart-2]
 ok: [kovalart-3]
-ok: [kovalart-1]
 
 TASK [init : Ensure /home/backup/restore directory is created] *****************
-ok: [kovalart-3]
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
+ok: [kovalart-3]
 
 TASK [init : Ensure Duplicity is installed] ************************************
 ok: [kovalart-1]
@@ -2278,14 +1963,14 @@ ok: [kovalart-3]
 PLAY [DNS server tasks] ********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
 ok: [kovalart-3]
+ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [bind : Install Bind9] ****************************************************
-ok: [kovalart-1]
 ok: [kovalart-3]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [bind : Configure DNS forwarders] *****************************************
 ok: [kovalart-3]
@@ -2293,9 +1978,9 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [bind : Configure DNS] ****************************************************
+ok: [kovalart-3]
 ok: [kovalart-1]
 ok: [kovalart-2]
-ok: [kovalart-3]
 
 TASK [bind : Configure Master Zone] ********************************************
 skipping: [kovalart-1]
@@ -2310,18 +1995,18 @@ ok: [kovalart-3]
 TASK [bind : Run handlers] *****************************************************
 
 TASK [bind : Ensure Bind9 service is running and enabled] **********************
-ok: [kovalart-3]
 ok: [kovalart-1]
+ok: [kovalart-3]
 ok: [kovalart-2]
 
 TASK [bind : Install Bind exporter] ********************************************
-ok: [kovalart-1]
-ok: [kovalart-3]
 ok: [kovalart-2]
+ok: [kovalart-3]
+ok: [kovalart-1]
 
 TASK [bind : Ensure bind exporter is running and enabled] **********************
-ok: [kovalart-3]
 ok: [kovalart-1]
+ok: [kovalart-3]
 ok: [kovalart-2]
 
 TASK [bind : Create CNAME records for DNS instances] ***************************
@@ -2338,19 +2023,19 @@ ok: [kovalart-3] => (item={'service': 'ns-3', 'target': 'kovalart-3'})
 PLAY [Resolv.conf task] ********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 ok: [kovalart-3]
 
 TASK [resolv_dns : Shut down systemd-resolved] *********************************
 ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-2]
 
 TASK [resolv_dns : Change resolv.conf on all VMs] ******************************
-ok: [kovalart-1]
 ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-1]
 
 PLAY [Database server] *********************************************************
 
@@ -2367,16 +2052,16 @@ ok: [kovalart-2]
 ok: [kovalart-1]
 
 TASK [mysql : Start mysql] *****************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : Install required Python Library] *********************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : MySQL database] **************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : MySQL user] ******************************************************
 ok: [kovalart-1]
@@ -2387,12 +2072,12 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [mysql : Install Exporter] ************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : Update the MySQL exporter] ***************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : Copy the config file] ********************************************
 ok: [kovalart-2]
@@ -2411,8 +2096,8 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [mysql : Ensure /home/backup/.my.cnf file is created] *********************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : Ensure user backup can create MySQL dumps without errors] ********
 ok: [kovalart-2]
@@ -2423,8 +2108,8 @@ skipping: [kovalart-1]
 skipping: [kovalart-2]
 
 TASK [mysql : Schedule MySQL backups with Cron] ********************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : Create MySQL user named replica with required privileges] ********
 ok: [kovalart-1]
@@ -2434,13 +2119,11 @@ TASK [mysql : Read only mode for the Replica MySQL host] ***********************
 ok: [kovalart-1]
 ok: [kovalart-2]
 
-TASK [mysql : Create CNAME records for MySQL instances 1] **********************
-skipping: [kovalart-2] => (item={'service': 'mysql-1', 'target': 'kovalart-1'}) 
+TASK [mysql : Create CNAME records for MySQL instances] ************************
+ok: [kovalart-2] => (item={'service': 'mysql-1', 'target': 'kovalart-1'})
 ok: [kovalart-1] => (item={'service': 'mysql-1', 'target': 'kovalart-1'})
-
-TASK [mysql : Create CNAME records for MySQL instances 2] **********************
-skipping: [kovalart-1] => (item={'service': 'mysql-2', 'target': 'kovalart-2'}) 
 ok: [kovalart-2] => (item={'service': 'mysql-2', 'target': 'kovalart-2'})
+ok: [kovalart-1] => (item={'service': 'mysql-2', 'target': 'kovalart-2'})
 
 PLAY [Prometheus tasks] ********************************************************
 
@@ -2462,23 +2145,23 @@ ok: [kovalart-3]
 PLAY [Docker tasks] ************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 ok: [kovalart-3]
 
 TASK [docker : Install Docker.io package] **************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 ok: [kovalart-3]
 
 TASK [docker : Install python3-docker package] *********************************
-ok: [kovalart-1]
-ok: [kovalart-3]
 ok: [kovalart-2]
+ok: [kovalart-3]
+ok: [kovalart-1]
 
 TASK [docker : Ensure Docker daemon is running and enabled] ********************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 ok: [kovalart-3]
 
 PLAY [Grafana Tasks] ***********************************************************
@@ -2511,20 +2194,20 @@ ok: [kovalart-3]
 PLAY [Agama tasks] *************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [agama : Agama directory] *************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [agama : Configure AGAMA application] *************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [agama : Download agama.py] ***********************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [agama : Download Dockerfile] *********************************************
 ok: [kovalart-2]
@@ -2541,20 +2224,18 @@ ok: [kovalart-1] => (item=None)
 ok: [kovalart-1]
 
 TASK [agama : Gather information about all running containers] *****************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [agama : Remove extra Agama Containers] ***********************************
 skipping: [kovalart-1] => (item=agama1) 
 skipping: [kovalart-2] => (item=agama1) 
 
-TASK [agama : Create CNAME records for Agama instances 1] **********************
-skipping: [kovalart-2] => (item={'service': 'www-1', 'target': 'kovalart-1'}) 
+TASK [agama : Create CNAME records for Agama instances] ************************
 ok: [kovalart-1] => (item={'service': 'www-1', 'target': 'kovalart-1'})
-
-TASK [agama : Create CNAME records for Agama instances 2] **********************
-skipping: [kovalart-1] => (item={'service': 'www-2', 'target': 'kovalart-2'}) 
+ok: [kovalart-2] => (item={'service': 'www-1', 'target': 'kovalart-1'})
 ok: [kovalart-2] => (item={'service': 'www-2', 'target': 'kovalart-2'})
+ok: [kovalart-1] => (item={'service': 'www-2', 'target': 'kovalart-2'})
 
 PLAY [Web server tasks] ********************************************************
 
@@ -2656,8 +2337,8 @@ ok: [kovalart-3]
 PLAY [Haproxy tasks] ***********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [haproxy : Install haproxy] ***********************************************
 ok: [kovalart-1]
@@ -2676,20 +2357,18 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [haproxy : Configure haproxy.scrape-uri in /etc/default/prometheus-haproxy-exporter] ***
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [haproxy : Start haproxy exporter] ****************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
-TASK [haproxy : Create CNAME records for HAproxy instances 1] ******************
+TASK [haproxy : Create CNAME records for HAproxy instances] ********************
 ok: [kovalart-1] => (item={'service': 'lb-1', 'target': 'kovalart-1'})
 ok: [kovalart-2] => (item={'service': 'lb-1', 'target': 'kovalart-1'})
-
-TASK [haproxy : Create CNAME records for HAproxy instances 2] ******************
-ok: [kovalart-2] => (item={'service': 'lb-2', 'target': 'kovalart-2'})
 ok: [kovalart-1] => (item={'service': 'lb-2', 'target': 'kovalart-2'})
+ok: [kovalart-2] => (item={'service': 'lb-2', 'target': 'kovalart-2'})
 
 PLAY [Keepalived tasks] ********************************************************
 
@@ -2698,20 +2377,20 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [keepalived : Install keepalived] *****************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [keepalived : Copy check script to keepalived_script user's home folder] ***
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [keepalived : Copy the Keepalived config] *********************************
 ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [keepalived : Start the service] ******************************************
-ok: [kovalart-2] => (item=keepalived)
 ok: [kovalart-1] => (item=keepalived)
+ok: [kovalart-2] => (item=keepalived)
 
 TASK [keepalived : Download Keepalived Exporter] *******************************
 ok: [kovalart-2]
@@ -2734,9 +2413,9 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 PLAY RECAP *********************************************************************
-kovalart-1                 : ok=76   changed=0    unreachable=0    failed=0    skipped=7    rescued=0    ignored=0   
-kovalart-2                 : ok=76   changed=0    unreachable=0    failed=0    skipped=7    rescued=0    ignored=0   
+kovalart-1                 : ok=75   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
+kovalart-2                 : ok=75   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
 kovalart-3                 : ok=72   changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
 
 + date
-Wed Dec 20 09:46:47 AM EST 2023
+Wed Dec 20 07:46:09 AM EST 2023

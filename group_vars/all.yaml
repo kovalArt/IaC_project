@@ -86,7 +86,7 @@ node_id: "{{ (ansible_port / 10) | int }}"
 
 mysql_backup_host: "{{ groups['db_servers'] | reject('eq', mysql_host) | first | default(mysql_host) }}"
 
-num_containers_per_machine: 1
+num_containers_per_machine: 3
 
 # ---- Agama variables ----
 agama_start_port: 8001
