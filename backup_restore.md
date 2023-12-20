@@ -28,7 +28,7 @@
 
 # Restore InfluxDB data from the backup:
 
-    1. Establish SSH connection to the host, where you have influxdb and issue the following command:
+    1. Establish SSH connection to the host, where you have influxdb (kovalart-3) and issue the following command:
 
     sudo -u backup duplicity --no-encryption restore rsync://kovalArt@backup.infocare.io/influxdb /home/backup/restore/influxdb
 

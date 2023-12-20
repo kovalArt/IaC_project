@@ -7,18 +7,18 @@
 - What is not backed up: System binaries, temporary files, configurations
 
 ### RPO (Recovery Point Objective)
-- Acceptable data loss: Up to 1 day
+- Acceptable data loss: Up to 2 day
 
 ### Versioning and Retention
--  Number of Full Backup Versions Stored: 4 (assuming one full backup each Friday for a month).
+-  Number of Full Backup Versions Stored: 1.
     
-- Number of Incremental Backup Versions Stored: 25 (assuming one incremental backup each day for the remaining  days of the month, excluding Sunday when full backups are done, 29 days in month as for example).
+- Number of Incremental Backup Versions Stored: 4.
 
-- Retention Period for Full and Incremental Backups: 40 days
+- Retention Period for Full and Incremental Backups: 40 days (On Sunday we have a New Full backup, On Monday we delete old backups)
 
 ### Usability Checks
 - "Alpha" Team of Infrastructure Engineers are resposible to periodically check the usability of backups
-- Each Monday of a week, team should test backups 
+- Each Monday of a week, team should test the backups 
 - Periodic restores to a sandbox environment.
 
 ### Restoration Criteria
@@ -27,7 +27,7 @@
 - Database encryption by ransomware
 
 ### RTO (Recovery Time Objective)
-- Target recovery time: Within 2 hours.
+- Target recovery time: Within 8 hours.
 
 ## InfluxDB
 
@@ -36,18 +36,19 @@
 - What is not backed up: Temporary files, Bind, nginx, agama, haproxy, keepalived
 
 ### RPO (Recovery Point Objective)
-- Acceptable data loss: Up to 1 day
+- Acceptable data loss: Up to 2 day
 
 ### Versioning and Retention
--  Number of Full Backup Versions Stored: 4 (assuming one full backup each Friday for a month).
+-  Number of Full Backup Versions Stored: 2
     
-- Number of Incremental Backup Versions Stored: 25 (assuming one incremental backup each day for the remaining  days of the month, excluding Sunday when full backups are done, 29 days in month as for example).
+- Number of Incremental Backup Versions Stored: 4
 
-- Retention Period for Full and Incremental Backups: 40 days
+- Retention Period for Full and Incremental Backups: 40 days (On Sunday we have a New Full backup, On Monday we delete old backups)
 
 ### Usability Checks
 - "Beta" Team of Infrastructure Engineers are resposible to periodically check the usability of backups
-- Regular automated backups checks.
+- Each Monday of a week, team should test the backups 
+- Regular backups checks.
 - Periodic test restores to a separate instance.
 - Periodic test restores to a sandbox environment.
 
@@ -56,7 +57,7 @@
 - Accidental data deletion.
 
 ### RTO (Recovery Time Objective)
-- Target recovery time: Within 2 hours.
+- Target recovery time: Within 8 hours.
 
 ## Ansible Repository
 
@@ -65,14 +66,14 @@
 - What is not backed up: Temporary files, build artifacts.
 
 ### RPO (Recovery Point Objective)
-- Acceptable data loss: Up to 1 day.
+- Acceptable data loss: Up to 2 day.
 
 ### Versioning and Retention
-- Number of backup versions stored: 20
+- Number of backup versions stored: 40
 - Retention period: 6 months.
 
 ### Usability Checks
-- Regular automated backup checks.
+- Regular backup checks.
 - Periodic test restores to a separate directory.
 
 ### Restoration Criteria
@@ -80,6 +81,6 @@
 - Repository corruption.
 
 ### RTO (Recovery Time Objective)
-- Target recovery time: Within 2 hours.
+- Target recovery time: Within 8 hours.
 
 ---

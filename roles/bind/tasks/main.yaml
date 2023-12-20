@@ -89,7 +89,7 @@
 - name: Create CNAME records for DNS instances
   community.general.nsupdate:
     key_name: "nsupdate.key"
-    server: "kovalart-3"
+    server: "{{ groups['dns_primary'][0] }}"
     key_algorithm: "hmac-sha256"
     key_secret: "{{ nsupdate_secret }}"
     zone: "{{ startup_name }}"
@@ -101,3 +101,4 @@
     - { service: "ns-1", target: "kovalart-1" }
     - { service: "ns-2", target: "kovalart-2" }
     - { service: "ns-3", target: "kovalart-3" }
+  when: inventory_hostname == 'kovalart-3'

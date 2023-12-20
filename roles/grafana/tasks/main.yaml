@@ -39,7 +39,7 @@
 - name: Create CNAME record for Grafana
   community.general.nsupdate:
     key_name: "nsupdate.key"
-    server: "kovalart-3"
+    server: "{{ groups['dns_primary'][0] }}"
     key_algorithm: "hmac-sha256"
     key_secret: "{{ nsupdate_secret }}"
     zone: "{{ startup_name }}"
@@ -47,6 +47,7 @@
     record: "grafana"
     type: "CNAME"
     value: "{{ grafana_host }}"
+  
 
     
 

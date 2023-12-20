@@ -7,7 +7,9 @@
     src: default
     dest: /etc/nginx/sites-enabled/default
   no_log: true
-  notify: restart nginx
+  notify: 
+    - restart nginx
+    - restart nginx exporter
 
 - name: start nginx
   service:

@@ -68,10 +68,10 @@
   when: item | regex_replace('^agama', '') | int > num_containers_per_machine | int
 
 #=== Create CNAMES on the Master Bind === 
-- name: Create CNAME records for Agama instances
+- name: Create CNAME records for Agama instances 1
   community.general.nsupdate:
     key_name: "nsupdate.key"
-    server: "kovalart-3"
+    server: "{{ groups['dns_primary'][0] }}"
     key_algorithm: "hmac-sha256"
     key_secret: "{{ nsupdate_secret }}"
     zone: "{{ startup_name }}"
@@ -81,4 +81,19 @@
     record: "{{ item.service }}"
   loop:
     - { service: "www-1", target: "kovalart-1" }
+  when: inventory_hostname == 'kovalart-1'
+
+- name: Create CNAME records for Agama instances 2
+  community.general.nsupdate:
+    key_name: "nsupdate.key"
+    server: "{{ groups['dns_primary'][0] }}"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ nsupdate_secret }}"
+    zone: "{{ startup_name }}"
+    state: present
+    type: "CNAME"
+    value: "{{ item.target }}"
+    record: "{{ item.service }}"
+  loop:
     - { service: "www-2", target: "kovalart-2" }
+  when: inventory_hostname == 'kovalart-2'

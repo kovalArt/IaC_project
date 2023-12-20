@@ -1,0 +1,16 @@
+
+#Clear the influxdb folder date on host from old backups at 20:05 (8:05) UTC PM - from Monday to Sunday
+05 20 * * 0-6 backup rm -rf /home/backup/influxdb/*
+
+#Create influxdb telegraf database dumps at 20:06 (8:06) UTC PM - from Monday to Sunday 
+06 20 * * 0-6 backup influxd backup -portable -database telegraf /home/backup/influxdb
+
+#Create incremental influxdb telegraf database backup at 20:07 (8:07) UTC PM - from Monday to Saturday 
+07 20 * * 1-6 backup  duplicity --no-encryption incremental /home/backup/influxdb rsync://kovalArt@backup.{{startup_name}}:/influxdb
+
+#Create an full backup at 20:08 (8:08 PM) UTC - every Sunday
+08 20 * * 0 backup duplicity --no-encryption full /home/backup/influxdb/ rsync://kovalArt@backup.{{startup_name}}:/influxdb
+
+#Delete old backups, that are older that 40D old each Monday at 20:30 (8:30 PM) UTC
+30 20 * * 1 backup duplicity remove-older-than 40D rsync://kovalArt@backup.{{startup_name}}:/influxdb --force
+

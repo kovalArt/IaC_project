@@ -3,4 +3,10 @@
     name: nginx
     state: restarted 
     enabled: true
+
+- name: restart nginx exporter
+  service:
+    name: prometheus-nginx-exporter
+    state: restarted 
+    enabled: true
   
