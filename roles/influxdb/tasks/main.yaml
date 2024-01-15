@@ -8,6 +8,7 @@
   - name: Dpkg InfluxDB
     apt:
       deb: "/home/ubuntu/influxdb_1.8.10_amd64.deb"
+      state: present
 
   - name: Change the config for Influxdb
     copy:
@@ -105,4 +106,5 @@
       state: present
       record: "influxdb"
       type: "CNAME"
-      value: "kovalart-3"
+      value: "{{ hostvars[groups['influxdb'][0]]['ansible_hostname'] }}"
+    no_log: true

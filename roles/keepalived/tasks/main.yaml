@@ -1,7 +1,7 @@
 - name: Install keepalived
   apt:
-    pkg: 
-      - keepalived
+    name: keepalived
+    state: present
 
 - name: Copy check script to keepalived_script user's home folder
   copy:
@@ -20,22 +20,14 @@
   notify: Restart keepalived
   no_log: true
 
-- name: Start the service
-  service:
-    name: "{{ item }}"
-    state: started
-    enabled: true
-  loop:
-    - keepalived
-
 - name: Download Keepalived Exporter
   get_url:
     url: http://backup/keepalived-exporter-1.2.0.linux-amd64.tar.gz
-    dest: /home/ubuntu/keepalived-exporter-1.2.0.linux-amd64.tar.gz
+    dest: /usr/local/bin/keepalived-exporter-1.2.0.linux-amd64.tar.gz
 
 - name: Extract Keepalived Exporter
   ansible.builtin.unarchive:
-    src: /home/ubuntu/keepalived-exporter-1.2.0.linux-amd64.tar.gz
+    src: /usr/local/bin/keepalived-exporter-1.2.0.linux-amd64.tar.gz
     dest: /usr/local/bin/
     remote_src: yes
 
@@ -52,8 +44,11 @@
   ansible.builtin.systemd:
     daemon_reload: yes
 
-- name: Start and enable Keepalived Exporter service
-  ansible.builtin.systemd:
-    name: keepalived-exporter
+- name: Start the service
+  service:
+    name: "{{ item }}"
     state: started
-    enabled: yes
+    enabled: true
+  loop:
+    - keepalived
+    - keepalived-exporter

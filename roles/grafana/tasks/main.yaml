@@ -46,7 +46,9 @@
     state: present
     record: "grafana"
     type: "CNAME"
-    value: "{{ grafana_host }}"
+    value: "{{ hostvars[groups['grafana'][0]]['ansible_hostname'] }}"
+  no_log: true
+  
   
 
     

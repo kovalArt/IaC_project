@@ -1,6 +1,7 @@
 - name: Install mysql
   apt:
     name: mysql-server
+    state: present
 
 - name: copy the mysql config file and restart mysql server
   template:
@@ -19,6 +20,7 @@
 - name: Install required Python Library
   apt:
     name: python3-pymysql  
+    state: present
 
 - name: MySQL database
   community.mysql.mysql_db:
@@ -49,12 +51,14 @@
 - name: Install Exporter 
   apt:
     name: prometheus-mysqld-exporter
+    state: present
 
 - name: Update the MySQL exporter
   copy:
     src: ../files/mysql_exporter
     dest: /etc/default/prometheus-mysqld-exporter
   notify: restart mysql-exporter
+  no_log: true
 
 - name: Copy the config file 
   template:
@@ -144,26 +148,7 @@
     zone: "{{ startup_name }}"
     state: present
     type: "CNAME"
-    value: "{{ item.target }}"
-    record: "{{ item.service }}"
-  loop:
-    - { service: "mysql-1", target: "kovalart-1" }
-  when: inventory_hostname == 'kovalart-1'
-
-- name: Create CNAME records for MySQL instances 2
-  community.general.nsupdate:
-    key_name: "nsupdate.key"
-    server: "{{ groups['dns_primary'][0] }}"
-    key_algorithm: "hmac-sha256"
-    key_secret: "{{ nsupdate_secret }}"
-    zone: "{{ startup_name }}"
-    state: present
-    type: "CNAME"
-    value: "{{ item.target }}"
-    record: "{{ item.service }}"
-  loop:
-    - { service: "mysql-2", target: "kovalart-2" }
-  when: inventory_hostname == 'kovalart-2'
-
-
-
+    value: "{{ hostvars[groups['db_servers'][item]]['ansible_hostname'] }}"
+    record: "mysql-{{ item + 1 }}"
+  loop: "{{ range( groups['db_servers'] | length ) }}"
+  no_log: true

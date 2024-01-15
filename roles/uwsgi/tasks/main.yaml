@@ -5,6 +5,7 @@
     - uwsgi
     - uwsgi-plugin-python3
     - python3-pymysql
+    state: present
 
 - name: Configure uWSGI for AGAMA application
   template:

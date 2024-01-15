@@ -1,6 +1,7 @@
-- name: Ensure nginx is installed and in working state
+- name: Ensure nginx is installed
   apt: 
     name: nginx  
+    state: present
 
 - name: Copy Nginx default config to sites-enabled
   template:
@@ -20,6 +21,7 @@
 - name: Install exporter
   apt:
     name: prometheus-nginx-exporter
+    state: present
 
 - name: Run the nginx exporter
   service:

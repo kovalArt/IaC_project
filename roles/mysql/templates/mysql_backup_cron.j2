@@ -4,8 +4,8 @@
 #Make a dump of agama database at 18:30 (6:30 PM) UTC - from Monday to Sunday
 30 18 * * 0-6 backup /usr/bin/mysqldump agama > /home/backup/mysql/agama.sql
 
-#Create an incremental backup at 18:31 (6:31 PM) UTC - from Monday to Saturday
-31 18 * * 1-6 backup duplicity --no-encryption incremental /home/backup/mysql/ rsync://kovalArt@backup.{{startup_name}}:/mysql
+#Create an incremental backup at 20:31 (8:31 PM) UTC - from Monday to Saturday
+31 20 * * 1-6 backup duplicity --no-encryption incremental /home/backup/mysql/ rsync://kovalArt@backup.{{startup_name}}:/mysql
 
 #Create a full backup at 20:30 (8:30 PM) UTC - every Sunday
 30 20 * * 0 backup duplicity --no-encryption full /home/backup/mysql/ rsync://kovalArt@backup.{{startup_name}}:/mysql
@@ -14,4 +14,5 @@
 27 20 * * 1 backup duplicity remove-older-than 40D rsync://kovalArt@backup.{{startup_name}}:/mysql --force
 
 {% endif %}
+
 

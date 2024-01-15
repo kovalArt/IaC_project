@@ -16,13 +16,15 @@
 
 # Restore MySQL data from the backup:
 
-    1. Establish SSH connection to the host, where you have MySQL in Read/Write mode and issue the following command:
+    1. Establish SSH connection to the host, where you have MySQL in Read/Write (Primary) mode and issue the following command:
     
     sudo -u backup duplicity --no-encryption restore rsync://kovalArt@backup.infocare.io/mysql /home/backup/restore/mysql
 
     2. After the backup has downloaded - issue this command to use the backup. This action should be done as root user!
+        
+        1. sudo su
 
-    mysql agama < /home/backup/restore/mysql/agama.sql
+        2. mysql agama < /home/backup/restore/mysql/agama.sql
 
     3. Check the result. MySQL should now have fresh data from backup and agama database available
 
@@ -34,6 +36,8 @@
 
     2. After the backup has downloaded - issue this command to use the backup. This action should be done as root user!
 
-    influxd restore -portable -database telegraf /home/backup/restore/influxdb
+        1. sudo su 
+
+        2. influxd restore -portable -database telegraf /home/backup/restore/influxdb
 
     3. Check the result. InfluxDB should now have fresh data from backup and telegraf database available

@@ -86,6 +86,7 @@
     state: started
     enabled: true
 
+# Did this way, because the order of machines changed while running the playbook
 - name: Create CNAME records for DNS instances
   community.general.nsupdate:
     key_name: "nsupdate.key"

@@ -7,8 +7,7 @@
 - name: Install Prometheus nodes
   become: yes
   apt:    
-    name:
-      - prometheus-node-exporter
+    name: prometheus-node-exporter
     state: present
 
 - name: Ensure the Node Exporters are started
@@ -61,6 +60,7 @@
     owner: backup
     group: backup
     mode: '0700'
+  no_log: true
 
 - name: Generate SSH keypair for backup user
   openssh_keypair:
@@ -85,6 +85,7 @@
     owner: backup
     group: backup
     mode: '0755'
+  no_log: true
 
 - name: Ensure Duplicity is installed
   apt:

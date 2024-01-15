@@ -2,8 +2,7 @@
 
 - name: Install Prometheus
   apt:
-    name:
-      prometheus
+    name: prometheus
     state: present
 
 - name: Copy Prometheus Configuration
@@ -14,8 +13,6 @@
   notify:
     - restart prometheus
 
-# === Task 3 (Install Nginx and set Reverse Proxy) === 
-
 - name: Copy Prometheus service configuration
   template:
     src: prom.service.j2
@@ -23,6 +20,12 @@
   no_log: true
   notify:
     - restart prometheus
+
+- name: Start the prometheus 
+  service:
+    name: prometheus
+    state: started
+    enabled: true
 
 - name: Create CNAME record for prometheus
   community.general.nsupdate:
@@ -34,4 +37,5 @@
     state: present
     record: "prometheus"
     type: "CNAME"
-    value: "kovalart-3"
+    value: "{{ hostvars[groups['prometheus'][0]]['ansible_hostname'] }}"
+  no_log: true
