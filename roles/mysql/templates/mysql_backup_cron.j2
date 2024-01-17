@@ -2,7 +2,7 @@
 {% if inventory_hostname == mysql_backup_host %}
 
 #Make a dump of agama database at 18:30 (6:30 PM) UTC - from Monday to Sunday
-30 18 * * 0-6 backup /usr/bin/mysqldump agama > /home/backup/mysql/agama.sql
+20 20 * * 0-6 backup /usr/bin/mysqldump agama > /home/backup/mysql/agama.sql
 
 #Create an incremental backup at 20:31 (8:31 PM) UTC - from Monday to Saturday
 31 20 * * 1-6 backup duplicity --no-encryption incremental /home/backup/mysql/ rsync://kovalArt@backup.{{startup_name}}:/mysql
