@@ -1,4 +1,4 @@
-Tue Jan 16 09:55:03 EET 2024
+Wed Jan 17 10:45:55 EET 2024
 + hostname
 MacBook-Pro-Artem.local
 + ansible-playbook infra.yaml --diff
@@ -11,7 +11,7 @@ ok: [kovalart-2]
 ok: [kovalart-1]
 
 TASK [init : Update APT cache] *************************************************
-ok: [kovalart-3]
+changed: [kovalart-3]
 changed: [kovalart-2]
 changed: [kovalart-1]
 
@@ -26,17 +26,6 @@ The following NEW packages will be installed:
   moreutils prometheus-node-exporter prometheus-node-exporter-collectors
   smartmontools
 0 upgraded, 8 newly installed, 0 to remove and 267 not upgraded.
-changed: [kovalart-3]
-The following additional packages will be installed:
-  libio-pty-perl libipc-run-perl libtime-duration-perl libtimedate-perl
-  moreutils prometheus-node-exporter-collectors smartmontools
-Suggested packages:
-  gsmartcontrol smart-notifier mailx | mailutils
-The following NEW packages will be installed:
-  libio-pty-perl libipc-run-perl libtime-duration-perl libtimedate-perl
-  moreutils prometheus-node-exporter prometheus-node-exporter-collectors
-  smartmontools
-0 upgraded, 8 newly installed, 0 to remove and 267 not upgraded.
 changed: [kovalart-2]
 The following additional packages will be installed:
   libio-pty-perl libipc-run-perl libtime-duration-perl libtimedate-perl
@@ -49,18 +38,28 @@ The following NEW packages will be installed:
   smartmontools
 0 upgraded, 8 newly installed, 0 to remove and 267 not upgraded.
 changed: [kovalart-1]
+The following additional packages will be installed:
+  libio-pty-perl libipc-run-perl libtime-duration-perl libtimedate-perl
+  moreutils prometheus-node-exporter-collectors smartmontools
+Suggested packages:
+  gsmartcontrol smart-notifier mailx | mailutils
+The following NEW packages will be installed:
+  libio-pty-perl libipc-run-perl libtime-duration-perl libtimedate-perl
+  moreutils prometheus-node-exporter prometheus-node-exporter-collectors
+  smartmontools
+0 upgraded, 8 newly installed, 0 to remove and 267 not upgraded.
+changed: [kovalart-3]
 
 TASK [init : Ensure the Node Exporters are started] ****************************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [init : Ensure ca-certificates is installed with a specific version] ******
 The following packages will be upgraded:
   ca-certificates
-Preconfiguring packages ...
 1 upgraded, 0 newly installed, 0 to remove and 266 not upgraded.
-changed: [kovalart-3]
+changed: [kovalart-2]
 The following packages will be upgraded:
   ca-certificates
 1 upgraded, 0 newly installed, 0 to remove and 266 not upgraded.
@@ -68,17 +67,17 @@ changed: [kovalart-1]
 The following packages will be upgraded:
   ca-certificates
 1 upgraded, 0 newly installed, 0 to remove and 266 not upgraded.
-changed: [kovalart-2]
+changed: [kovalart-3]
 
 TASK [init : Install Rsyslog] **************************************************
 ok: [kovalart-2]
-ok: [kovalart-1]
 ok: [kovalart-3]
+ok: [kovalart-1]
 
 TASK [init : Add the Rsyslog configuration for the Telegraf] *******************
-changed: [kovalart-2]
-changed: [kovalart-3]
 changed: [kovalart-1]
+changed: [kovalart-3]
+changed: [kovalart-2]
 
 TASK [init : Run Rsyslog] ******************************************************
 ok: [kovalart-1]
@@ -86,9 +85,9 @@ ok: [kovalart-2]
 ok: [kovalart-3]
 
 TASK [init : Create backup user] ***********************************************
-changed: [kovalart-1]
 changed: [kovalart-2]
 changed: [kovalart-3]
+changed: [kovalart-1]
 
 TASK [init : Ensure .ssh directory exists for backup user] *********************
 changed: [kovalart-1]
@@ -97,8 +96,8 @@ changed: [kovalart-3]
 
 TASK [init : Generate SSH keypair for backup user] *****************************
 changed: [kovalart-1]
-changed: [kovalart-3]
 changed: [kovalart-2]
+changed: [kovalart-3]
 
 TASK [init : Add backup server SSH key to known hosts] *************************
 changed: [kovalart-1]
@@ -106,8 +105,8 @@ changed: [kovalart-2]
 changed: [kovalart-3]
 
 TASK [init : Ensure /home/backup/restore directory is created] *****************
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 changed: [kovalart-3]
 
 TASK [init : Ensure Duplicity is installed] ************************************
@@ -121,17 +120,6 @@ The following NEW packages will be installed:
   duplicity librsync2 python3-bcrypt python3-fasteners python3-future
   python3-lockfile python3-monotonic python3-paramiko
 0 upgraded, 8 newly installed, 0 to remove and 266 not upgraded.
-changed: [kovalart-3]
-The following additional packages will be installed:
-  librsync2 python3-bcrypt python3-fasteners python3-future python3-lockfile
-  python3-monotonic python3-paramiko
-Suggested packages:
-  python3-boto ncftp lftp tahoe-lafs python3-swiftclient python3-pip par2
-  python-future-doc python-lockfile-doc python3-gssapi
-The following NEW packages will be installed:
-  duplicity librsync2 python3-bcrypt python3-fasteners python3-future
-  python3-lockfile python3-monotonic python3-paramiko
-0 upgraded, 8 newly installed, 0 to remove and 266 not upgraded.
 changed: [kovalart-2]
 The following additional packages will be installed:
   librsync2 python3-bcrypt python3-fasteners python3-future python3-lockfile
@@ -144,18 +132,29 @@ The following NEW packages will be installed:
   python3-lockfile python3-monotonic python3-paramiko
 0 upgraded, 8 newly installed, 0 to remove and 266 not upgraded.
 changed: [kovalart-1]
+The following additional packages will be installed:
+  librsync2 python3-bcrypt python3-fasteners python3-future python3-lockfile
+  python3-monotonic python3-paramiko
+Suggested packages:
+  python3-boto ncftp lftp tahoe-lafs python3-swiftclient python3-pip par2
+  python-future-doc python-lockfile-doc python3-gssapi
+The following NEW packages will be installed:
+  duplicity librsync2 python3-bcrypt python3-fasteners python3-future
+  python3-lockfile python3-monotonic python3-paramiko
+0 upgraded, 8 newly installed, 0 to remove and 266 not upgraded.
+changed: [kovalart-3]
 
 RUNNING HANDLER [init : restart rsyslog] ***************************************
+changed: [kovalart-1]
 changed: [kovalart-3]
 changed: [kovalart-2]
-changed: [kovalart-1]
 [WARNING]: Could not match supplied host pattern, ignoring: children
 
 PLAY [DNS server tasks] ********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-3]
 ok: [kovalart-1]
+ok: [kovalart-3]
 ok: [kovalart-2]
 
 TASK [bind : Install Bind9] ****************************************************
@@ -184,7 +183,7 @@ The following NEW packages will be installed:
 The following packages will be upgraded:
   bind9-dnsutils bind9-libs libssl1.1
 3 upgraded, 9 newly installed, 0 to remove and 263 not upgraded.
-changed: [kovalart-2]
+changed: [kovalart-1]
 The following additional packages will be installed:
   bind9-dnsutils bind9-libs bind9-utils dns-root-data libdpkg-perl
   libfile-fcntllock-perl libssl1.1 python3-ply
@@ -197,16 +196,16 @@ The following NEW packages will be installed:
 The following packages will be upgraded:
   bind9-dnsutils bind9-libs libssl1.1
 3 upgraded, 9 newly installed, 0 to remove and 263 not upgraded.
-changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [bind : Configure DNS forwarders] *****************************************
-changed: [kovalart-2]
-changed: [kovalart-1]
 changed: [kovalart-3]
+changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [bind : Configure DNS] ****************************************************
-changed: [kovalart-1]
 changed: [kovalart-3]
+changed: [kovalart-1]
 changed: [kovalart-2]
 
 TASK [bind : Configure Master Zone] ********************************************
@@ -223,37 +222,37 @@ TASK [bind : Run handlers] *****************************************************
 
 RUNNING HANDLER [bind : restart bind9] *****************************************
 changed: [kovalart-3]
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 RUNNING HANDLER [bind : restart rndc] ******************************************
-changed: [kovalart-2]
 changed: [kovalart-3]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [bind : Ensure Bind9 service is running and enabled] **********************
+ok: [kovalart-3]
 ok: [kovalart-1]
 ok: [kovalart-2]
-ok: [kovalart-3]
 
 TASK [bind : Install Bind exporter] ********************************************
 The following NEW packages will be installed:
   prometheus-bind-exporter
 0 upgraded, 1 newly installed, 0 to remove and 263 not upgraded.
+changed: [kovalart-3]
+The following NEW packages will be installed:
+  prometheus-bind-exporter
+0 upgraded, 1 newly installed, 0 to remove and 263 not upgraded.
 changed: [kovalart-1]
 The following NEW packages will be installed:
   prometheus-bind-exporter
 0 upgraded, 1 newly installed, 0 to remove and 263 not upgraded.
 changed: [kovalart-2]
-The following NEW packages will be installed:
-  prometheus-bind-exporter
-0 upgraded, 1 newly installed, 0 to remove and 263 not upgraded.
-changed: [kovalart-3]
 
 TASK [bind : Ensure bind exporter is running and enabled] **********************
 ok: [kovalart-3]
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [bind : Create CNAME records for DNS instances] ***************************
 skipping: [kovalart-1] => (item={'service': 'ns-1', 'target': 'kovalart-1'}) 
@@ -275,13 +274,13 @@ ok: [kovalart-2]
 
 TASK [resolv_dns : Shut down systemd-resolved] *********************************
 changed: [kovalart-1]
-changed: [kovalart-2]
 changed: [kovalart-3]
+changed: [kovalart-2]
 
 TASK [resolv_dns : Change resolv.conf on all VMs] ******************************
 changed: [kovalart-1]
-changed: [kovalart-2]
 changed: [kovalart-3]
+changed: [kovalart-2]
 
 PLAY [Database server] *********************************************************
 
@@ -332,8 +331,8 @@ changed: [kovalart-1]
 changed: [kovalart-2]
 
 TASK [mysql : Start mysql] *****************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : Install required Python Library] *********************************
 Suggested packages:
@@ -350,16 +349,16 @@ The following NEW packages will be installed:
 changed: [kovalart-2]
 
 TASK [mysql : MySQL database] **************************************************
-changed: [kovalart-1]
 changed: [kovalart-2]
+changed: [kovalart-1]
 
 TASK [mysql : MySQL user] ******************************************************
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [mysql : Create MySQL exporter user] **************************************
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [mysql : Install Exporter] ************************************************
 The following additional packages will be installed:
@@ -380,21 +379,23 @@ changed: [kovalart-1]
 changed: [kovalart-2]
 
 TASK [mysql : Copy the config file] ********************************************
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [mysql : Start Mysql exporter] ********************************************
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [mysql : Ensure that mysql directory exists] ******************************
 --- before
 +++ after
-@@ -1,6 +1,6 @@
+@@ -1,7 +1,7 @@
  {
 -    "group": 0,
+-    "mode": "0755",
 -    "owner": 0,
 +    "group": 34,
++    "mode": "0700",
 +    "owner": 34,
      "path": "/home/backup/mysql",
 -    "state": "absent"
@@ -404,11 +405,13 @@ TASK [mysql : Ensure that mysql directory exists] ******************************
 changed: [kovalart-1]
 --- before
 +++ after
-@@ -1,6 +1,6 @@
+@@ -1,7 +1,7 @@
  {
 -    "group": 0,
+-    "mode": "0755",
 -    "owner": 0,
 +    "group": 34,
++    "mode": "0700",
 +    "owner": 34,
      "path": "/home/backup/mysql",
 -    "state": "absent"
@@ -434,48 +437,48 @@ skipping: [kovalart-1]
 skipping: [kovalart-2]
 
 TASK [mysql : Schedule MySQL backups with Cron] ********************************
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [mysql : Create MySQL user named replica with required privileges] ********
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [mysql : Read only mode for the Replica MySQL host] ***********************
 changed: [kovalart-1]
 changed: [kovalart-2]
 
 TASK [mysql : Create CNAME records for MySQL instances 1] **********************
+changed: [kovalart-1] => (item=None)
+ok: [kovalart-2] => (item=None)
 ok: [kovalart-2] => (item=None)
 changed: [kovalart-1] => (item=None)
-changed: [kovalart-2] => (item=None)
-ok: [kovalart-1] => (item=None)
-changed: [kovalart-2]
+ok: [kovalart-2]
 changed: [kovalart-1]
 
 RUNNING HANDLER [mysql : restart mysql] ****************************************
-changed: [kovalart-1]
 changed: [kovalart-2]
+changed: [kovalart-1]
 
 RUNNING HANDLER [mysql : restart mysql-exporter] *******************************
 changed: [kovalart-1]
 changed: [kovalart-2]
 
 RUNNING HANDLER [mysql : Reset MySQL source] ***********************************
-skipping: [kovalart-2] => (item=stopreplica) 
-skipping: [kovalart-2] => (item=resetprimary) 
-ok: [kovalart-1] => (item=stopreplica)
-changed: [kovalart-1] => (item=resetprimary)
+skipping: [kovalart-1] => (item=stopreplica) 
+skipping: [kovalart-1] => (item=resetprimary) 
+ok: [kovalart-2] => (item=stopreplica)
+changed: [kovalart-2] => (item=resetprimary)
 
 RUNNING HANDLER [mysql : Reset MySQL replica] **********************************
-skipping: [kovalart-1] => (item=stopreplica) 
-skipping: [kovalart-1] => (item=changeprimary) 
-skipping: [kovalart-1] => (item=resetreplica) 
-skipping: [kovalart-1] => (item=startreplica) 
-ok: [kovalart-2] => (item=stopreplica)
-changed: [kovalart-2] => (item=changeprimary)
-changed: [kovalart-2] => (item=resetreplica)
-changed: [kovalart-2] => (item=startreplica)
+skipping: [kovalart-2] => (item=stopreplica) 
+skipping: [kovalart-2] => (item=changeprimary) 
+skipping: [kovalart-2] => (item=resetreplica) 
+skipping: [kovalart-2] => (item=startreplica) 
+ok: [kovalart-1] => (item=stopreplica)
+changed: [kovalart-1] => (item=changeprimary)
+changed: [kovalart-1] => (item=resetreplica)
+changed: [kovalart-1] => (item=startreplica)
 
 PLAY [Prometheus tasks] ********************************************************
 
@@ -519,8 +522,8 @@ PLAY [Docker tasks] ************************************************************
 
 TASK [Gathering Facts] *********************************************************
 ok: [kovalart-3]
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [docker : Install Docker.io package] **************************************
 The following additional packages will be installed:
@@ -531,7 +534,7 @@ Suggested packages:
 The following NEW packages will be installed:
   bridge-utils containerd dnsmasq-base docker.io libidn11 pigz runc ubuntu-fan
 0 upgraded, 8 newly installed, 0 to remove and 263 not upgraded.
-changed: [kovalart-2]
+changed: [kovalart-1]
 The following additional packages will be installed:
   bridge-utils containerd dnsmasq-base libidn11 pigz runc ubuntu-fan
 Suggested packages:
@@ -549,7 +552,7 @@ Suggested packages:
 The following NEW packages will be installed:
   bridge-utils containerd dnsmasq-base docker.io libidn11 pigz runc ubuntu-fan
 0 upgraded, 8 newly installed, 0 to remove and 263 not upgraded.
-changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [docker : Install python3-docker package] *********************************
 The following additional packages will be installed:
@@ -557,13 +560,13 @@ The following additional packages will be installed:
 The following NEW packages will be installed:
   python3-docker python3-websocket
 0 upgraded, 2 newly installed, 0 to remove and 263 not upgraded.
-changed: [kovalart-3]
+changed: [kovalart-1]
 The following additional packages will be installed:
   python3-websocket
 The following NEW packages will be installed:
   python3-docker python3-websocket
 0 upgraded, 2 newly installed, 0 to remove and 263 not upgraded.
-changed: [kovalart-1]
+changed: [kovalart-3]
 The following additional packages will be installed:
   python3-websocket
 The following NEW packages will be installed:
@@ -572,9 +575,9 @@ The following NEW packages will be installed:
 changed: [kovalart-2]
 
 TASK [docker : Ensure Docker daemon is running and enabled] ********************
+ok: [kovalart-3]
 ok: [kovalart-2]
 ok: [kovalart-1]
-ok: [kovalart-3]
 
 PLAY [Grafana Tasks] ***********************************************************
 
@@ -646,8 +649,8 @@ changed: [kovalart-3]
 PLAY [Agama tasks] *************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [agama : Agama directory] *************************************************
 --- before
@@ -659,7 +662,7 @@ TASK [agama : Agama directory] *************************************************
 +    "state": "directory"
  }
 
-changed: [kovalart-2]
+changed: [kovalart-1]
 --- before
 +++ after
 @@ -1,4 +1,4 @@
@@ -669,7 +672,7 @@ changed: [kovalart-2]
 +    "state": "directory"
  }
 
-changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [agama : Configure AGAMA application] *************************************
 changed: [kovalart-1]
@@ -684,18 +687,18 @@ changed: [kovalart-1]
 changed: [kovalart-2]
 
 TASK [agama : Build agama image] ***********************************************
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [agama : Create Agama Containers] *****************************************
 changed: [kovalart-1] => (item=None)
 changed: [kovalart-2] => (item=None)
-changed: [kovalart-2] => (item=None)
 changed: [kovalart-1] => (item=None)
 changed: [kovalart-2] => (item=None)
-changed: [kovalart-2]
 changed: [kovalart-1] => (item=None)
 changed: [kovalart-1]
+changed: [kovalart-2] => (item=None)
+changed: [kovalart-2]
 
 TASK [agama : Gather information about all running containers] *****************
 ok: [kovalart-1]
@@ -711,48 +714,18 @@ skipping: [kovalart-2] => (item=agama1)
 
 TASK [agama : Create CNAME records for Agama instances] ************************
 changed: [kovalart-1] => (item=None)
-ok: [kovalart-2] => (item=None)
+changed: [kovalart-2] => (item=None)
 changed: [kovalart-1] => (item=None)
 changed: [kovalart-1]
-changed: [kovalart-2] => (item=None)
+ok: [kovalart-2] => (item=None)
 changed: [kovalart-2]
 
 PLAY [Web server tasks] ********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
 
 TASK [nginx : Ensure nginx is installed] ***************************************
-The following additional packages will be installed:
-  fontconfig-config fonts-dejavu-core libfontconfig1 libgd3 libjbig0
-  libjpeg-turbo8 libjpeg8 libnginx-mod-http-image-filter
-  libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream libtiff5
-  libwebp6 libxpm4 nginx-common nginx-core
-Suggested packages:
-  libgd-tools fcgiwrap nginx-doc ssl-cert
-The following NEW packages will be installed:
-  fontconfig-config fonts-dejavu-core libfontconfig1 libgd3 libjbig0
-  libjpeg-turbo8 libjpeg8 libnginx-mod-http-image-filter
-  libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream libtiff5
-  libwebp6 libxpm4 nginx nginx-common nginx-core
-0 upgraded, 17 newly installed, 0 to remove and 263 not upgraded.
-changed: [kovalart-1]
-The following additional packages will be installed:
-  fontconfig-config fonts-dejavu-core libfontconfig1 libgd3 libjbig0
-  libjpeg-turbo8 libjpeg8 libnginx-mod-http-image-filter
-  libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream libtiff5
-  libwebp6 libxpm4 nginx-common nginx-core
-Suggested packages:
-  libgd-tools fcgiwrap nginx-doc ssl-cert
-The following NEW packages will be installed:
-  fontconfig-config fonts-dejavu-core libfontconfig1 libgd3 libjbig0
-  libjpeg-turbo8 libjpeg8 libnginx-mod-http-image-filter
-  libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream libtiff5
-  libwebp6 libxpm4 nginx nginx-common nginx-core
-0 upgraded, 17 newly installed, 0 to remove and 263 not upgraded.
-changed: [kovalart-2]
 The following additional packages will be installed:
   fontconfig-config fonts-dejavu-core libfontconfig1 libgd3 libjbig0
   libjpeg-turbo8 libjpeg8 libnginx-mod-http-image-filter
@@ -770,42 +743,24 @@ changed: [kovalart-3]
 
 TASK [nginx : Copy Nginx default config to sites-enabled] **********************
 changed: [kovalart-3]
-changed: [kovalart-2]
-changed: [kovalart-1]
 
 TASK [nginx : start nginx] *****************************************************
-ok: [kovalart-2]
-ok: [kovalart-1]
 ok: [kovalart-3]
 
 TASK [nginx : Install exporter] ************************************************
 The following NEW packages will be installed:
   prometheus-nginx-exporter
 0 upgraded, 1 newly installed, 0 to remove and 263 not upgraded.
-changed: [kovalart-2]
-The following NEW packages will be installed:
-  prometheus-nginx-exporter
-0 upgraded, 1 newly installed, 0 to remove and 263 not upgraded.
 changed: [kovalart-3]
-The following NEW packages will be installed:
-  prometheus-nginx-exporter
-0 upgraded, 1 newly installed, 0 to remove and 263 not upgraded.
-changed: [kovalart-1]
 
 TASK [nginx : Run the nginx exporter] ******************************************
-changed: [kovalart-1]
-changed: [kovalart-2]
 changed: [kovalart-3]
 
 RUNNING HANDLER [nginx : restart nginx] ****************************************
 changed: [kovalart-3]
-changed: [kovalart-2]
-changed: [kovalart-1]
 
 RUNNING HANDLER [nginx : restart nginx exporter] *******************************
 changed: [kovalart-3]
-changed: [kovalart-1]
-changed: [kovalart-2]
 
 PLAY [Influxdb tasks] **********************************************************
 
@@ -859,11 +814,13 @@ changed: [kovalart-3] => (item=prometheus-influxdb-stats-exporter)
 TASK [influxdb : Ensure that influxdb directory exists] ************************
 --- before
 +++ after
-@@ -1,6 +1,6 @@
+@@ -1,7 +1,7 @@
  {
 -    "group": 0,
+-    "mode": "0755",
 -    "owner": 0,
 +    "group": 34,
++    "mode": "0700",
 +    "owner": 34,
      "path": "/home/backup/influxdb",
 -    "state": "absent"
@@ -957,52 +914,52 @@ The following NEW packages will be installed:
 changed: [kovalart-2]
 
 TASK [haproxy : Copy the Haproxy config] ***************************************
-changed: [kovalart-1]
 changed: [kovalart-2]
+changed: [kovalart-1]
 
 TASK [haproxy : Start the service] *********************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [haproxy : Install prometheus-haproxy-exporter using APT] *****************
 The following NEW packages will be installed:
   prometheus-haproxy-exporter
 0 upgraded, 1 newly installed, 0 to remove and 263 not upgraded.
-changed: [kovalart-2]
+changed: [kovalart-1]
 The following NEW packages will be installed:
   prometheus-haproxy-exporter
 0 upgraded, 1 newly installed, 0 to remove and 263 not upgraded.
-changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [haproxy : Configure haproxy.scrape-uri in /etc/default/prometheus-haproxy-exporter] ***
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [haproxy : Start haproxy exporter] ****************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [haproxy : Create CNAME records for HAproxy instances] ********************
-ok: [kovalart-1] => (item=None)
+changed: [kovalart-1] => (item=None)
 changed: [kovalart-2] => (item=None)
-ok: [kovalart-1] => (item=None)
+changed: [kovalart-1] => (item=None)
 changed: [kovalart-2] => (item=None)
-ok: [kovalart-1]
+changed: [kovalart-1]
 changed: [kovalart-2]
 
 RUNNING HANDLER [haproxy : Restart Haproxy] ************************************
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 RUNNING HANDLER [haproxy : restart prometheus-haproxy-exporter] ****************
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 PLAY [Keepalived tasks] ********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [keepalived : Install keepalived] *****************************************
 The following additional packages will be installed:
@@ -1031,24 +988,24 @@ changed: [kovalart-1]
 changed: [kovalart-2]
 
 TASK [keepalived : Copy the Keepalived config] *********************************
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [keepalived : Download Keepalived Exporter] *******************************
 changed: [kovalart-2]
 changed: [kovalart-1]
 
 TASK [keepalived : Extract Keepalived Exporter] ********************************
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 TASK [keepalived : Create systemd unit file] ***********************************
 changed: [kovalart-1]
 changed: [kovalart-2]
 
 TASK [keepalived : Reload systemd] *********************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [keepalived : Start the service] ******************************************
 changed: [kovalart-1] => (item=keepalived)
@@ -1057,13 +1014,13 @@ changed: [kovalart-1] => (item=keepalived-exporter)
 changed: [kovalart-2] => (item=keepalived-exporter)
 
 RUNNING HANDLER [keepalived : Restart keepalived] ******************************
-changed: [kovalart-2]
 changed: [kovalart-1]
+changed: [kovalart-2]
 
 PLAY RECAP *********************************************************************
-kovalart-1                 : ok=91   changed=68   unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
-kovalart-2                 : ok=91   changed=69   unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
-kovalart-3                 : ok=84   changed=65   unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+kovalart-1                 : ok=83   changed=63   unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
+kovalart-2                 : ok=83   changed=62   unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
+kovalart-3                 : ok=84   changed=66   unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
 
 + ansible-playbook infra.yaml --diff
 
@@ -1075,8 +1032,8 @@ ok: [kovalart-2]
 ok: [kovalart-3]
 
 TASK [init : Update APT cache] *************************************************
-ok: [kovalart-3]
 ok: [kovalart-1]
+ok: [kovalart-3]
 ok: [kovalart-2]
 
 TASK [init : Install Prometheus nodes] *****************************************
@@ -1085,39 +1042,39 @@ ok: [kovalart-3]
 ok: [kovalart-2]
 
 TASK [init : Ensure the Node Exporters are started] ****************************
-ok: [kovalart-1]
 ok: [kovalart-3]
+ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [init : Ensure ca-certificates is installed with a specific version] ******
-ok: [kovalart-2]
-ok: [kovalart-3]
 ok: [kovalart-1]
+ok: [kovalart-3]
+ok: [kovalart-2]
 
 TASK [init : Install Rsyslog] **************************************************
-ok: [kovalart-2]
-ok: [kovalart-3]
 ok: [kovalart-1]
+ok: [kovalart-3]
+ok: [kovalart-2]
 
 TASK [init : Add the Rsyslog configuration for the Telegraf] *******************
 ok: [kovalart-3]
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [init : Run Rsyslog] ******************************************************
-ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-2]
 ok: [kovalart-1]
 
 TASK [init : Create backup user] ***********************************************
 ok: [kovalart-3]
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [init : Ensure .ssh directory exists for backup user] *********************
+ok: [kovalart-1]
 ok: [kovalart-2]
 ok: [kovalart-3]
-ok: [kovalart-1]
 
 TASK [init : Generate SSH keypair for backup user] *****************************
 ok: [kovalart-1]
@@ -1125,19 +1082,19 @@ ok: [kovalart-2]
 ok: [kovalart-3]
 
 TASK [init : Add backup server SSH key to known hosts] *************************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [init : Ensure /home/backup/restore directory is created] *****************
-ok: [kovalart-2]
 ok: [kovalart-1]
 ok: [kovalart-3]
+ok: [kovalart-2]
 
 TASK [init : Ensure Duplicity is installed] ************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
 ok: [kovalart-3]
+ok: [kovalart-2]
 [WARNING]: Could not match supplied host pattern, ignoring: children
 
 PLAY [DNS server tasks] ********************************************************
@@ -1148,14 +1105,14 @@ ok: [kovalart-2]
 ok: [kovalart-1]
 
 TASK [bind : Install Bind9] ****************************************************
+ok: [kovalart-1]
 ok: [kovalart-3]
 ok: [kovalart-2]
-ok: [kovalart-1]
 
 TASK [bind : Configure DNS forwarders] *****************************************
 ok: [kovalart-3]
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [bind : Configure DNS] ****************************************************
 ok: [kovalart-1]
@@ -1175,9 +1132,9 @@ ok: [kovalart-3]
 TASK [bind : Run handlers] *****************************************************
 
 TASK [bind : Ensure Bind9 service is running and enabled] **********************
-ok: [kovalart-3]
 ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-3]
 
 TASK [bind : Install Bind exporter] ********************************************
 ok: [kovalart-3]
@@ -1203,29 +1160,29 @@ ok: [kovalart-3] => (item={'service': 'ns-3', 'target': 'kovalart-3'})
 PLAY [Resolv.conf task] ********************************************************
 
 TASK [Gathering Facts] *********************************************************
+ok: [kovalart-1]
 ok: [kovalart-3]
 ok: [kovalart-2]
-ok: [kovalart-1]
 
 TASK [resolv_dns : Shut down systemd-resolved] *********************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 ok: [kovalart-3]
 
 TASK [resolv_dns : Change resolv.conf on all VMs] ******************************
 ok: [kovalart-1]
-ok: [kovalart-3]
 ok: [kovalart-2]
+ok: [kovalart-3]
 
 PLAY [Database server] *********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [mysql : Install mysql] ***************************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [mysql : copy the mysql config file and restart mysql server] *************
 ok: [kovalart-1]
@@ -1244,8 +1201,8 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [mysql : MySQL user] ******************************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [mysql : Create MySQL exporter user] **************************************
 ok: [kovalart-1]
@@ -1264,8 +1221,8 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [mysql : Start Mysql exporter] ********************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [mysql : Ensure that mysql directory exists] ******************************
 ok: [kovalart-1]
@@ -1276,12 +1233,12 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [mysql : Ensure /home/backup/.my.cnf file is created] *********************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [mysql : Ensure user backup can create MySQL dumps without errors] ********
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : Fail if the dump command did not execute successfully] ***********
 skipping: [kovalart-1]
@@ -1300,12 +1257,12 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [mysql : Create CNAME records for MySQL instances 1] **********************
-ok: [kovalart-2] => (item=None)
 ok: [kovalart-1] => (item=None)
 ok: [kovalart-2] => (item=None)
-ok: [kovalart-2]
 ok: [kovalart-1] => (item=None)
 ok: [kovalart-1]
+ok: [kovalart-2] => (item=None)
+ok: [kovalart-2]
 
 PLAY [Prometheus tasks] ********************************************************
 
@@ -1331,23 +1288,23 @@ PLAY [Docker tasks] ************************************************************
 
 TASK [Gathering Facts] *********************************************************
 ok: [kovalart-3]
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [docker : Install Docker.io package] **************************************
-ok: [kovalart-2]
-ok: [kovalart-1]
 ok: [kovalart-3]
+ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [docker : Install python3-docker package] *********************************
-ok: [kovalart-2]
 ok: [kovalart-1]
 ok: [kovalart-3]
+ok: [kovalart-2]
 
 TASK [docker : Ensure Docker daemon is running and enabled] ********************
 ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-2]
 
 PLAY [Grafana Tasks] ***********************************************************
 
@@ -1387,8 +1344,8 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [agama : Configure AGAMA application] *************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [agama : Download agama.py] ***********************************************
 ok: [kovalart-2]
@@ -1399,18 +1356,18 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [agama : Build agama image] ***********************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [agama : Create Agama Containers] *****************************************
 ok: [kovalart-1] => (item=None)
 ok: [kovalart-2] => (item=None)
-ok: [kovalart-2] => (item=None)
 ok: [kovalart-1] => (item=None)
 ok: [kovalart-2] => (item=None)
-ok: [kovalart-2]
 ok: [kovalart-1] => (item=None)
 ok: [kovalart-1]
+ok: [kovalart-2] => (item=None)
+ok: [kovalart-2]
 
 TASK [agama : Gather information about all running containers] *****************
 ok: [kovalart-1]
@@ -1436,32 +1393,20 @@ PLAY [Web server tasks] ********************************************************
 
 TASK [Gathering Facts] *********************************************************
 ok: [kovalart-3]
-ok: [kovalart-1]
-ok: [kovalart-2]
 
 TASK [nginx : Ensure nginx is installed] ***************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
 
 TASK [nginx : Copy Nginx default config to sites-enabled] **********************
-ok: [kovalart-1]
 ok: [kovalart-3]
-ok: [kovalart-2]
 
 TASK [nginx : start nginx] *****************************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
 
 TASK [nginx : Install exporter] ************************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
 
 TASK [nginx : Run the nginx exporter] ******************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
 
 PLAY [Influxdb tasks] **********************************************************
@@ -1598,8 +1543,8 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [keepalived : Download Keepalived Exporter] *******************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [keepalived : Extract Keepalived Exporter] ********************************
 ok: [kovalart-1]
@@ -1620,24 +1565,24 @@ ok: [kovalart-2] => (item=keepalived-exporter)
 ok: [kovalart-1] => (item=keepalived-exporter)
 
 PLAY RECAP *********************************************************************
-kovalart-1                 : ok=80   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
-kovalart-2                 : ok=80   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
+kovalart-1                 : ok=74   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
+kovalart-2                 : ok=74   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
 kovalart-3                 : ok=73   changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
 
 + ansible all -b -m reboot -a test_command=uptime
 kovalart-3 | CHANGED => {
     "changed": true,
-    "elapsed": 41,
-    "rebooted": true
-}
-kovalart-1 | CHANGED => {
-    "changed": true,
-    "elapsed": 41,
+    "elapsed": 39,
     "rebooted": true
 }
 kovalart-2 | CHANGED => {
     "changed": true,
-    "elapsed": 52,
+    "elapsed": 42,
+    "rebooted": true
+}
+kovalart-1 | CHANGED => {
+    "changed": true,
+    "elapsed": 44,
     "rebooted": true
 }
 + ansible-playbook infra.yaml --diff
@@ -1645,8 +1590,8 @@ kovalart-2 | CHANGED => {
 PLAY [Initial setup] ***********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-2]
 ok: [kovalart-1]
 
 TASK [init : Update APT cache] *************************************************
@@ -1655,77 +1600,77 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [init : Install Prometheus nodes] *****************************************
-ok: [kovalart-1]
 ok: [kovalart-3]
+ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [init : Ensure the Node Exporters are started] ****************************
 ok: [kovalart-3]
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [init : Ensure ca-certificates is installed with a specific version] ******
-ok: [kovalart-2]
 ok: [kovalart-3]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [init : Install Rsyslog] **************************************************
-ok: [kovalart-2]
-ok: [kovalart-1]
 ok: [kovalart-3]
+ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [init : Add the Rsyslog configuration for the Telegraf] *******************
 ok: [kovalart-2]
-ok: [kovalart-1]
 ok: [kovalart-3]
+ok: [kovalart-1]
 
 TASK [init : Run Rsyslog] ******************************************************
-ok: [kovalart-2]
-ok: [kovalart-3]
 ok: [kovalart-1]
+ok: [kovalart-3]
+ok: [kovalart-2]
 
 TASK [init : Create backup user] ***********************************************
-ok: [kovalart-2]
-ok: [kovalart-3]
 ok: [kovalart-1]
+ok: [kovalart-3]
+ok: [kovalart-2]
 
 TASK [init : Ensure .ssh directory exists for backup user] *********************
-ok: [kovalart-2]
-ok: [kovalart-3]
 ok: [kovalart-1]
+ok: [kovalart-3]
+ok: [kovalart-2]
 
 TASK [init : Generate SSH keypair for backup user] *****************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 ok: [kovalart-3]
 
 TASK [init : Add backup server SSH key to known hosts] *************************
+ok: [kovalart-3]
 ok: [kovalart-2]
 ok: [kovalart-1]
-ok: [kovalart-3]
 
 TASK [init : Ensure /home/backup/restore directory is created] *****************
 ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-2]
 
 TASK [init : Ensure Duplicity is installed] ************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
 ok: [kovalart-3]
+ok: [kovalart-2]
 [WARNING]: Could not match supplied host pattern, ignoring: children
 
 PLAY [DNS server tasks] ********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-2]
 ok: [kovalart-3]
+ok: [kovalart-2]
 ok: [kovalart-1]
 
 TASK [bind : Install Bind9] ****************************************************
-ok: [kovalart-2]
-ok: [kovalart-3]
 ok: [kovalart-1]
+ok: [kovalart-3]
+ok: [kovalart-2]
 
 TASK [bind : Configure DNS forwarders] *****************************************
 ok: [kovalart-3]
@@ -1734,8 +1679,8 @@ ok: [kovalart-1]
 
 TASK [bind : Configure DNS] ****************************************************
 ok: [kovalart-1]
-ok: [kovalart-3]
 ok: [kovalart-2]
+ok: [kovalart-3]
 
 TASK [bind : Configure Master Zone] ********************************************
 skipping: [kovalart-1]
@@ -1761,8 +1706,8 @@ ok: [kovalart-1]
 
 TASK [bind : Ensure bind exporter is running and enabled] **********************
 ok: [kovalart-3]
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [bind : Create CNAME records for DNS instances] ***************************
 skipping: [kovalart-1] => (item={'service': 'ns-1', 'target': 'kovalart-1'}) 
@@ -1778,49 +1723,49 @@ ok: [kovalart-3] => (item={'service': 'ns-3', 'target': 'kovalart-3'})
 PLAY [Resolv.conf task] ********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-3]
 ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-3]
 
 TASK [resolv_dns : Shut down systemd-resolved] *********************************
-ok: [kovalart-3]
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
+ok: [kovalart-3]
 
 TASK [resolv_dns : Change resolv.conf on all VMs] ******************************
+ok: [kovalart-1]
 ok: [kovalart-2]
 ok: [kovalart-3]
-ok: [kovalart-1]
 
 PLAY [Database server] *********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [mysql : Install mysql] ***************************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [mysql : copy the mysql config file and restart mysql server] *************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [mysql : Start mysql] *****************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : Install required Python Library] *********************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [mysql : MySQL database] **************************************************
 ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [mysql : MySQL user] ******************************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : Create MySQL exporter user] **************************************
 ok: [kovalart-1]
@@ -1835,20 +1780,20 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [mysql : Copy the config file] ********************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [mysql : Start Mysql exporter] ********************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [mysql : Ensure that mysql directory exists] ******************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [mysql : Create MySQL user named backup with required privileges] *********
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [mysql : Ensure /home/backup/.my.cnf file is created] *********************
 ok: [kovalart-2]
@@ -1871,16 +1816,16 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [mysql : Read only mode for the Replica MySQL host] ***********************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [mysql : Create CNAME records for MySQL instances 1] **********************
-ok: [kovalart-2] => (item=None)
 ok: [kovalart-1] => (item=None)
 ok: [kovalart-2] => (item=None)
 ok: [kovalart-1] => (item=None)
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2] => (item=None)
+ok: [kovalart-2]
 
 PLAY [Prometheus tasks] ********************************************************
 
@@ -1910,19 +1855,19 @@ ok: [kovalart-2]
 ok: [kovalart-1]
 
 TASK [docker : Install Docker.io package] **************************************
-ok: [kovalart-2]
 ok: [kovalart-3]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [docker : Install python3-docker package] *********************************
-ok: [kovalart-2]
-ok: [kovalart-3]
 ok: [kovalart-1]
+ok: [kovalart-3]
+ok: [kovalart-2]
 
 TASK [docker : Ensure Docker daemon is running and enabled] ********************
+ok: [kovalart-3]
 ok: [kovalart-2]
 ok: [kovalart-1]
-ok: [kovalart-3]
 
 PLAY [Grafana Tasks] ***********************************************************
 
@@ -1954,28 +1899,28 @@ ok: [kovalart-3]
 PLAY [Agama tasks] *************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [agama : Agama directory] *************************************************
 ok: [kovalart-2]
 ok: [kovalart-1]
 
 TASK [agama : Configure AGAMA application] *************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [agama : Download agama.py] ***********************************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [agama : Download Dockerfile] *********************************************
 ok: [kovalart-2]
 ok: [kovalart-1]
 
 TASK [agama : Build agama image] ***********************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [agama : Create Agama Containers] *****************************************
 ok: [kovalart-1] => (item=None)
@@ -1983,8 +1928,8 @@ ok: [kovalart-2] => (item=None)
 ok: [kovalart-1] => (item=None)
 ok: [kovalart-2] => (item=None)
 ok: [kovalart-1] => (item=None)
-ok: [kovalart-2] => (item=None)
 ok: [kovalart-1]
+ok: [kovalart-2] => (item=None)
 ok: [kovalart-2]
 
 TASK [agama : Gather information about all running containers] *****************
@@ -2010,33 +1955,21 @@ ok: [kovalart-2]
 PLAY [Web server tasks] ********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
 
 TASK [nginx : Ensure nginx is installed] ***************************************
-ok: [kovalart-2]
-ok: [kovalart-1]
 ok: [kovalart-3]
 
 TASK [nginx : Copy Nginx default config to sites-enabled] **********************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
 
 TASK [nginx : start nginx] *****************************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
 
 TASK [nginx : Install exporter] ************************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
 
 TASK [nginx : Run the nginx exporter] ******************************************
-ok: [kovalart-1]
-ok: [kovalart-2]
 ok: [kovalart-3]
 
 PLAY [Influxdb tasks] **********************************************************
@@ -2123,8 +2056,8 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [haproxy : Install haproxy] ***********************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [haproxy : Copy the Haproxy config] ***************************************
 ok: [kovalart-1]
@@ -2135,12 +2068,12 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [haproxy : Install prometheus-haproxy-exporter using APT] *****************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [haproxy : Configure haproxy.scrape-uri in /etc/default/prometheus-haproxy-exporter] ***
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [haproxy : Start haproxy exporter] ****************************************
 ok: [kovalart-1]
@@ -2149,10 +2082,10 @@ ok: [kovalart-2]
 TASK [haproxy : Create CNAME records for HAproxy instances] ********************
 ok: [kovalart-1] => (item=None)
 ok: [kovalart-2] => (item=None)
-ok: [kovalart-2] => (item=None)
-ok: [kovalart-2]
 ok: [kovalart-1] => (item=None)
 ok: [kovalart-1]
+ok: [kovalart-2] => (item=None)
+ok: [kovalart-2]
 
 PLAY [Keepalived tasks] ********************************************************
 
@@ -2161,24 +2094,24 @@ ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [keepalived : Install keepalived] *****************************************
-ok: [kovalart-2]
 ok: [kovalart-1]
+ok: [kovalart-2]
 
 TASK [keepalived : Copy check script to keepalived_script user's home folder] ***
 ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [keepalived : Copy the Keepalived config] *********************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [keepalived : Download Keepalived Exporter] *******************************
 ok: [kovalart-1]
 ok: [kovalart-2]
 
 TASK [keepalived : Extract Keepalived Exporter] ********************************
-ok: [kovalart-1]
 ok: [kovalart-2]
+ok: [kovalart-1]
 
 TASK [keepalived : Create systemd unit file] ***********************************
 ok: [kovalart-1]
@@ -2195,9 +2128,9 @@ ok: [kovalart-1] => (item=keepalived-exporter)
 ok: [kovalart-2] => (item=keepalived-exporter)
 
 PLAY RECAP *********************************************************************
-kovalart-1                 : ok=80   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
-kovalart-2                 : ok=80   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
+kovalart-1                 : ok=74   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
+kovalart-2                 : ok=74   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
 kovalart-3                 : ok=73   changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
 
 + date
-Tue Jan 16 10:16:04 EET 2024
+Wed Jan 17 11:04:29 EET 2024

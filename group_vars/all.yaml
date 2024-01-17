@@ -10,7 +10,7 @@ docker_network: 172.17.0.0/16
 backup_host: "192.168.42.132"
 backup_ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90"
 
-mysql_host: "kovalart-2"
+mysql_host: "kovalart-1"
 mysql_database: agama
 mysql_user: agama
 mysql_replication_user: replica
