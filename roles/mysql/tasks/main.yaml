@@ -81,7 +81,7 @@
     state: directory 
     owner: backup 
     group: backup 
-    mode: '0755'
+    mode: 0700
 
 - name: Create MySQL user named backup with required privileges
   mysql_user:
@@ -98,7 +98,7 @@
     dest: /home/backup/.my.cnf
     owner: backup
     group: backup
-    mode: '0600'
+    mode: 0600
   no_log: true
 
 - name: Ensure user backup can create MySQL dumps without errors

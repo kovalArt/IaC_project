@@ -6,7 +6,7 @@
     ansible-playbook infra.yaml
 
     # MySQL and Inflxdb parts of infrustructure:
-    ansible-playbook infra.yaml -tdb -ti -ta
+    ansible-playbook infra.yaml -tdb -ti -ta 
 
     # Explanations:
     -tdb - setting up MySQL
@@ -34,10 +34,17 @@
 
     sudo -u backup duplicity --no-encryption restore rsync://kovalArt@backup.infocare.io/influxdb /home/backup/restore/influxdb
 
-    2. After the backup has downloaded - issue this command to use the backup. This action should be done as root user!
+    2. After the backup has downloaded - issue this command to use the backup. This action should be done as root user! Before the restoring from the backup - make sure you stopped the "telegraf" service and dropped the telegraf database in influxdb.  
 
         1. sudo su 
+        2. service telegraf stop
+        3. influx -execute 'DROP DATABASE telegraf'
+        4. influxd restore -portable -database telegraf /home/backup/restore/influxdb
 
-        2. influxd restore -portable -database telegraf /home/backup/restore/influxdb
+            (On this step you may face an error "error updating meta: DB metadata not changed. database may already exist restore: DB metadata not changed. database may already exist". It's a known issue with InfluxDB restore, you can ignore these. Just make sure that telegraf database is restored correctly.)
 
-    3. Check the result. InfluxDB should now have fresh data from backup and telegraf database available
+        5. After succesfully restored backup - start the telegraf service by one of these commands:
+            - ansible-playbook infra.yaml
+            - ansible-playbook infra.yaml -ti 
+
+    3. Check the result. InfluxDB telegraf should now have fresh data from backup and telegraf database and service available

@@ -77,7 +77,7 @@
       state: directory 
       owner: backup 
       group: backup 
-      mode: '0755'
+      mode: 0700
 
   - name: Ensure user backup can create InfluxDB dumps without errors
     ansible.builtin.shell:
