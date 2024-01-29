@@ -1,4 +1,4 @@
-# ica0002
+# IaaC project 
 Repo for the university course - IT Infrastructure Services
 
 The main objectice is to create the IaaC project, that would deploy a secure and sustainable infrastructure by using a one command (ansible-playbook infra.yaml). 
