@@ -1,7 +1,7 @@
-# IaaC project 
+# IaC project 
 Repo for the university course - IT Infrastructure Services
 
-The main objectice is to create the IaaC project, that would deploy a secure and sustainable infrastructure by using a one command (ansible-playbook infra.yaml). 
+The main objectice is to create the IaC project, that would deploy a secure and sustainable infrastructure by using a one command (ansible-playbook infra.yaml). 
 
 ### Infrastructure deployed:
 
